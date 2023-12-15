@@ -1,3 +1,3 @@
 const discord = require('discord.js');
+const fs = require('fs');
 
-console.log('test')
