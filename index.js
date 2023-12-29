@@ -53,6 +53,24 @@ app.post("/login/otp", async (req, res) => {
   }
 });
 
+
+
+app.get("/balance", async (req, res) => {
+  try {
+    // Assuming you have the accessToken from the query parameters
+    const accessToken = req.query.accessToken;
+    const paypayWithToken = new PayPay({ accessToken });
+
+    const balance = await paypayWithToken.getBalance();
+    res.json(balance);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ status: "error", message: "Internal Server Error" });
+  }
+});
+
+
+
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
