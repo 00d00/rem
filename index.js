@@ -70,6 +70,19 @@ app.get("/balance", async (req, res) => {
 });
 
 
+app.get("/create", async (req, res) => {
+  try {
+    const accessToken = req.query.accessToken;
+    const paypayWithToken = new PayPay({ accessToken });
+
+    const exee = await paypayWithToken.executeLink(1);
+    res.json(exee);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ status: "error", message: "Internal Server Error" });
+  }
+});
+
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
