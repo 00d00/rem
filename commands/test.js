@@ -7,7 +7,6 @@ module.exports = {
     .setDefaultMemberPermissions(discord.PermissionFlagsBits.Administrator)
   ,
   async execute(interaction) {
-
     const embed = new discord.EmbedBuilder()
       .setColor(process.env.COLOR)
       .setTitle('Verify')
