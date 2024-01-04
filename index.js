@@ -61,9 +61,9 @@ const events = fs.readdirSync('./events/').filter(file => file.endsWith('.js'));
 for (const event of events) {
   const data = require(`./events/${event}`);
   if (data.once) {
-    client.once(data.name, (...args) => data.execute(...args));
+    client.once(data.name, (...args) => data.execute(client, ...args));
   } else {
-    client.on(data.name, (...args) => data.execute(...args));
+    client.on(data.name, (...args) => data.execute(client, ...args));
   }
 }
 
