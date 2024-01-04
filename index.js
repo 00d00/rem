@@ -10,6 +10,11 @@ const client = new discord.Client({
 });
 
 
+const express = require('express');
+const app = express();
+
+
+
 
 // コマンドデータの取得
 const commands = new discord.Collection();
@@ -30,9 +35,6 @@ client.once(discord.Events.ClientReady, async() => {
     data.push(commands[commandName].data)
   }
   await client.application.commands.set(data);
-  client.guilds.cache.forEach(async (guild) => {
-    console.log(`NAME: ${guild.name}, ID: ${guild.id}`);
-  });
 });
 
 
