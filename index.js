@@ -70,4 +70,4 @@ for (const event of events) {
 }
 
 
-client.login(process.env.TOKEN
+client.login(process.env.TOKEN);
