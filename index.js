@@ -17,6 +17,12 @@ app.set('view engine', 'ejs');
 app.set('views', __dirname + '/views');
 
 
+app.get('/oauth', (req, res) => {
+  const server = req.query.state
+  res.render('success', {});
+});
+
+
 // コマンドデータの取得
 const commands = new discord.Collection();
 
