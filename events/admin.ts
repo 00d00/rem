@@ -8,6 +8,7 @@ module.exports = {
       .setTitle('Joined Server')
       .setDescription(`NAME: ${guild.name}` + '\n' + `ID: ${guild.id}`)
       .setThumbnail(guild.iconURL());
+    
     guild.channels.cache.get('1192362617617002536').send({ embeds: [embed] });
   },
 };
