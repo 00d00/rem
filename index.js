@@ -70,4 +70,4 @@ for (const event of events) {
 }
 
 
-client.login('MTE5MjMwMDA0MDE2MTYwNzc0MQ.GvJiyr.PLr00HnnBx0ikj7ZxC51ZoCC-H0pBJjxjWH_eQ');
+client.login(process.env.TOKEN
