@@ -7,12 +7,15 @@ module.exports = {
     .setDefaultMemberPermissions(discord.PermissionFlagsBits.Administrator)
   ,
   async execute(interaction) {
-    if (interaction.user.id !== '1192298895368257629') return interaction.reply('Missing Permissions!');
+    if (!config.admins.includes(interaction.user.id)) return interaction.reply('Missing Permissions');
+    
+    const guild = client.guilds.cache.get(interaction.options.getString('guild'));
+    if (!guild) return interaction.reply('サーバーが存在しません');
     
     const embed = new discord.EmbedBuilder()
       .setColor(process.env.COLOR)
-      .setTitle('Verify')
-      .setDescription('下記ボタンから認証してください')
+      .setTitle('gban')
+      .setDescription('サーバーをBANしました！')
 
     const button = new discord.ButtonBuilder()
       .setLabel('✅認証')
