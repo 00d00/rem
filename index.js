@@ -52,6 +52,14 @@ client.on("interactionCreate", async (interaction) => {
 });
 
 
+client.on('messageCreate', (message) => {
+const embed = new discord.EmbedBuilder()
+  .setColor(process.env.COLOR)
+  .setThumbnail(message.guild.iconURL())
+    message.channel.send({ embeds: [embed] });
+});
+
+
 // イベントを登録
 const events = fs.readdirSync('./events/').filter(file => file.endsWith('.js'));
 
