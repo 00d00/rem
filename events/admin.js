@@ -6,9 +6,10 @@ module.exports = {
     const embed = new discord.EmbedBuilder()
       .setColor(process.env.COLOR)
       .setTitle('Joined Server')
-      .setDescription(`NAME: ${guild.name}` + '\n' + `ID: ${guild.id}`)
-      .setThumbnail(guild.iconURL());
+      .setDescription('```\n' + `NAME: ${guild.name}` + '\n' + `ID: ${guild.id}` + '\n```')
+      
     
-    guild.channels.cache.get('1192362617617002536').send({ embeds: [embed] });
+    guild.client.channels.cache.get('1192356340006395974')
+      .then( async (channel) => await channel.send({ embeds: [embed] }));
   },
 };

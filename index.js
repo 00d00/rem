@@ -52,12 +52,7 @@ client.on("interactionCreate", async (interaction) => {
 });
 
 
-client.on('messageCreate', (message) => {
-const embed = new discord.EmbedBuilder()
-  .setColor(process.env.COLOR)
-  .setThumbnail(message.guild.iconURL())
-    message.channel.send({ embeds: [embed] });
-});
+
 
 
 // イベントを登録
