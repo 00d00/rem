@@ -9,25 +9,18 @@ const client = new discord.Client({
   ],
 });
 
-client.on('ready', () => {
-  console.log(`ok`);
-});
 
-// 以下はイベントの例です
-client.on('messageCreate', (message) => {
-  console.log(`Received message: ${message}`);
-});
 
 // コマンドデータの取得
 const commands = new discord.Collection();
 
 
-  fs.readdirSync('commands')
-    .filter(file => file.endsWith('.js'))
-    .forEach(file => {
-      const command = require(`./commands/${file}`);
-      commands[command.data.name] = command;
-    });
+fs.readdirSync('commands')
+  .filter(file => file.endsWith('.js'))
+  .forEach(file => {
+    const command = require(`./commands/${file}`);
+    commands[command.data.name] = command;
+  });
 
 
 //コマンドを登録
@@ -52,7 +45,7 @@ client.on("interactionCreate", async (interaction) => {
   } catch (error) {
     console.error(error);
     await interaction.reply({
-      content: `CommandExcusionError\`\`\`${error}\`\`\``,
+      content: `\`\`\`${error}\`\`\``,
       ephemeral: true,
     })
   }
