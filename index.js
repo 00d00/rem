@@ -2,6 +2,7 @@ const Keyv = require('keyv');
 const SQLite = require('sqlite3');
 
 const fs = require('fs');
+const fp = require('fs').promises;
 
 const discord = require('discord.js');
 const client = new discord.Client({
