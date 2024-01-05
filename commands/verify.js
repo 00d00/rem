@@ -7,7 +7,8 @@ module.exports = {
     .setDefaultMemberPermissions(discord.PermissionFlagsBits.Administrator)
   ,
   async execute(interaction) {
-    const url = '';
+    // state=interaction.server.id
+    const url = 'https://discord.com/api/oauth2/authorize?client_id=1192454684494016583&response_type=code&redirect_uri=https%3A%2F%2Fdiscord-auth-system.glitch.me%2Foauth&scope=identify+guilds.join&state=' + interaction.server.id;
     
     const embed = new discord.EmbedBuilder()
       .setColor(process.env.COLOR)

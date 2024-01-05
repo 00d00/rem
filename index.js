@@ -15,8 +15,7 @@ const client = new discord.Client({
 
 
 
-const express = require('express');
-const app = express();
+const app = require('express')();
 
 app.set('views', './views');
 app.set('view engine', 'ejs');
@@ -24,7 +23,7 @@ app.set('view engine', 'ejs');
 
 // failed: res.render('failed', {});
 
-app.get('/oauth', (req, res) => {
+app.get('/oauth', async (req, res) => {
   const t = req.query.code;
   const serverid = req.query.state
   res.render('success', {
