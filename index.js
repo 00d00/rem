@@ -1,5 +1,5 @@
 const Keyv = require('keyv');
-const SQLite = require('keyv-sqlite');
+const SQLite = require('sqlite3');
 
 
 
