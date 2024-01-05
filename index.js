@@ -1,3 +1,8 @@
+const Keyv = require('keyv');
+const SQLite = require('keyv-sqlite');
+
+
+
 const discord = require('discord.js');
 const fs = require('fs');
 
@@ -22,6 +27,7 @@ app.set('view engine', 'ejs');
 // failed: res.render('failed', {});
 
 app.get('/oauth', (req, res) => {
+  const t = req.query.code;
   const serverid = req.query.state
   res.render('success', {
     avatarUrl: 'https://cdn.discordapp.com/avatars/1192454684494016583/92b7d39a1e8f7869e2e36049b595ce34.png',
