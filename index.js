@@ -1,3 +1,17 @@
+
+
+const express = require('express');
+const app = express();
+
+app.set('view engine', 'ejs');
+
+
+app.get('/oauth', (req, res) => {
+  const serverid = req.query.state
+  res.render('success', {});
+});
+
+
 const discord = require('discord.js');
 const fs = require('fs');
 
@@ -9,18 +23,6 @@ const client = new discord.Client({
   ],
 });
 
-
-const express = require('express');
-const app = express();
-
-app.set('view engine', 'ejs');
-app.set('views', __dirname + '/views');
-
-
-app.get('/oauth', (req, res) => {
-  const server = req.query.state
-  res.render('success', {});
-});
 
 
 // コマンドデータの取得
