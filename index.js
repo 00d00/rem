@@ -1,16 +1,13 @@
 const Keyv = require('keyv');
 const SQLite = require('sqlite3');
 
-
-
-const discord = require('discord.js');
 const fs = require('fs');
 
+const discord = require('discord.js');
 const client = new discord.Client({
   intents: [
     discord.GatewayIntentBits.Guilds,
     discord.GatewayIntentBits.GuildMessages,
-    // 他の必要なインテントを追加
   ],
 });
 
