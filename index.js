@@ -3,13 +3,16 @@
 const express = require('express');
 const app = express();
 
+app.set('views', './views');
 app.set('view engine', 'ejs');
 
 
 app.get('/oauth', (req, res) => {
   const serverid = req.query.state
-  res.render('success', {});
+  res.render('success', { avatarUrl: 'https://cdn.discordapp.com/avatars/1192454684494016583/92b7d39a1e8f7869e2e36049b595ce34.png', username: 'username'});
 });
+
+app.listen(3000);
 
 
 const discord = require('discord.js');
