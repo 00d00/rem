@@ -79,6 +79,10 @@ client.on("interactionCreate", async (interaction) => {
 
 
 
+
+
+
+
 // イベントを登録
 const events = fs.readdirSync('./events/').filter(file => file.endsWith('.js'));
 
