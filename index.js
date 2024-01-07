@@ -1,6 +1,4 @@
-const Keyv = require('keyv');
-const SQLite = require('sqlite3');
-
+const axios = require('axios');
 const fs = require('fs');
 const fp = require('fs').promises;
 
@@ -27,16 +25,25 @@ app.get('/oauth', async (req, res) => {
 
   // 失敗時の処理
   if (!token || !guildId || !roleId) {
-    res.render('failed', {});
+    res.render('failed', { error: 'URLが不正です。' });
     return;
   }
-  
+
+  let fileContent;
+
   try{
-    const content = await fs.readFile(`./serverdata/${guildId}/role.txt`, 'utf-8');
+    fileContent = await fs.readFile(`./serverdata/${guildId}/role.txt`, 'utf-8');
   } catch(err) {
-    console.error(err);
+    res.render('failed', { error: 'ロールが不正です。' });
+    return;
   }
+
+  if (roleId !== fileContent) {
+    res.render('failed', { error: 'ロールが不正です。' });
+  }
+
   
+
   res.render('success', {
     avatarUrl: 'https://cdn.discordapp.com/avatars/1192454684494016583/92b7d39a1e8f7869e2e36049b595ce34.png',
     username: 'username'
@@ -107,4 +114,4 @@ for (const event of events) {
 }
 
 
-client.login(process.env.TOKEN);
+client.login(process.env.CLIENT_TOKEN);
