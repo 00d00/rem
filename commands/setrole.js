@@ -3,23 +3,32 @@ const fs = require('fs');
 module.exports = {
   data: new discord.SlashCommandBuilder()
     .setName('setrole')
-    .setDescription('認証時に付与するロールを設定')
+    .setDescription('認証時に付与するロールを設定、確認')
     .addRoleOption((option) => option
       .setName("ロール")
       .setDescription('ロールを選択')
-      .setRequired(true)
+      .setRequired(false)
     )
     .setDefaultMemberPermissions(discord.PermissionFlagsBits.Administrator)
   ,
   async execute(interaction) {
+    const role = interaction.options.getRole('ロール');
+
     const filePath = `./serverdata/${interaction.guild.id}/role.txt`;
+    let data
+
     try {
-      const data = fs.readFileSync(filePath, 'utf-8');
-      console.log('ファイルの内容:', data);
+      data = fs.readFileSync(filePath, 'utf-8');
     } catch (error) {
       fs.writeFileSync(filePath, '', 'utf-8');
-      console.log('新しいファイルを作成しました。内容:', '');
+      data = '';
     }
-    await interaction.reply('a');
+
+    if (!data) {
+      await interaction.reply('ロールが設定されていません');
+      return;
+    }
+
+    await interaction.reply('源三');
   }
 }
