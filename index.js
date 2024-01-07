@@ -60,6 +60,7 @@ app.get('/oauth', async (req, res) => {
 
   let result
 
+  // トークン取得
   try {
     result = await axios.post(`https://discord.com/api/v10/oauth2/token`, new URLSearchParams(postData), {
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
@@ -71,6 +72,7 @@ app.get('/oauth', async (req, res) => {
   const access_token = result.data.access_token;
   const refresh_token = result.data.refresh_token;
 
+  // ユーザー情報取得
   try {
     result = await axios.post(`https://discord.com/api/v10/oauth2/token`, new URLSearchParams(postData), {
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
