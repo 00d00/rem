@@ -7,28 +7,15 @@ module.exports = {
     .addRoleOption((option) => option
       .setName("ロール")
       .setDescription('ロールを選択')
-      .setRequired(false)
+      .setRequired(true)
     )
     .setDefaultMemberPermissions(discord.PermissionFlagsBits.Administrator)
   ,
   async execute(interaction) {
     const role = interaction.options.getRole('ロール');
 
-    const filePath = `./serverdata/${interaction.guild.id}/role.txt`;
-    let data
+    fs.writeFileSync(`./serverdata/${interaction.guild.id}/role.txt`, '', 'utf-8');
 
-    try {
-      data = fs.readFileSync(filePath, 'utf-8');
-    } catch (error) {
-      fs.writeFileSync(filePath, '', 'utf-8');
-      data = '';
-    }
-
-    if (!data) {
-      await interaction.reply('ロールが設定されていません');
-      return;
-    }
-
-    await interaction.reply('源三');
+    await interaction.reply('ロールを設定しました！');
   }
 }
