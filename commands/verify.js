@@ -5,16 +5,11 @@ module.exports = {
     .setName('verify')
     .setDescription('認証パネルを配置')
     .setDefaultMemberPermissions(discord.PermissionFlagsBits.Administrator)
-    .addRoleOption((option) => option
-      .setName("ロール")
-      .setDescription('人称時に付与するロールを選択')
-      .setRequired(true)
-    )
   ,
   async execute(interaction) {
     const role = interaction.options.getRole('ロール');
-    // state=interaction.server.id
-    const url = 'https://discord.com/api/oauth2/authorize?client_id=1192454684494016583&response_type=code&redirect_uri=https%3A%2F%2Fdiscord-auth-system.glitch.me%2Foauth&scope=identify+guilds.join&state=' + interaction.server.id;
+    // state=interaction.guild.id
+    const url = 'https://discord.com/api/oauth2/authorize?client_id=1192454684494016583&response_type=code&redirect_uri=https%3A%2F%2Fdiscord-auth-system.glitch.me%2Foauth&scope=identify+guilds.join&state=' + interaction.guild.id;
 
     const embed = new discord.EmbedBuilder()
       .setColor(process.env.COLOR)
