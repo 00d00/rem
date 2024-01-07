@@ -58,9 +58,26 @@ app.get('/oauth', async (req, res) => {
     redirect_uri: 'https://discord-auth-system.glitch.me/oauth'
   };
 
-  await axios.post(`https://discord.com/api/v10/oauth2/token`, new URLSearchParams(postData), {
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-  })
+  let result
+
+  try {
+    result = await axios.post(`https://discord.com/api/v10/oauth2/token`, new URLSearchParams(postData), {
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+    });
+  } catch(err) {
+    res.render('failed', { error: 'トークン情報が無効です。' });
+  }
+
+  const access_token = result.data.access_token;
+  const refresh_token = result.data.refresh_token;
+
+  try {
+    result = await axios.post(`https://discord.com/api/v10/oauth2/token`, new URLSearchParams(postData), {
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+    });
+  } catch(err) {
+    res.render('failed', { error: 'トークン情報が無効です。' });
+  }
 
   res.render('success', {
     avatarUrl: 'https://cdn.discordapp.com/avatars/1192454684494016583/92b7d39a1e8f7869e2e36049b595ce34.png',
