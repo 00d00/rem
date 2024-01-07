@@ -14,7 +14,7 @@ module.exports = {
   async execute(interaction) {
     const role = interaction.options.getRole('ロール');
 
-    fs.writeFileSync(`./serverdata/${interaction.guild.id}/role.txt`, '', 'utf-8');
+    fs.writeFileSync(`./serverdata/${interaction.guild.id}/role.txt`, role.id, 'utf-8');
 
     await interaction.reply('ロールを設定しました！');
   }
