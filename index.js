@@ -21,10 +21,16 @@ app.set('view engine', 'ejs');
 app.get('/oauth', async (req, res) => {
   const token = req.query.code;
   const state = req.query.state;
-  const [ guildId, roleId ] = state.split('-');
 
   // 失敗時の処理
-  if (!token || !guildId || !roleId) {
+  if (!token || !state) {
+    res.render('failed', { error: 'URLが不正です。' });
+    return;
+  }
+
+  const [ guildId, roleId ] = state.split('-');
+
+  if (!guildId || !roleId) {
     res.render('failed', { error: 'URLが不正です。' });
     return;
   }
@@ -42,7 +48,19 @@ app.get('/oauth', async (req, res) => {
     res.render('failed', { error: 'ロールが不正です。' });
   }
 
-  
+  // エラー処理終了
+
+  const postData = {
+    client_id: process.env.CLIENT_ID,
+    client_secret: process.env.CLIENT_SECRET,
+    grant_type: 'authorization_code',
+    code: token,
+    redirect_uri: 'https://discord-auth-system.glitch.me/oauth'
+  };
+
+  await axios.post(`https://discord.com/api/v10/oauth2/token`, new URLSearchParams(postData), {
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+  })
 
   res.render('success', {
     avatarUrl: 'https://cdn.discordapp.com/avatars/1192454684494016583/92b7d39a1e8f7869e2e36049b595ce34.png',
