@@ -4,6 +4,7 @@ module.exports = {
   data: new discord.SlashCommandBuilder()
     .setName('gban')
     .setDescription('guild ban')
+
     .setDefaultMemberPermissions(discord.PermissionFlagsBits.Administrator)
   ,
   async execute(interaction) {
@@ -17,13 +18,9 @@ module.exports = {
       .setTitle('gban')
       .setDescription('サーバーをBANしました！')
 
-    const button = new discord.ButtonBuilder()
-      .setLabel('✅認証')
-      .setURL('https://example.com')
-      .setStyle(discord.ButtonStyle.Link);
 
     const row = new discord.ActionRowBuilder().addComponents(button);
 
-    await interaction.reply({ embeds: [embed], components: [row] });
+    await interaction.reply({ embeds: [embed] });
   }
 }
