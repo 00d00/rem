@@ -24,8 +24,9 @@ app.set('view engine', 'ejs');
 // failed: res.render('failed', {});
 
 app.get('/oauth', async (req, res) => {
-  const t = req.query.code;
-  const serverid = req.query.state
+  const token = req.query.code;
+  const state = req.query.state;
+  const a = state
   res.render('success', {
     avatarUrl: 'https://cdn.discordapp.com/avatars/1192454684494016583/92b7d39a1e8f7869e2e36049b595ce34.png',
     username: 'username'
