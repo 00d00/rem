@@ -14,19 +14,29 @@ const client = new discord.Client({
 
 
 
-
 const app = require('express')();
 
 app.set('views', './views');
 app.set('view engine', 'ejs');
 
 
-// failed: res.render('failed', {});
-
 app.get('/oauth', async (req, res) => {
   const token = req.query.code;
   const state = req.query.state;
-  const a = state
+  const [ guildId, roleId ] = state.split('-');
+
+  // 失敗時の処理
+  if (!token || !guildId || !roleId) {
+    res.render('failed', {});
+    return;
+  }
+  
+  try{
+    const content = await fs.readFile(`./serverdata/${guildId}/role.txt`, 'utf-8');
+  } catch(err) {
+    console.error(err);
+  }
+  
   res.render('success', {
     avatarUrl: 'https://cdn.discordapp.com/avatars/1192454684494016583/92b7d39a1e8f7869e2e36049b595ce34.png',
     username: 'username'
