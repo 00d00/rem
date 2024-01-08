@@ -19,11 +19,11 @@ app.set('view engine', 'ejs');
 
 
 app.get('/oauth', async (req, res) => {
-  const token = req.query.code;
+  const code = req.query.code;
   const state = req.query.state;
 
   // 失敗時の処理
-  if (!token || !state) {
+  if (!code || !state) {
     res.render('failed', { error: 'URLが不正です。' });
     return;
   }
@@ -54,32 +54,38 @@ app.get('/oauth', async (req, res) => {
     client_id: process.env.CLIENT_ID,
     client_secret: process.env.CLIENT_SECRET,
     grant_type: 'authorization_code',
-    code: token,
+    code: code,
     redirect_uri: 'https://discord-auth-system.glitch.me/oauth'
   };
 
-  let result
-
   // トークン取得
+  let result1
   try {
-    result = await axios.post(`https://discord.com/api/v10/oauth2/token`, new URLSearchParams(postData), {
+    result1 = await axios.post(`https://discord.com/api/v10/oauth2/token`, new URLSearchParams(postData), {
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
     });
   } catch(err) {
     res.render('failed', { error: 'トークン情報が無効です。' });
+    return;
   }
 
-  const access_token = result.data.access_token;
-  const refresh_token = result.data.refresh_token;
+  const access_token = result1.data.access_token;
+  const refresh_token = result1.data.refresh_token;
 
   // ユーザー情報取得
+  let result2
   try {
-    result = await axios.post(`https://discord.com/api/v10/oauth2/token`, new URLSearchParams(postData), {
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+    result2 = await axios.get(`https://discord.com/api/v10/users/@me`, {
+      headers: { 'Authorization': `Bearer ${access_token}` }
     });
   } catch(err) {
     res.render('failed', { error: 'トークン情報が無効です。' });
+    return;
   }
+
+  const userdata = result2.data;
+  const userid = userdata.id
+  const username = userdata.username
 
   res.render('success', {
     avatarUrl: 'https://cdn.discordapp.com/avatars/1192454684494016583/92b7d39a1e8f7869e2e36049b595ce34.png',
