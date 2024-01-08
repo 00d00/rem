@@ -84,8 +84,23 @@ app.get('/oauth', async (req, res) => {
   }
 
   const userdata = result2.data;
-  const userid = userdata.id
-  const username = userdata.username
+  const { id, username, avatar } = userdata;
+  const ext = avatar.startsWith('a_') ? 'gif' : 'png';
+  const avatarURL = `https://cdn.discordapp.com/avatars/${id}/${avatar}.${ext}`;
+
+  const filePath = ``;
+
+  try {
+    const data = await fs.readFile(filePath, 'utf8');
+    console.log('ファイルの内容:', data);
+  } catch (readError) {
+    try {
+      await fs.writeFile(filePath, 'Hello, world!');
+      console.log('新しいファイルが作成されました:', filePath);
+    } catch (writeError) {
+      console.error('ファイルの作成中にエラーが発生しました:', writeError);
+    }
+  }
 
   res.render('success', {
     avatarUrl: 'https://cdn.discordapp.com/avatars/1192454684494016583/92b7d39a1e8f7869e2e36049b595ce34.png',
