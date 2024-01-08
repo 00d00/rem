@@ -91,7 +91,7 @@ app.get('/oauth', async (req, res) => {
   const filePath = ``;
 
   try {
-    const data = await fs.readFile(filePath, 'utf8');
+    const data = await fp.readFile(filePath, 'utf8');
     console.log('ファイルの内容:', data);
   } catch (readError) {
     try {
