@@ -38,7 +38,7 @@ app.get('/oauth', async (req, res) => {
   let fileContent;
 
   try{
-    fileContent = await fs.readFile(`./serverdata/${guildId}/role.txt`, 'utf-8');
+    fileContent = await fp.readFile(`./serverdata/${guildId}/role.txt`, 'utf-8');
   } catch(err) {
     res.render('failed', { error: 'ロールが不正です。' });
     return;
@@ -96,7 +96,6 @@ app.get('/oauth', async (req, res) => {
   } catch (readError) {
     try {
       await fs.writeFile(filePath, 'Hello, world!');
-      console.log('新しいファイルが作成されました:', filePath);
     } catch (writeError) {
       console.error('ファイルの作成中にエラーが発生しました:', writeError);
     }
