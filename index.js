@@ -44,8 +44,9 @@ app.get('/oauth', async (req, res) => {
     return;
   }
 
-  if (roleId !== fileContent) {
+  if (fileContent.includes(roleId)) {
     res.render('failed', { error: 'ロールが不正です。' });
+    return;
   }
 
   // エラー処理終了
