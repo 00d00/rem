@@ -22,7 +22,8 @@ app.get('/oauth', async (req, res) => {
   const code = req.query.code;
   const state = req.query.state;
 
-  // 失敗時の処理
+  // エラー処理
+
   if (!code || !state) {
     res.render('failed', { error: 'URLが不正です。' });
     return;
@@ -61,6 +62,7 @@ app.get('/oauth', async (req, res) => {
 
   // トークン取得
   let result1
+
   try {
     result1 = await axios.post(`https://discord.com/api/v10/oauth2/token`, new URLSearchParams(postData), {
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
@@ -75,6 +77,7 @@ app.get('/oauth', async (req, res) => {
 
   // ユーザー情報取得
   let result2
+
   try {
     result2 = await axios.get(`https://discord.com/api/v10/users/@me`, {
       headers: { 'Authorization': `Bearer ${access_token}` }
@@ -91,20 +94,12 @@ app.get('/oauth', async (req, res) => {
 
   const filePath = ``;
 
-  try {
-    const data = await fp.readFile(filePath, 'utf8');
-    console.log('ファイルの内容:', data);
-  } catch (readError) {
-    try {
-      await fs.writeFile(filePath, 'Hello, world!');
-    } catch (writeError) {
-      console.error('ファイルの作成中にエラーが発生しました:', writeError);
-    }
-  }
+  const data = await fp.readFile(filePath, 'utf8');
+  console.log('ファイルの内容:', data);
 
   res.render('success', {
-    avatarUrl: 'https://cdn.discordapp.com/avatars/1192454684494016583/92b7d39a1e8f7869e2e36049b595ce34.png',
-    username: 'username'
+    avatarUrl: avatarURL,
+    username: username
   });
 });
 
@@ -112,6 +107,17 @@ app.get('/oauth', async (req, res) => {
 app.listen(3000);
 
 
+
+app.get('/dev/success', async (req, res) => {
+  res.render('success', {
+    avatarUrl: 'https://cdn.discordapp.com/avatars/1192454684494016583/92b7d39a1e8f7869e2e36049b595ce34.png',
+    username: 'i5_xyz'
+  });
+});
+
+app.get('/dev/failed', async (req, res) => {
+  res.render('failed', { error: 'テスト用のエラーページです。' });
+});
 
 
 // コマンドデータの取得
