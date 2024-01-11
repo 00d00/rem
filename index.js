@@ -110,7 +110,7 @@ app.listen(3000);
 
 app.get('/dev/success', async (req, res) => {
   res.render('success', {
-    avatarUrl: 'https://cdn.discordapp.com/avatars/1192454684494016583/92b7d39a1e8f7869e2e36049b595ce34.png',
+    avatarUrl: 'https://cdn.discordapp.com/avatars/1097780939368714310/06eb6e74c99569e4f32b4a0bbf23db79.png',
     username: 'i5_xyz'
   });
 });
