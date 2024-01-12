@@ -22,7 +22,7 @@ module.exports = {
       .setLabel('パスワード')
       .setStyle(discord.TextInputStyle.Short);
 
-    modal.addComponents(firstActionRow, secondActionRow);
+    modal.addComponents(idInput, passwordInput);
 
     await interaction.showModal(modal);
   }
