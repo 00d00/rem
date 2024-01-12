@@ -4,6 +4,7 @@ const fp = require('fs').promises;
 const path = require('path');
 
 const discord = require('discord.js');
+
 const client = new discord.Client({
   intents: [
     discord.GatewayIntentBits.Guilds,
@@ -50,9 +51,11 @@ app.get('/total', async (req, res) => {
 
 
 app.get('/oauth', async (req, res) => {
+  // 情報を取得
   const code = req.query.code;
   const state = req.query.state;
 
+  // エラー処理
   if (!code || !state) {
     res.render('failed', { error: 'URLが不正です。' });
     return;
@@ -82,7 +85,8 @@ app.get('/oauth', async (req, res) => {
   }
 
 
-
+  // トークン取得
+  let result1
 
   const postData = {
     client_id: process.env.CLIENT_ID,
@@ -91,9 +95,6 @@ app.get('/oauth', async (req, res) => {
     code: code,
     redirect_uri: 'https://discord-auth-system.glitch.me/oauth'
   };
-
-  // トークン取得
-  let result1
 
   try {
     result1 = await axios.post(`https://discord.com/api/v10/oauth2/token`, new URLSearchParams(postData), {
@@ -106,6 +107,7 @@ app.get('/oauth', async (req, res) => {
 
   const accessToken = result1.data.access_token;
   const refreshToken = result1.data.refresh_token;
+
 
   // ユーザー情報取得
   let result2
@@ -124,6 +126,7 @@ app.get('/oauth', async (req, res) => {
   const ext = avatar.startsWith('a_') ? 'gif' : 'png';
   const avatarURL = `https://cdn.discordapp.com/avatars/${id}/${avatar}.${ext}`;
 
+  // データを保存
   let jsonData
 
   try {
@@ -139,25 +142,25 @@ app.get('/oauth', async (req, res) => {
 
 
 
-
+  // ロール付与
   try {
-  const guild = client.guilds.cache.get(guildId);
-  const role = guild.roles.cache.get(roleId);
-  const member = guild.members.cache.get(id);
+    const guild = client.guilds.cache.get(guildId);
+    const role = guild.roles.cache.get(roleId);
+    const member = guild.members.cache.get(id);
     await member.roles.add(role);
   } catch (_err) {
     res.render('failed', { error: '情報が不正です。' });
     return;
   }
 
+
+  // 完了
   res.render('success', {
     avatarUrl: avatarURL,
     username: username
   });
 });
 
-
-app.listen(3000);
 
 
 
@@ -172,6 +175,7 @@ app.get('/dev/failed', async (req, res) => {
   res.render('failed', { error: 'テスト用のエラーページです。' });
 });
 
+app.listen(3000);
 
 
 

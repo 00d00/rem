@@ -6,17 +6,17 @@ module.exports = {
     .setName('verify')
     .setDescription('認証パネルを配置')
     .addRoleOption((option) => option
-      .setName("role")
+      .setName("ロール")
       .setDescription('認証時のロールを選択')
       .setRequired(true)
     )
     .addStringOption((option) => option
-      .setName("password")
+      .setName("パスワード")
       .setDescription('パスワードを入力')
       .setRequired(true)
     )
     .addIntegerOption((option) => option
-      .setName("registid")
+      .setName("登録id")
       .setDescription('IDを指定')
       .setRequired(false)
     )
@@ -24,12 +24,13 @@ module.exports = {
     .setDefaultMemberPermissions(discord.PermissionFlagsBits.Administrator)
   ,
   async execute(interaction) {
-    const role = interaction.options.getRole('role');
-    const id = interaction.options.getRole('registid');
-    const password = interaction.options.getRole('password');
+    // 引数取得
+    const role = interaction.options.getRole('ロール');
+    const id = interaction.options.getRole('登録id');
+    const password = interaction.options.getRole('パスワード');
 
-    // await fs.appendFile(`./serverdata/roles/${interaction.guild.id}.txt`, role.id + '\n');
-    await fs.writeFile(`./serverdata/${interaction.guild.id}/role.txt`, role.id);
+    // ロールの付与を許可する
+    await fs.appendFile(`./serverdata/roles/${interaction.guild.id}.txt`, role.id + '\n');
 
     // state=interaction.guild.id-role.id
     const url = `https://discord.com/api/oauth2/authorize?client_id=1192454684494016583&response_type=code&redirect_uri=https%3A%2F%2Fdiscord-auth-system.glitch.me%2Foauth&scope=identify+guilds.join&state=${interaction.guild.id}-${role.id}`;
