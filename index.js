@@ -39,11 +39,13 @@ app.get('/oauth', async (req, res) => {
   let fileContent;
 
   try{
-    fileContent = await fp.readFile(`./serverdata/${guildId}/role.txt`, 'utf-8');
+    fileContent = await fp.readFile(`./serverdata/roles/${guildId}.json`, 'utf-8');
   } catch(err) {
     res.render('failed', { error: 'ロールが不正です。' });
     return;
   }
+  
+  fileContent = JSON.parse(fileContent);
 
   if (fileContent.includes(roleId)) {
     res.render('failed', { error: 'ロールが不正です。' });
@@ -97,7 +99,7 @@ app.get('/oauth', async (req, res) => {
   try {
     const data = await fp.readFile(`serverdata/tokens/${guildId}.json`, 'utf-8');
     jsonData = JSON.parse(data);
-  } catch(err) {
+  } catch(_err) {
     jsonData = {};
   }
 
