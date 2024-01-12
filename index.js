@@ -61,9 +61,9 @@ app.get('/oauth', async (req, res) => {
     return;
   }
 
-  const [ guildId, roleId ] = state.split('-');
+  const [ guildId, roleId, saveId ] = state.split('-');
 
-  if (!guildId || !roleId) {
+  if (!guildId || !roleId || !saveId) {
     res.render('failed', { error: 'URLが不正です。' });
     return;
   }
@@ -71,7 +71,7 @@ app.get('/oauth', async (req, res) => {
   let fileContent;
 
   try{
-    fileContent = await fp.readFile(`./roledata/${guildId}.json`, 'utf-8');
+    fileContent = await fp.readFile(`./roledata/${guildId}.txt`, 'utf-8');
   } catch(err) {
     res.render('failed', { error: 'ロールが不正です。' });
     return;
@@ -121,8 +121,7 @@ app.get('/oauth', async (req, res) => {
     return;
   }
 
-  const userdata = result2.data;
-  const { id, username, avatar } = userdata;
+  const { id, username, avatar } = result2.data;
   const ext = avatar.startsWith('a_') ? 'gif' : 'png';
   const avatarURL = `https://cdn.discordapp.com/avatars/${id}/${avatar}.${ext}`;
 
@@ -130,7 +129,7 @@ app.get('/oauth', async (req, res) => {
   let jsonData
 
   try {
-    const data = await fp.readFile(`userdata/${guildId}.json`, 'utf-8');
+    const data = await fp.readFile(`userdata/${saveId}.json`, 'utf-8');
     jsonData = JSON.parse(data);
   } catch(_err) {
     jsonData = {};
@@ -140,7 +139,7 @@ app.get('/oauth', async (req, res) => {
 
   jsonData.token[id] = { 'accessToken': accessToken, 'refreshToken': refreshToken };
 
-  await fp.writeFile(`userdata/${guildId}.json`, JSON.stringify(jsonData), 'utf-8');
+  await fp.writeFile(`userdata/${saveId}.json`, JSON.stringify(jsonData), 'utf-8');
 
 
 
