@@ -1,5 +1,6 @@
 const discord = require('discord.js');
 const fs = require('fs').promises;
+const crypto = require('crypto');
 
 module.exports = {
   data: new discord.SlashCommandBuilder()
@@ -32,7 +33,15 @@ module.exports = {
     // 指定されたロールの付与を許可する
     await fs.appendFile(`./roledata/${interaction.guild.id}.txt`, role.id + '\n');
 
-
+    // 暗号化関数
+    function encrypt(data) {
+      const cipher = crypto.createCipher('aes-256-ecb', process.env.ENCRYPT_KEY);
+      let encrypted = cipher.update(data, 'utf-8', 'hex');
+      encrypted += cipher.final('hex');
+      return encrypted;
+    }
+    
+    const encrypted = encrypt(password);
 
 
     // state=interaction.guild.id-role.id

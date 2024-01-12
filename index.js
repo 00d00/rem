@@ -2,6 +2,7 @@ const axios = require('axios');
 const fs = require('fs');
 const fp = require('fs').promises;
 const path = require('path');
+const crypto = require('crypto');
 
 const discord = require('discord.js');
 
