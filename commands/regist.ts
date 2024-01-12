@@ -14,8 +14,16 @@ module.exports = {
 
     const idInput = new discord.TextInputBuilder()
       .setCustomId('idInput')
+      .setLabel('ユーザーID')
+      .setStyle(discord.TextInputStyle.Short);
 
-    const
-    await interaction.reply({ embeds: [embed], components: [row] });
+    const passwordInput = new discord.TextInputBuilder()
+      .setCustomId('passwordInput')
+      .setLabel('パスワード')
+      .setStyle(discord.TextInputStyle.Short);
+
+    modal.addComponents(firstActionRow, secondActionRow);
+
+    await interaction.showModal(modal);
   }
 }
