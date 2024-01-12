@@ -10,12 +10,17 @@ module.exports = {
       .setDescription('認証時のロールを選択')
       .setRequired(true)
     )
+    .addIntegerOption((option) => option
+      .setName("id")
+      .setDescription('IDを指定')
+      .setRequired(false)
+    )
     .setDefaultMemberPermissions(discord.PermissionFlagsBits.Administrator)
   ,
   async execute(interaction) {
     const role = interaction.options.getRole('ロール');
 
-    // await fsPromises.appendFile(`./serverdata/roles/${interaction.guild.id}.txt`, role.id + '\n');
+    // await fs.appendFile(`./serverdata/roles/${interaction.guild.id}.txt`, role.id + '\n');
     await fs.writeFile(`./serverdata/${interaction.guild.id}/role.txt`, role.id);
 
     // state=interaction.guild.id-role.id
