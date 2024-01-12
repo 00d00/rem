@@ -19,6 +19,36 @@ app.set('views', './views');
 app.set('view engine', 'ejs');
 
 
+
+
+app.get('/total', async (req, res) => {
+  let total = [];
+
+  try {
+    const dataDirectory = 'serverdata/tokens';
+    const files = await fp.readdir(dataDirectory);
+
+    for (const file of files) {
+      const data = await fp.readFile(path.join(dataDirectory, file), 'utf8');
+      const jsonData = JSON.parse(data);
+      total = total.concat(Object.keys(jsonData));
+    }
+
+    total = total.filter((value, index, self) => self.indexOf(value) === index);
+
+    res.render('total', { total: total.length });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+
+
+
+
+
+
 app.get('/oauth', async (req, res) => {
   const code = req.query.code;
   const state = req.query.state;
