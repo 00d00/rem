@@ -1,6 +1,7 @@
 const axios = require('axios');
 const fs = require('fs');
 const fp = require('fs').promises;
+const path = require('path');
 
 const discord = require('discord.js');
 const client = new discord.Client({
