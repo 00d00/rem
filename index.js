@@ -132,7 +132,8 @@ app.get('/oauth', async (req, res) => {
     const data = await fp.readFile(`userdata/${saveId}.json`, 'utf-8');
     jsonData = JSON.parse(data);
   } catch(_err) {
-    jsonData = {};
+    res.render('failed', { error: 'IDが不正です。' });
+    return;
   }
 
   jsonData.token = jsonData.token || {};
