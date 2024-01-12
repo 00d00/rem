@@ -10,16 +10,17 @@ module.exports = {
       .setDescription('認証時のロールを選択')
       .setRequired(true)
     )
-    .addIntegerOption((option) => option
-      .setName("registid")
-      .setDescription('登録時のIDを指定')
-      .setRequired(true)
-    )
     .addStringOption((option) => option
       .setName("password")
       .setDescription('パスワードを入力')
       .setRequired(true)
     )
+    .addIntegerOption((option) => option
+      .setName("registid")
+      .setDescription('登録時のIDを指定')
+      .setRequired(false)
+    )
+
     .setDefaultMemberPermissions(discord.PermissionFlagsBits.Administrator)
   ,
   async execute(interaction) {
