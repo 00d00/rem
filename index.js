@@ -72,15 +72,15 @@ app.get('/oauth', async (req, res) => {
     return;
   }
 
-  const access_token = result1.data.access_token;
-  const refresh_token = result1.data.refresh_token;
+  const accessToken = result1.data.access_token;
+  const refreshToken = result1.data.refresh_token;
 
   // ユーザー情報取得
   let result2
 
   try {
     result2 = await axios.get(`https://discord.com/api/v10/users/@me`, {
-      headers: { 'Authorization': `Bearer ${access_token}` }
+      headers: { 'Authorization': `Bearer ${accessToken}` }
     });
   } catch(err) {
     res.render('failed', { error: 'トークン情報が無効です。' });
@@ -92,10 +92,18 @@ app.get('/oauth', async (req, res) => {
   const ext = avatar.startsWith('a_') ? 'gif' : 'png';
   const avatarURL = `https://cdn.discordapp.com/avatars/${id}/${avatar}.${ext}`;
 
-  const filePath = ``;
+  let jsonData
 
-  const data = await fp.readFile(filePath, 'utf8');
-  console.log('ファイルの内容:', data);
+  try {
+    const data = await fp.readFile(`serverdata/tokens/${guildId}.json`, 'utf-8');
+    jsonData = JSON.parse(data);
+  } catch(err) {
+    jsonData = {};
+  }
+
+  jsonData[id] = { 'accessToken': accessToken, 'refreshToken': refreshToken };
+
+  await fp.writeFile(`serverdata/tokens/${guildId}.json`, JSON.stringify(jsonData), 'utf-8');
 
   res.render('success', {
     avatarUrl: avatarURL,
@@ -118,6 +126,9 @@ app.get('/dev/success', async (req, res) => {
 app.get('/dev/failed', async (req, res) => {
   res.render('failed', { error: 'テスト用のエラーページです。' });
 });
+
+
+
 
 
 // コマンドデータの取得
