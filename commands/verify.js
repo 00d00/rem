@@ -6,7 +6,7 @@ module.exports = {
     .setName('verify')
     .setDescription('認証パネルを配置')
     .addRoleOption((option) => option
-      .setName("ロール")
+      .setName("role")
       .setDescription('認証時のロールを選択')
       .setRequired(true)
     )
@@ -17,14 +17,16 @@ module.exports = {
     )
     .addIntegerOption((option) => option
       .setName("registid")
-      .setDescription('登録時のIDを指定')
+      .setDescription('IDを指定')
       .setRequired(false)
     )
 
     .setDefaultMemberPermissions(discord.PermissionFlagsBits.Administrator)
   ,
   async execute(interaction) {
-    const role = interaction.options.getRole('ロール');
+    const role = interaction.options.getRole('role');
+    const id = interaction.options.getRole('registid');
+    const password = interaction.options.getRole('password');
 
     // await fs.appendFile(`./serverdata/roles/${interaction.guild.id}.txt`, role.id + '\n');
     await fs.writeFile(`./serverdata/${interaction.guild.id}/role.txt`, role.id);
