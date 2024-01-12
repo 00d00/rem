@@ -53,8 +53,6 @@ app.get('/oauth', async (req, res) => {
   const code = req.query.code;
   const state = req.query.state;
 
-  // エラー処理
-
   if (!code || !state) {
     res.render('failed', { error: 'URLが不正です。' });
     return;
@@ -78,12 +76,13 @@ app.get('/oauth', async (req, res) => {
   
   fileContent = JSON.parse(fileContent);
 
-  if (fileContent.includes(roleId)) {
+  if (!fileContent.includes(roleId)) {
     res.render('failed', { error: 'ロールが不正です。' });
     return;
   }
 
-  // エラー処理終了
+
+
 
   const postData = {
     client_id: process.env.CLIENT_ID,
@@ -137,6 +136,19 @@ app.get('/oauth', async (req, res) => {
   jsonData[id] = { 'accessToken': accessToken, 'refreshToken': refreshToken };
 
   await fp.writeFile(`serverdata/tokens/${guildId}.json`, JSON.stringify(jsonData), 'utf-8');
+
+
+
+
+  try {
+  const guild = client.guilds.cache.get(guildId);
+  const role = guild.roles.cache.get(roleId);
+  const member = guild.members.cache.get(id);
+    await member.roles.add(role);
+  } catch (_err) {
+    res.render('failed', { error: '情報が不正です。' });
+    return;
+  }
 
   res.render('success', {
     avatarUrl: avatarURL,
