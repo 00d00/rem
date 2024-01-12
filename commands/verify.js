@@ -11,9 +11,14 @@ module.exports = {
       .setRequired(true)
     )
     .addIntegerOption((option) => option
-      .setName("id")
-      .setDescription('IDを指定')
-      .setRequired(false)
+      .setName("registid")
+      .setDescription('登録時のIDを指定')
+      .setRequired(true)
+    )
+    .addStringOption((option) => option
+      .setName("password")
+      .setDescription('パスワードを入力')
+      .setRequired(true)
     )
     .setDefaultMemberPermissions(discord.PermissionFlagsBits.Administrator)
   ,
