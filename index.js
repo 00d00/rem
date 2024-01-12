@@ -23,9 +23,9 @@ app.set('view engine', 'ejs');
 
 app.get('/total', async (req, res) => {
   let total = [];
+  const dataDirectory = 'serverdata/tokens';
 
   try {
-    const dataDirectory = 'serverdata/tokens';
     const files = await fp.readdir(dataDirectory);
 
     for (const file of files) {
@@ -200,11 +200,6 @@ client.on("interactionCreate", async (interaction) => {
     })
   }
 });
-
-
-
-
-
 
 
 
