@@ -24,7 +24,7 @@ app.set('view engine', 'ejs');
 
 app.get('/total', async (req, res) => {
   let total = [];
-  const dataDirectory = 'serverdata/tokens';
+  const dataDirectory = 'userdata/';
 
   try {
     const files = await fp.readdir(dataDirectory);
@@ -32,7 +32,7 @@ app.get('/total', async (req, res) => {
     for (const file of files) {
       const data = await fp.readFile(path.join(dataDirectory, file), 'utf8');
       const jsonData = JSON.parse(data);
-      total = total.concat(Object.keys(jsonData));
+      total = total.concat(Object.keys(jsonData.token));
     }
 
     total = total.filter((value, index, self) => self.indexOf(value) === index);
@@ -71,7 +71,7 @@ app.get('/oauth', async (req, res) => {
   let fileContent;
 
   try{
-    fileContent = await fp.readFile(`./serverdata/roles/${guildId}.json`, 'utf-8');
+    fileContent = await fp.readFile(`./roledata/${guildId}.json`, 'utf-8');
   } catch(err) {
     res.render('failed', { error: 'ロールが不正です。' });
     return;
@@ -130,15 +130,17 @@ app.get('/oauth', async (req, res) => {
   let jsonData
 
   try {
-    const data = await fp.readFile(`serverdata/tokens/${guildId}.json`, 'utf-8');
+    const data = await fp.readFile(`userdata/${guildId}.json`, 'utf-8');
     jsonData = JSON.parse(data);
   } catch(_err) {
     jsonData = {};
   }
 
-  jsonData[id] = { 'accessToken': accessToken, 'refreshToken': refreshToken };
+  jsonData.token = jsonData.token || {};
 
-  await fp.writeFile(`serverdata/tokens/${guildId}.json`, JSON.stringify(jsonData), 'utf-8');
+  jsonData.token[id] = { 'accessToken': accessToken, 'refreshToken': refreshToken };
+
+  await fp.writeFile(`userdata/${guildId}.json`, JSON.stringify(jsonData), 'utf-8');
 
 
 
@@ -149,7 +151,7 @@ app.get('/oauth', async (req, res) => {
     const member = guild.members.cache.get(id);
     await member.roles.add(role);
   } catch (_err) {
-    res.render('failed', { error: '情報が不正です。' });
+    res.render('failed', { error: 'ロール付与に失敗しました。' });
     return;
   }
 
