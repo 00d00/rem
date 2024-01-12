@@ -36,7 +36,7 @@ app.get('/total', async (req, res) => {
 
     total = total.filter((value, index, self) => self.indexOf(value) === index);
 
-    res.render('total', { total: total.length });
+    res.render('total', { total: total.length, servers: client.guilds.cache.size });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Internal Server Error' });
