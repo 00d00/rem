@@ -29,7 +29,7 @@ module.exports = {
   async execute(interaction) {
     // 引数取得
     const role = interaction.options.getRole('ロール');
-    const saveId = interaction.options.getRole('登録id');
+    let saveId = interaction.options.getRole('登録id');
     const password = interaction.options.getRole('パスワード');
 
     if (!saveId) {
@@ -38,12 +38,14 @@ module.exports = {
       // パスワードチェッカー
       if (password < 8 || password > 16|| new Set(password).size < 3) {
         interaction.reply('パスワードは8~15文字、3種類以上の文字を使ってください。');
+        return;
       }
 
       // id生成
     } else {
       // 既存のID使用の処理
-      
+      const idgen = require('./modules/idgen.js');
+      saveId = await idgen();
     }
 
 
