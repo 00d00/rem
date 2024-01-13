@@ -2,6 +2,7 @@ const discord = require('discord.js');
 const fs = require('fs').promises;
 const crypto = require('crypto');
 
+
 module.exports = {
   data: new discord.SlashCommandBuilder()
     .setName('verify')
@@ -29,15 +30,19 @@ module.exports = {
     const role = interaction.options.getRole('ロール');
     const saveId = interaction.options.getRole('登録id');
     const password = interaction.options.getRole('パスワード');
-  
-    
+
     if (!saveId) {
+      // ID新規作成の処理
+
       // パスワードチェッカー
       if (password < 8 || new Set(password).size < 3) {
         interaction.reply('パスワードは8文字以上、3種類以上の文字を使ってください。');
       }
 
       // id生成
+    } else {
+      // 既存のID使用の処理
+      
     }
 
 
