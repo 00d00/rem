@@ -36,8 +36,8 @@ module.exports = {
       // ID新規作成の処理
 
       // パスワードチェッカー
-      if (password < 8 || new Set(password).size < 3) {
-        interaction.reply('パスワードは8文字以上、3種類以上の文字を使ってください。');
+      if (password < 8 || password > 16|| new Set(password).size < 3) {
+        interaction.reply('パスワードは8~15文字、3種類以上の文字を使ってください。');
       }
 
       // id生成
