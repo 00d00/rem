@@ -42,10 +42,10 @@ module.exports = {
       }
 
       // id生成
-    } else {
-      // 既存のID使用の処理
       const idgen = require('./modules/idgen.js');
       saveId = await idgen();
+    } else {
+      // 既存のID使用の処理
     }
 
 
