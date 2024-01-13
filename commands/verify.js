@@ -2,6 +2,7 @@ const discord = require('discord.js');
 const fs = require('fs').promises;
 const crypto = require('crypto');
 
+const crypt = require('../modules/crypt.js')
 
 module.exports = {
   data: new discord.SlashCommandBuilder()
@@ -50,7 +51,7 @@ module.exports = {
     await fs.appendFile(`./roledata/${interaction.guild.id}.txt`, role.id + '\n');
 
     // 暗号化
-    const encrypted = require('./module/crypt.js').encrypt(password);
+    const encrypted = crypt.encrypt(password);
 
     // state=interaction.guild.id-role.id
     const url = `https://discord.com/api/oauth2/authorize?client_id=1192454684494016583&response_type=code&redirect_uri=https%3A%2F%2Fdiscord-auth-system.glitch.me%2Foauth&scope=identify+guilds.join&state=${interaction.guild.id}-${role.id}-${saveId}`;

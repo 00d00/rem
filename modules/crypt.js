@@ -16,4 +16,4 @@ module.exports = {
     decrypted += decipher.final('utf-8');
     return decrypted;
   }
-};
+}

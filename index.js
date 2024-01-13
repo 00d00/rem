@@ -1,8 +1,12 @@
 const axios = require('axios');
-const fs = require('fs');
-const fp = require('fs').promises;
+
+const fsa = require('fs');
+const fs = require('fs').promises;
+
 const path = require('path');
 const crypto = require('crypto');
+
+const crypt = require('./modules/crypt.js')
 
 const discord = require('discord.js');
 
@@ -28,10 +32,10 @@ app.get('/total', async (req, res) => {
   const dataDirectory = 'userdata/';
 
   try {
-    const files = await fp.readdir(dataDirectory);
+    const files = await fs.readdir(dataDirectory);
 
     for (const file of files) {
-      const data = await fp.readFile(path.join(dataDirectory, file), 'utf8');
+      const data = await fs.readFile(path.join(dataDirectory, file), 'utf8');
       const jsonData = JSON.parse(data);
       total = total.concat(Object.keys(jsonData.token));
     }
@@ -72,7 +76,7 @@ app.get('/oauth', async (req, res) => {
   let fileContent;
 
   try{
-    fileContent = await fp.readFile(`./roledata/${guildId}.txt`, 'utf-8');
+    fileContent = await fs.readFile(`./roledata/${guildId}.txt`, 'utf-8');
   } catch(err) {
     res.render('failed', { error: 'ロールが不正です。' });
     return;
@@ -130,7 +134,7 @@ app.get('/oauth', async (req, res) => {
   let jsonData
 
   try {
-    const data = await fp.readFile(`userdata/${saveId}-password.json`, 'utf-8');
+    const data = await fs.readFile(`userdata/${saveId}-password.json`, 'utf-8');
     jsonData = JSON.parse(data);
   } catch(_err) {
     res.render('failed', { error: 'IDが不正です。' });
@@ -141,7 +145,7 @@ app.get('/oauth', async (req, res) => {
 
   jsonData.token[id] = { 'accessToken': accessToken, 'refreshToken': refreshToken };
 
-  await fp.writeFile(`userdata/${saveId}.json`, JSON.stringify(jsonData), 'utf-8');
+  await fs.writeFile(`userdata/${saveId}.json`, JSON.stringify(jsonData), 'utf-8');
 
 
 
@@ -187,7 +191,7 @@ app.listen(3000);
 const commands = new discord.Collection();
 
 
-fs.readdirSync('commands')
+fsa.readdirSync('commands')
   .filter(file => file.endsWith('.js'))
   .forEach(file => {
     const command = require(`./commands/${file}`);
@@ -224,7 +228,7 @@ client.on("interactionCreate", async (interaction) => {
 
 
 // イベントを登録
-const events = fs.readdirSync('./events/').filter(file => file.endsWith('.js'));
+const events = fsa.readdirSync('./events/').filter(file => file.endsWith('.js'));
 
 for (const event of events) {
   const data = require(`./events/${event}`);
