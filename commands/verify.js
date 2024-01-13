@@ -30,11 +30,15 @@ module.exports = {
     const id = interaction.options.getRole('登録id');
     const password = interaction.options.getRole('パスワード');
   
-    if (!id) {}
-  
-    if (password < 8) {
-      interaction.reply('パスワードは8文字以上にしてください。')
+    if (!id) {
+      // パスワードチェッカー
+      if (password < 8 || new Set(password).size < 3) {
+        interaction.reply('パスワードは8文字以上、3種類以上の文字を使ってください。');
+      }
+
+      // id生成
     }
+
 
     // 指定されたロールの付与を許可する
     await fs.appendFile(`./roledata/${interaction.guild.id}.txt`, role.id + '\n');
