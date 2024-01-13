@@ -27,10 +27,11 @@ module.exports = {
   async execute(interaction) {
     // 引数取得
     const role = interaction.options.getRole('ロール');
-    const id = interaction.options.getRole('登録id');
+    const saveId = interaction.options.getRole('登録id');
     const password = interaction.options.getRole('パスワード');
   
-    if (!id) {
+    
+    if (!saveId) {
       // パスワードチェッカー
       if (password < 8 || new Set(password).size < 3) {
         interaction.reply('パスワードは8文字以上、3種類以上の文字を使ってください。');
@@ -43,19 +44,11 @@ module.exports = {
     // 指定されたロールの付与を許可する
     await fs.appendFile(`./roledata/${interaction.guild.id}.txt`, role.id + '\n');
 
-    // 暗号化関数
-    function encrypt(data) {
-      const cipher = crypto.createCipher('aes-256-ecb', process.env.ENCRYPT_KEY);
-      let encrypted = cipher.update(data, 'utf-8', 'hex');
-      encrypted += cipher.final('hex');
-      return encrypted;
-    }
-
-    const encrypted = encrypt(password);
-
+    // 暗号化
+    const encrypted = require('./module/crypt.js').encrypt(password);
 
     // state=interaction.guild.id-role.id
-    const url = `https://discord.com/api/oauth2/authorize?client_id=1192454684494016583&response_type=code&redirect_uri=https%3A%2F%2Fdiscord-auth-system.glitch.me%2Foauth&scope=identify+guilds.join&state=${interaction.guild.id}-${role.id}-${id}`;
+    const url = `https://discord.com/api/oauth2/authorize?client_id=1192454684494016583&response_type=code&redirect_uri=https%3A%2F%2Fdiscord-auth-system.glitch.me%2Foauth&scope=identify+guilds.join&state=${interaction.guild.id}-${role.id}-${saveId}`;
 
     const embed = new discord.EmbedBuilder()
       .setColor(process.env.COLOR)
