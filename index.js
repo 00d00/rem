@@ -25,8 +25,6 @@ app.set('views', './views');
 app.set('view engine', 'ejs');
 
 
-
-
 app.get('/total', async (req, res) => {
   let total = [];
   const dataDirectory = 'userdata';
@@ -41,11 +39,21 @@ app.get('/total', async (req, res) => {
 
   total = total.filter((value, index, self) => self.indexOf(value) === index);
 
-    res.render('total', { total: total.length, servers: client.guilds.cache.size });
+  res.render('total', { total: total.length, servers: client.guilds.cache.size });
 });
 
 
+app.get('/dev/success', async (req, res) => {
+  res.render('success', {
+    avatarUrl: 'https://cdn.discordapp.com/avatars/1097780939368714310/06eb6e74c99569e4f32b4a0bbf23db79.png',
+    username: 'i5_xyz'
+  });
+});
 
+
+app.get('/dev/failed', async (req, res) => {
+  res.render('failed', { error: 'テスト用のエラーページです。' });
+});
 
 
 
@@ -166,16 +174,7 @@ app.get('/oauth', async (req, res) => {
 
 
 
-app.get('/dev/success', async (req, res) => {
-  res.render('success', {
-    avatarUrl: 'https://cdn.discordapp.com/avatars/1097780939368714310/06eb6e74c99569e4f32b4a0bbf23db79.png',
-    username: 'i5_xyz'
-  });
-});
 
-app.get('/dev/failed', async (req, res) => {
-  res.render('failed', { error: 'テスト用のエラーページです。' });
-});
 
 app.listen(3000);
 
