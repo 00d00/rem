@@ -29,24 +29,19 @@ app.set('view engine', 'ejs');
 
 app.get('/total', async (req, res) => {
   let total = [];
-  const dataDirectory = 'userdata/';
+  const dataDirectory = 'userdata';
 
-  try {
-    const files = await fs.readdir(dataDirectory);
+  const files = await fs.readdir(dataDirectory);
 
-    for (const file of files) {
-      const data = await fs.readFile(path.join(dataDirectory, file), 'utf8');
-      const jsonData = JSON.parse(data);
-      total = total.concat(Object.keys(jsonData.token));
-    }
+  for ( const file of files.filter(file => file.endsWith('.json')) ) {
+    const data = await fs.readFile(path.join(dataDirectory, file), 'utf8');
+    const jsonData = JSON.parse(data);
+    total = total.concat(Object.keys(jsonData.token));
+  }
 
-    total = total.filter((value, index, self) => self.indexOf(value) === index);
+  total = total.filter((value, index, self) => self.indexOf(value) === index);
 
     res.render('total', { total: total.length, servers: client.guilds.cache.size });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
 });
 
 
