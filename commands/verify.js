@@ -44,6 +44,7 @@ module.exports = {
       // id生成
       const idgen = require('./modules/idgen.js');
       saveId = await idgen();
+      const encryptedId = crypt(saveId)
     } else {
       // 既存のID使用の処理
     }
