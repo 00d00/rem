@@ -1,7 +1,7 @@
 const fs = require('fs').promises;
 
 module.exports = async() => {
-  const files = await fs.readdir('userdata');
+  const files = await fs.readdir('./userdata');
 
   let maxNumber = 0;
 
@@ -17,6 +17,6 @@ module.exports = async() => {
 
   const id = maxNumber + 1;
 
-  await fs.writeFile(`./${id}.json`, '{}');
+  await fs.writeFile(`./userdata/${id}.json`, '{}');
   return id;
 }

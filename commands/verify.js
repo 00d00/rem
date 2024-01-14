@@ -42,8 +42,23 @@ module.exports = {
       }
 
       // id生成
-      const idgen = require('./modules/idgen.js');
-      saveId = await idgen();
+      const files = await fs.readdir('./userdata');
+
+      let maxNumber = 0;
+
+      for (const file of files) {
+        const match = file.match(/^\d+\.json$/);
+        if (match) {
+          const number = parseInt(match[0]);
+          if (!isNaN(number) && number > maxNumber) {
+            maxNumber = number;
+          }
+        }
+      }
+
+      saveId = maxNumber + 1;
+
+      await fs.writeFile(`./userdata/${saveId}.json`, '{}');
       const encryptedId = crypt(saveId)
     } else {
       // 既存のID使用の処理
