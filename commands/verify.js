@@ -37,7 +37,7 @@ module.exports = {
     if (!saveId) {
       // ID新規作成の処理
 
-      if (password < 6 || password > 16|| new Set(password).size < 3) {
+      if (password < 6 || password > 16|| new Set(password).size < 3 || password.includes('-')) {
         interaction.reply({ content: 'パスワードは6~15文字、3種類以上の文字を使ってください。', ephemeral: true });
         return;
       }

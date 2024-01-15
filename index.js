@@ -83,13 +83,12 @@ app.get('/oauth', async (req, res) => {
 
   const matchingFiles = files.filter(file => file.startsWith(`${saveId}-`));
 
-  if (matchingFiles.length === 1) {
-    res.json({ "マッチングするファイル": matchingFiles[0] });
-    return;
-  } else {
+  if (matchingFiles.length !== 1) {
     res.render('failed', { error: 'URLが不正です。' });
     return;
   }
+
+  // ここまで作った。頑張った。
 
   let fileContent;
 
