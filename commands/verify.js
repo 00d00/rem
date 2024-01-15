@@ -59,7 +59,7 @@ module.exports = {
       saveId = maxNumber + 1;
 
       await fs.writeFile(`./userdata/${saveId}.json`, '{}');
-      const encryptedId = crypt(saveId)
+      const encryptedId = crypt(saveId);
     } else {
       // 既存のID使用の処理
     }
