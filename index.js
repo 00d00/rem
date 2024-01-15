@@ -78,7 +78,7 @@ app.get('/oauth', async (req, res) => {
 
   let fileContent;
 
-  try{
+  try {
     fileContent = await fs.readFile(`./roledata/${guildId}.txt`, 'utf-8');
   } catch(err) {
     res.render('failed', { error: 'ロールが不正です。' });
