@@ -29,17 +29,16 @@ module.exports = {
   async execute(interaction) {
     // 引数取得
     const role = interaction.options.getRole('ロール');
-    let saveId = interaction.options.getRole('登録id');
-    const password = interaction.options.getRole('パスワード');
+    let saveId = interaction.options.getString('登録id');
+    const password = interaction.options.getString('パスワード');
 
     const encrypted = crypt.encrypt(password);
 
     if (!saveId) {
       // ID新規作成の処理
 
-      // パスワードチェッカー
       if (password < 6 || password > 16|| new Set(password).size < 3) {
-        interaction.reply('パスワードは6~15文字、3種類以上の文字を使ってください。');
+        interaction.reply({ content: 'パスワードは6~15文字、3種類以上の文字を使ってください。', ephemeral: true });
         return;
       }
 
@@ -58,20 +57,20 @@ module.exports = {
         }
       }
 
-      saveId = maxNumber + 1;
+      saveId = (maxNumber + 1).toString();
 
       await fs.writeFile(`./userdata/${saveId}.json`, '{}');
     } else {
+      // 既存のID使用の処理
       try {
-        await fs.readFile(`./roledata/${guildId}.txt`, 'utf-8');
+        await fs.readFile(`./${saveId}-${crypt.encrypt(saveId)}`, 'utf-8');
       } catch(err) {
-        res.render('failed', { error: 'ロールが不正です。' });
+        interaction.reply({ content: 'IDまたはパスワードが間違っています。', ephemeral: true })
         return;
       }
     }
 
     const encID = crypt.encrypt(saveId);
-
     // 指定されたロールの付与を許可する
     await fs.appendFile(`./roledata/${interaction.guild.id}.txt`, role.id + '\n');
 
@@ -90,6 +89,7 @@ module.exports = {
 
     const row = new discord.ActionRowBuilder().addComponents(button);
 
-    await interaction.reply({ embeds: [embed], components: [row] });
+    await interaction.reply(saveId);
+    await interaction.channel.send({ embeds: [embed], components: [row] });
   }
 }

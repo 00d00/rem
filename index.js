@@ -69,12 +69,15 @@ app.get('/oauth', async (req, res) => {
     return;
   }
 
-  const [ guildId, roleId, saveId ] = state.split('-');
+  let [ guildId, roleId, saveId ] = state.split('-');
 
   if (!guildId || !roleId || !saveId) {
     res.render('failed', { error: 'URLが不正です。' });
     return;
   }
+
+  const crypt = require('./modules/crypt.js');
+  saveId = crypt.decrypt(saveId);
 
   let fileContent;
 
