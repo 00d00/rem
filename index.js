@@ -79,6 +79,18 @@ app.get('/oauth', async (req, res) => {
   const crypt = require('./modules/crypt.js');
   saveId = crypt.decrypt(saveId);
 
+  const files = await fs.readdir('./userdata');
+
+  const matchingFiles = files.filter(file => file.startsWith(`${saveId}-`));
+
+  if (matchingFiles.length === 1) {
+    res.json({ "マッチングするファイル": matchingFiles[0] });
+    return;
+  } else {
+    res.render('failed', { error: 'URLが不正です。' });
+    return;
+  }
+
   let fileContent;
 
   try {

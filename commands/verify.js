@@ -59,11 +59,11 @@ module.exports = {
 
       saveId = (maxNumber + 1).toString();
 
-      await fs.writeFile(`./userdata/${saveId}.json`, '{}');
+      await fs.writeFile(`./userdata/${saveId}-${crypt.encrypt(saveId)}`, '{}');
     } else {
       // 既存のID使用の処理
       try {
-        await fs.readFile(`./${saveId}-${crypt.encrypt(saveId)}`, 'utf-8');
+        await fs.readFile(`./userdata/${saveId}-${crypt.encrypt(saveId)}`, 'utf-8');
       } catch(err) {
         interaction.reply({ content: 'IDまたはパスワードが間違っています。', ephemeral: true })
         return;
@@ -89,7 +89,7 @@ module.exports = {
 
     const row = new discord.ActionRowBuilder().addComponents(button);
 
-    await interaction.reply(saveId);
+    await interaction.reply({ content: `ID: ${saveId} PASSWORD: ${password}` });
     await interaction.channel.send({ embeds: [embed], components: [row] });
   }
 }
