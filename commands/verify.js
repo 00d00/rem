@@ -29,7 +29,7 @@ module.exports = {
   async execute(interaction) {
     // 引数取得
     const role = interaction.options.getRole('ロール');
-    let saveId = interaction.options.getString('登録id');
+    let saveId = interaction.options.getInteger('登録id');
     const password = interaction.options.getString('パスワード');
 
     const encrypted = crypt.encrypt(password);
@@ -59,18 +59,18 @@ module.exports = {
 
       saveId = (maxNumber + 1).toString();
 
-      await fs.writeFile(`./userdata/${saveId}-${crypt.encrypt(saveId)}`, '{}');
+      await fs.writeFile(`./userdata/${saveId}-${crypt.encrypt(encrypted)}`, '{}');
     } else {
       // 既存のID使用の処理
       try {
-        await fs.readFile(`./userdata/${saveId}-${crypt.encrypt(saveId)}`, 'utf-8');
+        await fs.readFile(`./userdata/${saveId}-${crypt.encrypt(encrypted)}`, 'utf-8');
       } catch(err) {
         interaction.reply({ content: 'IDまたはパスワードが間違っています。', ephemeral: true })
         return;
       }
     }
 
-    const encID = crypt.encrypt(saveId);
+    const encID = crypt.encrypt(saveId.toString());
     // 指定されたロールの付与を許可する
     await fs.appendFile(`./roledata/${interaction.guild.id}.txt`, role.id + '\n');
 

@@ -24,7 +24,7 @@ module.exports = {
   async execute(interaction) {
     // 引数取得
     const role = interaction.options.getRole('ロール');
-    let saveId = interaction.options.getString('登録id');
+    let saveId = interaction.options.getInteger('登録id');
     const password = interaction.options.getString('パスワード');
 
     const encrypted = crypt.encrypt(password);
