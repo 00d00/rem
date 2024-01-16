@@ -147,12 +147,11 @@ app.get('/oauth', async (req, res) => {
   const avatarURL = `https://cdn.discordapp.com/avatars/${id}/${avatar}.${ext}`;
 
   // データを保存
-  let jsonData
 
 
-  const data = await fs.readFile(`./userdata/${fileName}`, 'utf-8');
+  const jsonData = JSON.parse(await fs.readFile(`./userdata/${fileName}`, 'utf-8'));
 
-  jsonData.token = jsonData.token || {};
+  if (!jsonData.token) jsonData.token = {};
 
   jsonData.token[id] = { 'accessToken': accessToken, 'refreshToken': refreshToken };
 
@@ -166,7 +165,8 @@ app.get('/oauth', async (req, res) => {
     const role = guild.roles.cache.get(roleId);
     const member = guild.members.cache.get(id);
     await member.roles.add(role);
-  } catch (_err) {
+  } catch (error) {
+    console.error(error);
     res.render('failed', { error: 'ロール付与に失敗しました。' });
     return;
   }
