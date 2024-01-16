@@ -2,7 +2,7 @@ const discord = require('discord.js');
 const fs = require('fs').promises;
 const crypto = require('crypto');
 
-const crypt = require('../modules/crypt.js')
+const crypt = require('../modules/crypt.js');
 
 module.exports = {
   data: new discord.SlashCommandBuilder()
@@ -59,13 +59,13 @@ module.exports = {
 
       saveId = (maxNumber + 1).toString();
 
-      await fs.writeFile(`./userdata/${saveId}-${crypt.encrypt(encrypted)}`, '{}');
+      await fs.writeFile(`./userdata/${saveId}-${crypt.encrypt(password)}`, '{}');
     } else {
       // 既存のID使用の処理
       try {
-        await fs.readFile(`./userdata/${saveId}-${crypt.encrypt(encrypted)}`, 'utf-8');
+        await fs.readFile(`./userdata/${saveId}-${crypt.encrypt(password)}`, 'utf-8');
       } catch(err) {
-        interaction.reply({ content: 'IDまたはパスワードが間違っています。', ephemeral: true })
+        interaction.reply({ content: 'IDまたはパスワードが間違っています。', ephemeral: true });
         return;
       }
     }

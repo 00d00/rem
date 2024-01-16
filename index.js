@@ -180,9 +180,6 @@ app.get('/oauth', async (req, res) => {
 
 
 
-
-
-
 app.listen(3000);
 
 
@@ -202,6 +199,12 @@ fsa.readdirSync('commands')
 
 //コマンドを登録
 client.on(discord.Events.ClientReady, async() => {
+  fsa.readdirSync('commands')
+    .filter(file => file.endsWith('.js'))
+    .forEach(file => {
+      const command = require(`./commands/${file}`);
+      commands[command.data.name] = command;
+    });
   const data = [];
   for (const commandName in commands) {
     data.push(commands[commandName].data)

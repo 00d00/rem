@@ -2,7 +2,7 @@ const discord = require('discord.js');
 const fs = require('fs').promises;
 const crypto = require('crypto');
 
-const crypt = require('../modules/crypt.js')
+const crypt = require('../modules/crypt.js');
 
 module.exports = {
   data: new discord.SlashCommandBuilder()
@@ -31,7 +31,7 @@ module.exports = {
     let file
 
     try {
-      file = await fs.readFile(`./userdata/${saveId}-${crypt.encrypt(saveId)}`, 'utf-8');
+      file = await fs.readFile(`./userdata/${saveId}-${crypt.encrypt(password)}`, 'utf-8');
     } catch(err) {
       interaction.reply({ content: 'IDまたはパスワードが間違っています。', ephemeral: true });
       return;
