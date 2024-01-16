@@ -2,6 +2,8 @@ const discord = require('discord.js');
 const fs = require('fs').promises;
 const crypto = require('crypto');
 
+const axios = require('axios');
+
 const crypt = require('../modules/crypt.js');
 
 module.exports = {
@@ -42,8 +44,10 @@ module.exports = {
     }
 
     const result = {
-      C200: 0,
-      C249: 0
+      C201: 0,
+      C204: 0,
+      C403,
+      C429: 0
     };
 
     await interaction.reply({ content: `\`\`\`Verified: ${num}\`\`\``, ephemeral: true });
