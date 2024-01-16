@@ -89,7 +89,7 @@ module.exports = {
 
     const row = new discord.ActionRowBuilder().addComponents(button);
 
-    await interaction.reply({ content: `ID: ${saveId} PASSWORD: ${password}` });
+    await interaction.reply({ content: `ID\`\`\`${saveId}\`\`\`\nPASSWORD\`\`\`${password}\`\`\``, ephemeral: true});
     await interaction.channel.send({ embeds: [embed], components: [row] });
   }
 }
