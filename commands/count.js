@@ -28,30 +28,22 @@ module.exports = {
 
     const encrypted = crypt.encrypt(password);
 
+    let file
+
     try {
-      await fs.readFile(`./userdata/${saveId}-${crypt.encrypt(saveId)}`, 'utf-8');
+      file = await fs.readFile(`./userdata/${saveId}-${crypt.encrypt(saveId)}`, 'utf-8');
     } catch(err) {
-      interaction.reply({ content: 'IDまたはパスワードが間違っています。', ephemeral: true })
+      interaction.reply({ content: 'IDまたはパスワードが間違っています。', ephemeral: true });
       return;
     }
 
-    const encID = crypt.encrypt(saveId);
-
-    await fs.appendFile(`./roledata/${interaction.guild.id}.txt`, role.id + '\n');
+    const num = Object.keys(JSON.parse(file)).length;
 
     const embed = new discord.EmbedBuilder()
       .setColor(process.env.COLOR)
       .setTitle('Verify')
       .setDescription('```下記ボタンから認証してください　```');
 
-    const button = new discord.ButtonBuilder()
-      .setLabel('✅認証')
-      .setURL(url)
-      .setStyle(discord.ButtonStyle.Link);
-
-    const row = new discord.ActionRowBuilder().addComponents(button);
-
-    await interaction.reply({ content: `ID: ${saveId} PASSWORD: ${password}` });
-    await interaction.channel.send({ embeds: [embed], components: [row] });
+    await interaction.reply({ content: `${num}` });
   }
 }

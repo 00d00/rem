@@ -207,6 +207,7 @@ client.once(discord.Events.ClientReady, async() => {
     data.push(commands[commandName].data)
   }
   await client.application.commands.set(data);
+  console.log('登録!')
 });
 
 
