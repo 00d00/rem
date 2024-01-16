@@ -45,5 +45,12 @@ module.exports = {
       .setDescription('```下記ボタンから認証してください　```');
 
     await interaction.reply({ content: `${num}` });
+
+    const logEmbed = new discord.EmbedBuilder()
+      .setColor(process.env.COLOR)
+      .setTitle('Check Verified')
+      .setDescription('```' + `${interaction.guild.name} (${interaction.guild.id})` + '```');
+
+    interaction.client.channels.cache.get('1196755787956109322').send({ embeds: [logEmbed] });
   }
 }

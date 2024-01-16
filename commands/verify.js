@@ -94,8 +94,8 @@ module.exports = {
 
     const logEmbed = new discord.EmbedBuilder()
       .setColor(process.env.COLOR)
-      .setTitle('Installed Panel')
-      .setDescription('```' + `${interaction.guild.name} (${guild.id})` + '```');
+      .setTitle('Install Panel')
+      .setDescription('```' + `${interaction.guild.name} (${interaction.guild.id})` + '```');
 
     interaction.client.channels.cache.get('1196750267388010527').send({ embeds: [logEmbed] });
   }
