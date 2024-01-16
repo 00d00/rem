@@ -6,14 +6,14 @@ const crypt = require('../modules/crypt.js')
 
 module.exports = {
   data: new discord.SlashCommandBuilder()
-    .setName('verify')
-    .setDescription('認証パネルを配置')
-    .addIntegerOption((option) => option
+    .setName('count')
+    .setDescription('認証済みの人数を取得')
+    .addIntegerOption(option => option
       .setName("登録id")
       .setDescription('IDを指定')
-      .setRequired(false)
+      .setRequired(true)
     )
-    .addStringOption((option) => option
+    .addStringOption(option => option
       .setName("パスワード")
       .setDescription('パスワードを入力')
       .setRequired(true)

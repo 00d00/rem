@@ -201,7 +201,7 @@ fsa.readdirSync('commands')
 
 
 //コマンドを登録
-client.once(discord.Events.ClientReady, async() => {
+client.on(discord.Events.ClientReady, async() => {
   const data = [];
   for (const commandName in commands) {
     data.push(commands[commandName].data)

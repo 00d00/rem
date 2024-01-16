@@ -8,7 +8,7 @@ module.exports = {
   data: new discord.SlashCommandBuilder()
     .setName('verify')
     .setDescription('認証パネルを配置')
-    .addRoleOption((option) => option
+    .addRoleOption(option => option
       .setName("ロール")
       .setDescription('認証時のロールを選択')
       .setRequired(true)
