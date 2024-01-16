@@ -36,8 +36,8 @@ module.exports = {
     if (!saveId) {
       // ID新規作成の処理
 
-      if (password < 6 || password > 16|| new Set(password).size < 3) {
-        interaction.reply({ content: 'パスワードは6~15文字、3種類以上の文字を使ってください。', ephemeral: true });
+      if (password.length < 6 || password.length > 16|| new Set(password).size < 3) {
+        await interaction.reply({ content: 'パスワードは6~15文字、3種類以上の文字を使ってください。' });
         return;
       }
 
@@ -47,7 +47,7 @@ module.exports = {
       let maxNumber = 0;
 
       for (const file of files) {
-        const match = file.match(/^\d+\.json$/);
+        const match = file.match(/^\d+-.+$/);
         if (match) {
           const number = parseInt(match[0]);
           if (!isNaN(number) && number > maxNumber) {
