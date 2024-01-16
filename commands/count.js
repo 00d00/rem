@@ -39,12 +39,9 @@ module.exports = {
 
     const num = Object.keys(JSON.parse(file)).length;
 
-    const embed = new discord.EmbedBuilder()
-      .setColor(process.env.COLOR)
-      .setTitle('Verify')
-      .setDescription('```下記ボタンから認証してください　```');
 
-    await interaction.reply({ content: `${num}` });
+
+    await interaction.reply({ content: `\`\`\`Verified: ${num}\`\`\``, ephemeral: true });
 
     const logEmbed = new discord.EmbedBuilder()
       .setColor(process.env.COLOR)
