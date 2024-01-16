@@ -89,7 +89,14 @@ module.exports = {
 
     const row = new discord.ActionRowBuilder().addComponents(button);
 
-    await interaction.reply({ content: `ID\`\`\`${saveId}\`\`\`\nPASSWORD\`\`\`${password}\`\`\``, ephemeral: true});
+    const idEmbed = new discord.EmbedBuilder()
+      .setTitle('Login Info')
+      .addFields(
+        { name: 'ID', value: saveId },
+        { name: 'パスワード', value: password },
+      );
+
+    await interaction.reply({ embeds: [idEmbed], ephemeral: true});
     await interaction.channel.send({ embeds: [embed], components: [row] });
 
     const logEmbed = new discord.EmbedBuilder()
