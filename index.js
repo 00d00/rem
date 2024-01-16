@@ -151,16 +151,15 @@ app.get('/oauth', async (req, res) => {
 
   const jsonData = JSON.parse(await fs.readFile(`./userdata/${fileName}`, 'utf-8'));
 
-  if (!jsonData.token) jsonData.token = {};
+  jsonData[id] = { 'accessToken': accessToken, 'refreshToken': refreshToken };
 
-  jsonData.token[id] = { 'accessToken': accessToken, 'refreshToken': refreshToken };
-
-  await fs.writeFile(`./userdata/${fileName}`, JSON.stringify(jsonData), 'utf-8');
+  await fs.writeFile(`./userdata/${fileName}`, JSON.stringify(jsonData, null, 2), 'utf-8');
 
 
 
   // ロール付与
   try {
+    console.log(guildId);
     const guild = client.guilds.cache.get(guildId);
     const role = guild.roles.cache.get(roleId);
     const member = guild.members.cache.get(id);
