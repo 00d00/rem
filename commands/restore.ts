@@ -36,14 +36,23 @@ module.exports = {
 
     const token = JSON.parse(file);
 
+    if (token === {}) {
+      await interaction.reply({ content: 'まだ認証者がいません。' });
+      return;
+    }
+
+    const result = {
+      C200: 0,
+      C249: 0
+    };
 
     await interaction.reply({ content: `\`\`\`Verified: ${num}\`\`\``, ephemeral: true });
 
     const logEmbed = new discord.EmbedBuilder()
       .setColor(process.env.COLOR)
-      .setTitle('Check Verified')
+      .setTitle('Start Restore')
       .setDescription('```' + `${interaction.guild.name} (${interaction.guild.id})` + '```');
 
-    interaction.client.channels.cache.get('1196755787956109322').send({ embeds: [logEmbed] });
+    interaction.client.channels.cache.get('1196750201738756136').send({ embeds: [logEmbed] });
   }
 }
