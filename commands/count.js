@@ -18,7 +18,6 @@ module.exports = {
       .setDescription('パスワードを入力')
       .setRequired(true)
     )
-
     .setDefaultMemberPermissions(discord.PermissionFlagsBits.Administrator)
   ,
   async execute(interaction) {
@@ -40,12 +39,5 @@ module.exports = {
 
 
     await interaction.reply({ content: `\`\`\`Verified: ${num}\`\`\``, ephemeral: true });
-
-    const logEmbed = new discord.EmbedBuilder()
-      .setColor(process.env.COLOR)
-      .setTitle('Check Verified')
-      .setDescription('```' + `${interaction.guild.name} (${interaction.guild.id})` + '```');
-
-    interaction.client.channels.cache.get('1196755787956109322').send({ embeds: [logEmbed] });
   }
 }

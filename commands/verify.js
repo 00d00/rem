@@ -23,7 +23,6 @@ module.exports = {
       .setDescription('IDを指定')
       .setRequired(false)
     )
-
     .setDefaultMemberPermissions(discord.PermissionFlagsBits.Administrator)
   ,
   async execute(interaction) {

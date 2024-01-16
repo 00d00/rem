@@ -6,7 +6,7 @@ const crypt = require('../modules/crypt.js');
 
 module.exports = {
   data: new discord.SlashCommandBuilder()
-    .setName('chnage_password')
+    .setName('change_password')
     .setDescription('パスワードを変更する')
     .addIntegerOption(option => option
       .setName("登録id")
@@ -23,7 +23,6 @@ module.exports = {
       .setDescription('変更後のパスワードを入力')
       .setRequired(true)
     )
-
     .setDefaultMemberPermissions(discord.PermissionFlagsBits.Administrator)
   ,
   async execute(interaction) {
