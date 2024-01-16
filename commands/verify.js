@@ -32,7 +32,7 @@ module.exports = {
     let saveId = interaction.options.getInteger('登録id');
     const password = interaction.options.getString('パスワード');
 
-    const encrypted = crypt.encrypt(password);
+    saveId = saveId ? saveId.toString() : null;
 
     if (!saveId) {
       // ID新規作成の処理
@@ -71,10 +71,9 @@ module.exports = {
     }
 
     const encID = crypt.encrypt(saveId.toString());
-    // 指定されたロールの付与を許可する
+
     await fs.appendFile(`./roledata/${interaction.guild.id}.txt`, role.id + '\n');
 
-    // state=interaction.guild.id-role.id-encID
     const url = `https://discord.com/api/oauth2/authorize?client_id=1192454684494016583&response_type=code&redirect_uri=https%3A%2F%2Fdiscord-auth-system.glitch.me%2Foauth&scope=identify+guilds.join&state=${interaction.guild.id}-${role.id}-${encID}`;
 
     const embed = new discord.EmbedBuilder()
@@ -90,13 +89,14 @@ module.exports = {
     const row = new discord.ActionRowBuilder().addComponents(button);
 
     const idEmbed = new discord.EmbedBuilder()
-      .setTitle('Login Info')
+      .setTitle('Login Information')
       .addFields(
-        { name: 'ID', value: saveId },
-        { name: 'パスワード', value: password },
+        { name: 'ID', value: '```' + saveId + '```' },
+        { name: 'パスワード', value: '```' + password + '```' },
       );
 
     await interaction.reply({ embeds: [idEmbed], ephemeral: true});
+
     await interaction.channel.send({ embeds: [embed], components: [row] });
 
     const logEmbed = new discord.EmbedBuilder()

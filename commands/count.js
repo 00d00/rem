@@ -26,8 +26,6 @@ module.exports = {
     let saveId = interaction.options.getInteger('登録id');
     const password = interaction.options.getString('パスワード');
 
-    const encrypted = crypt.encrypt(password);
-
     let file
 
     try {
