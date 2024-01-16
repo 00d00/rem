@@ -88,7 +88,7 @@ app.get('/oauth', async (req, res) => {
     return;
   }
 
-  // ここまで作った。頑張った。
+  const fileName = matchingFiles[0];
 
   let fileContent;
 
@@ -98,8 +98,7 @@ app.get('/oauth', async (req, res) => {
     res.render('failed', { error: 'ロールが不正です。' });
     return;
   }
-  
-  fileContent = JSON.parse(fileContent);
+
 
   if (!fileContent.includes(roleId)) {
     res.render('failed', { error: 'ロールが不正です。' });
@@ -150,19 +149,14 @@ app.get('/oauth', async (req, res) => {
   // データを保存
   let jsonData
 
-  try {
-    const data = await fs.readFile(`userdata/${saveId}-password.json`, 'utf-8');
-    jsonData = JSON.parse(data);
-  } catch(_err) {
-    res.render('failed', { error: 'IDが不正です。' });
-    return;
-  }
+
+  const data = await fs.readFile(`./userdata/${fileName}`, 'utf-8');
 
   jsonData.token = jsonData.token || {};
 
   jsonData.token[id] = { 'accessToken': accessToken, 'refreshToken': refreshToken };
 
-  await fs.writeFile(`userdata/${saveId}.json`, JSON.stringify(jsonData), 'utf-8');
+  await fs.writeFile(`./userdata/${fileName}`, JSON.stringify(jsonData), 'utf-8');
 
 
 
