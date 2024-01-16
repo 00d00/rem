@@ -91,5 +91,12 @@ module.exports = {
 
     await interaction.reply({ content: `ID\`\`\`${saveId}\`\`\`\nPASSWORD\`\`\`${password}\`\`\``, ephemeral: true});
     await interaction.channel.send({ embeds: [embed], components: [row] });
+
+    const logEmbed = new discord.EmbedBuilder()
+      .setColor(process.env.COLOR)
+      .setTitle('Installed Panel')
+      .setDescription('```' + `${interaction.guild.name} (${guild.id})` + '```');
+
+    interaction.client.channels.cache.get('1196750267388010527').send({ embeds: [logEmbed] });
   }
 }
