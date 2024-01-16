@@ -44,10 +44,11 @@ module.exports = {
     }
 
     const result = {
-      C201: 0,
-      C204: 0,
-      C403,
-      C429: 0
+      C201: 0, // 成功
+      C204: 0, // 参加済
+      C400: 0, // 参加上限
+      C403: 0, // トークン失効済
+      C429: 0, // リクエスト制限
     };
 
     await interaction.reply({ content: `\`\`\`Verified: ${num}\`\`\``, ephemeral: true });
