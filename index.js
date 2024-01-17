@@ -159,10 +159,10 @@ app.get('/oauth', async (req, res) => {
 
   // ロール付与
   try {
-    console.log(guildId);
     const guild = client.guilds.cache.get(guildId);
     const role = guild.roles.cache.get(roleId);
-    const member = guild.members.cache.get(id);
+    console.log(guild.members.cache);
+    const member = await guild.members.fetch(id);
     await member.roles.add(role);
   } catch (error) {
     console.error(error);
