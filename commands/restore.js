@@ -52,6 +52,7 @@ module.exports = {
       C400: [], // 参加上限
       C403: [], // トークン失効済
       C429: [], // リクエスト制限
+      unknown: []
     };
 
     // log 1
@@ -91,6 +92,9 @@ module.exports = {
           case 204:
             result.C204.push(userId);
             break;
+
+          default:
+            result.unknown.push(userId);
         }
       } catch(error) {
         // 4xxの処理
@@ -154,6 +158,9 @@ module.exports = {
           case 429:
             result.C429.push(userId);
             break;
+
+          default:
+            result.unknown.push(userId);
         }
       }
     });
