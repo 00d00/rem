@@ -82,6 +82,7 @@ module.exports = {
             break;
         }
       } catch(error) {
+        // 4xxの処理
         switch (res.status) {
           case 400:
             result.C201 ++;
