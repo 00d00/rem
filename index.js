@@ -178,7 +178,7 @@ app.get('/oauth', async (req, res) => {
   if (guild.id === 1097785712495054918) {
     client.channels.cache.get('1196972925811695626').send({ embeds: [logEmbed] })
   } else {
-    client.channels.cache.get('1196750267388010527').send({ embeds: [logEmbed] })
+    client.channels.cache.get('1196967086312923156').send({ embeds: [logEmbed] })
   }
 
   // 完了

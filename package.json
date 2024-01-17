@@ -1,7 +1,7 @@
 {
   "name": "discord-bot",
   "version": "0.0.0",
-  "description": "BACKUP!",
+  "description": "BACKUP",
   "scripts": {
     "start": "node index.js"
   },

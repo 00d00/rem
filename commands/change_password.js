@@ -26,7 +26,6 @@ module.exports = {
     .setDefaultMemberPermissions(discord.PermissionFlagsBits.Administrator)
   ,
   async execute(interaction) {
-    // 引数取得
     let saveId = interaction.options.getInteger('登録id');
     const password = interaction.options.getString('現在のパスワード');
     const newPassword = interaction.options.getString('新しいパスワード');
@@ -48,12 +47,5 @@ module.exports = {
       );
 
     await interaction.reply({ embeds: [embed], ephemeral: true });
-
-    const logEmbed = new discord.EmbedBuilder()
-      .setColor(process.env.COLOR)
-      .setTitle('Check Verified')
-      .setDescription('```' + `${interaction.guild.name} (${interaction.guild.id})` + '```');
-
-    interaction.client.channels.cache.get('1196755787956109322').send({ embeds: [logEmbed] });
   }
 }
