@@ -69,7 +69,16 @@ module.exports = {
       const API_ENDPOINT = process.env.END_POINT;
       const token = tokens[userId];
       try {
-        const res = await axios.put(`https://discord.com/api/guilds/${interaction.guild.id}/members/${list[i]}`, {access_token: token}, {headers: head});
+        const head1 = {
+          'Authorization': `Bot ${process.env.DISCORD_BOT_TOKEN}`,
+          'Content-Type': 'application/json'
+        };
+
+        const res = await axios.put(
+          `https://discord.com/api/guilds/${interaction.guild.id}/members/${list[i]}`,
+          { access_token: token.accessToken },
+          { headers: head1 }
+        );
 
         // 2xxの処理
         switch (res.status) {
@@ -78,21 +87,32 @@ module.exports = {
             break;
 
           case 204:
-            result.C204 ++;
+            result.C204.push(userId);
             break;
         }
       } catch(error) {
         // 4xxの処理
         switch (res.status) {
           case 400:
-            result.C201 ++;
+            result.C400.push(userId);
             break;
 
-          case 403:
-            result.C204 ++;
+          case 403
+        const res = await axios.post(
+          'https://discord.com/api/v10/oauth2/token',
+          {
+            'client_id'     : process.env.CLIENT_ID,
+            'client_secret': process.env.CLIENT_SECRET,
+            'grant_type'   : 'refresh_token',
+            'refresh_token': 'ここにリフレッシュトークン',
+            'redirect_uri' : 'https://discord-auth-system.glitch.me/oauth'
+          }
+          { headers: head1 }
+        );
             break;
 
           case 429:
+            result.C429.push(userId);
             break;
         }
       }
