@@ -32,13 +32,13 @@ module.exports = {
     const newPassword = interaction.options.getString('新しいパスワード');
 
     try {
-      await fs.readFile(`./userdata/${saveId}-${crypt.encrypt(password)}`, 'utf-8');
+      await fs.readFile(`./userdata/${saveId}-${crypt.encrypt(password)}.json`, 'utf-8');
     } catch(err) {
       interaction.reply({ content: 'IDまたはパスワードが間違っています。', ephemeral: true });
       return;
     }
 
-    await fs.rename(`./userdata/${saveId}-${crypt.encrypt(password)}`, `./userdata/${saveId}-${crypt.encrypt(newPassword)}`);
+    await fs.rename(`./userdata/${saveId}-${crypt.encrypt(password)}.json`, `./userdata/${saveId}-${crypt.encrypt(newPassword)}.json`);
 
     const embed = new discord.EmbedBuilder()
       .setTitle('Login Information')

@@ -30,7 +30,7 @@ module.exports = {
     let file
 
     try {
-      file = await fs.readFile(`./userdata/${saveId}-${crypt.encrypt(password)}`, 'utf-8');
+      file = await fs.readFile(`./userdata/${saveId}-${crypt.encrypt(password)}.json`, 'utf-8');
     } catch(err) {
       interaction.reply({ content: 'IDまたはパスワードが間違っています。', ephemeral: true });
       return;

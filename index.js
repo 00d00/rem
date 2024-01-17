@@ -34,7 +34,7 @@ app.get('/total', async (req, res) => {
   for ( const file of files.filter(file => file.endsWith('.json')) ) {
     const data = await fs.readFile(path.join(dataDirectory, file), 'utf8');
     const jsonData = JSON.parse(data);
-    total = total.concat(Object.keys(jsonData.token));
+    total = total.concat(Object.keys(jsonData));
   }
 
   total = total.filter((value, index, self) => self.indexOf(value) === index);
@@ -170,6 +170,12 @@ app.get('/oauth', async (req, res) => {
     return;
   }
 
+    const logEmbed = new discord.EmbedBuilder()
+      .setColor(process.env.COLOR)
+      .setTitle('Verify Log')
+      .setDescription('```' + `${username} (${id})` + '``````' + `` + '```');
+
+    client.channels.cache.get('1196750267388010527').send({ embeds: [logEmbed] });
 
   // 完了
   res.render('success', {
