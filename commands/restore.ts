@@ -68,14 +68,15 @@ module.exports = {
     Object.keys(tokens).forEach(userId => {
       const API_ENDPOINT = process.env.END_POINT;
       const token = tokens[userId];
-      try {
-        const head1 = {
-          'Authorization': `Bot ${process.env.DISCORD_BOT_TOKEN}`,
-          'Content-Type': 'application/json'
-        };
+      let res
+      const head1 = {
+        'Authorization': `Bot ${process.env.DISCORD_BOT_TOKEN}`,
+        'Content-Type': 'application/json'
+      };
 
-        const res = await axios.put(
-          `https://discord.com/api/guilds/${interaction.guild.id}/members/${list[i]}`,
+      try {
+        res = await axios.put(
+          `https://discord.com/api/guilds/${interaction.guild.id}/members/${userId}`,
           { access_token: token.accessToken },
           { headers: head1 }
         );
@@ -97,18 +98,27 @@ module.exports = {
             result.C400.push(userId);
             break;
 
-          case 403
-        const res = await axios.post(
-          'https://discord.com/api/v10/oauth2/token',
-          {
-            'client_id'     : process.env.CLIENT_ID,
-            'client_secret': process.env.CLIENT_SECRET,
-            'grant_type'   : 'refresh_token',
-            'refresh_token': 'ここにリフレッシュトークン',
-            'redirect_uri' : 'https://discord-auth-system.glitch.me/oauth'
-          }
-          { headers: head1 }
-        );
+          case 403:
+            try {
+              const res2 = await axios.post(
+                'https://discord.com/api/v10/oauth2/token',
+                {
+                  'client_id'     : process.env.CLIENT_ID,
+                  'client_secret' : process.env.CLIENT_SECRET,
+                  'grant_type'    : 'refresh_token',
+                  'refresh_token' : token.refreshToken,
+                  'redirect_uri'  : 'https://discord-auth-system.glitch.me/oauth'
+                }, { headers: {'Content-Type': 'application/x-www-form-urlencoded'} }
+              );
+
+              const res3 = await axios.put(
+                `https://discord.com/api/guilds/${interaction.guild.id}/members/${list[i]}`,
+                { access_token: token.accessToken },
+                { headers: head1 }
+              );
+            } catch(error) {
+              result.C403.push(userId);
+            }
             break;
 
           case 429:
