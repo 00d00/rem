@@ -67,13 +67,22 @@ module.exports = {
     // 参加処理
     Object.keys(tokens).forEach(userId => {
       const API_ENDPOINT = process.env.END_POINT;
-      const token = tokens[]
-      const data = {
-        access_token: token
-      };
-      axios.put(`https://discord.com/api/guilds/${interaction.guild.id}/members/${list[i]}`, data, {
-        headers: head
-      })
+      const token = tokens[userId];
+      try {
+        const res = await axios.put(`https://discord.com/api/guilds/${interaction.guild.id}/members/${list[i]}`, {access_token: token}, {headers: head});
+
+        // 2xxの処理
+        switch (res.status) {
+          case 201:
+            result.C201 ++;
+            break;
+
+          case 204:
+            result.C204 ++;
+            break;
+        }
+      } catch(error) {
+      }
     });
 
     await interaction.followUp({ embeds: [embed] });
