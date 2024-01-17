@@ -6,7 +6,7 @@ const axios = require('axios');
 
 const crypt = require('../modules/crypt.js');
 
-const wait = (ms) => return new Promise( resolve => setTimeout(() => resolve(), ms) );
+const wait = (ms) => new Promise( resolve => setTimeout(() => resolve(), ms) );
 
 module.exports = {
   data: new discord.SlashCommandBuilder()
@@ -65,7 +65,7 @@ module.exports = {
     await interaction.reply({ content: `処理開始`, ephemeral: true});
 
     // 参加処理
-    Object.keys(tokens).forEach(userId => {
+    Object.keys(tokens).forEach(async userId => {
       const API_ENDPOINT = process.env.END_POINT;
       const token = tokens[userId];
       let res
@@ -99,6 +99,9 @@ module.exports = {
             break;
 
           case 403:
+            let res2;
+            let res3;
+
             try {
               const res2 = await axios.post(
                 'https://discord.com/api/v10/oauth2/token',
@@ -120,8 +123,30 @@ module.exports = {
                 { headers: head1 }
               );
 
+              // 2xxの処理
+              switch (res3.status) {
+                case 201:
+                  result.C201.push(userId);
+                  break;
+
+                case 204:
+                  result.C204.push(userId);
+                  break;
+              }
             } catch(error) {
-              result.C403.push(userId);
+              if (!res3) {
+                result.C403.push(userId);
+              } else {
+                switch (res3.status) {
+                  case 400:
+                    result.C400.push(userId);
+                    break;
+
+                  case 429:
+                    result.C429.push(userId);
+                    break;
+                }
+              }
             }
             break;
 
@@ -132,7 +157,8 @@ module.exports = {
       }
     });
 
-    await interaction.followUp({ embeds: [embed] });
+    //await interaction.followUp({ embeds: [embed] });
+    await interaction.followUp(JSON.stringify(result));
 
     // log 2
     const endEmbed = new discord.EmbedBuilder()
