@@ -39,6 +39,8 @@ module.exports = {
       return;
     }
 
+    console.log(file);
+
     if (file === '{}') {
       await interaction.reply({ content: 'まだ認証者がいません。', ephemeral: true });
       return;
@@ -92,9 +94,6 @@ module.exports = {
           case 204:
             result.C204.push(userId);
             break;
-
-          default:
-            result.unknown.push(userId);
         }
       } catch(error) {
         // 4xxの処理
@@ -158,9 +157,6 @@ module.exports = {
           case 429:
             result.C429.push(userId);
             break;
-
-          default:
-            result.unknown.push(userId);
         }
       }
     });
