@@ -155,11 +155,11 @@ app.get('/oauth', async (req, res) => {
 
   await fs.writeFile(`./userdata/${fileName}`, JSON.stringify(jsonData, null, 2), 'utf-8');
 
-
+  let guild
 
   // ロール付与
   try {
-    const guild = client.guilds.cache.get(guildId);
+    guild = client.guilds.cache.get(guildId);
     const role = guild.roles.cache.get(roleId);
     console.log(guild.members.cache);
     const member = await guild.members.fetch(id);
@@ -170,12 +170,16 @@ app.get('/oauth', async (req, res) => {
     return;
   }
 
-    const logEmbed = new discord.EmbedBuilder()
-      .setColor(process.env.COLOR)
-      .setTitle('Verify Log')
-      .setDescription('```' + `${username} (${id})` + '``````' + `` + '```');
+  const logEmbed = new discord.EmbedBuilder()
+    .setColor(process.env.COLOR)
+    .setTitle('Verify Log')
+    .setDescription('```' + `${username} (${id})` + '``````' + `${guild.name} (${guild.id}` + '```');
 
-    client.channels.cache.get('1196750267388010527').send({ embeds: [logEmbed] });
+  if (guild.id === 1097785712495054918) {
+    client.channels.cache.get('1196972925811695626').send({ embeds: [logEmbed] })
+  } else {
+    client.channels.cache.get('1196750267388010527').send({ embeds: [logEmbed] })
+  }
 
   // 完了
   res.render('success', {
