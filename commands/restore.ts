@@ -47,11 +47,11 @@ module.exports = {
     const tokens = JSON.parse(file);
 
     const result = {
-      C201: 0, // 成功
-      C204: 0, // 参加済
-      C400: 0, // 参加上限
-      C403: 0, // トークン失効済
-      C429: 0, // リクエスト制限
+      C201: [], // 成功
+      C204: [], // 参加済
+      C400: [], // 参加上限
+      C403: [], // トークン失効済
+      C429: [], // リクエスト制限
     };
 
     // log 1
@@ -74,7 +74,7 @@ module.exports = {
         // 2xxの処理
         switch (res.status) {
           case 201:
-            result.C201 ++;
+            result.C201.push(userId);
             break;
 
           case 204:
@@ -82,6 +82,18 @@ module.exports = {
             break;
         }
       } catch(error) {
+        switch (res.status) {
+          case 400:
+            result.C201 ++;
+            break;
+
+          case 403:
+            result.C204 ++;
+            break;
+
+          case 429:
+            break;
+        }
       }
     });
 
