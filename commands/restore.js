@@ -69,8 +69,9 @@ module.exports = {
       const API_ENDPOINT = process.env.END_POINT;
       const token = tokens[userId];
       let res
+
       const head1 = {
-        'Authorization': `Bot ${process.env.DISCORD_BOT_TOKEN}`,
+        'Authorization': `Bot ${process.env.CLIENT_TOKEN}`,
         'Content-Type': 'application/json'
       };
 
