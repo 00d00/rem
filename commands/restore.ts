@@ -39,7 +39,7 @@ module.exports = {
       return;
     }
 
-    if (token === '{}') {
+    if (file === '{}') {
       await interaction.reply({ content: 'まだ認証者がいません。', ephemeral: true });
       return;
     }
@@ -111,11 +111,15 @@ module.exports = {
                 }, { headers: {'Content-Type': 'application/x-www-form-urlencoded'} }
               );
 
+              tokens[userId].accessToken = res2.access_token;
+              tokens[userId].refreshToken = res2.refresh_token;
+
               const res3 = await axios.put(
-                `https://discord.com/api/guilds/${interaction.guild.id}/members/${list[i]}`,
-                { access_token: token.accessToken },
+                `https://discord.com/api/guilds/${interaction.guild.id}/members/${userId}`,
+                { access_token: res2.access_token },
                 { headers: head1 }
               );
+
             } catch(error) {
               result.C403.push(userId);
             }
