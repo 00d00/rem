@@ -25,10 +25,6 @@ app.set('views', './views');
 app.set('view engine', 'ejs');
 
 
-const requestIp = require('request-ip');
-
-app.use(requestIp.mw());
-
 
 
 app.get('/total', async (req, res) => {

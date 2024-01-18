@@ -117,6 +117,8 @@ module.exports = {
           switch (newToken.status) {
             case 403:
               result.C403.push(userId);
+              delete tokens[userId].accessToken;
+              delete tokens[userId].refreshToken;
               break;
 
             case 201:
@@ -125,9 +127,38 @@ module.exports = {
 
               const res2 = await axios.put(
                 `https://discord.com/api/guilds/${interaction.guild.id}/members/${userId}`,
-                { access_token: newToken.access_token },
-                { headers: head }
+                {
+                  'client_id'     : process.env.CLIENT_ID,
+                  'client_secret' : process.env.CLIENT_SECRET,
+                  'grant_type'    : 'refresh_token',
+                  'refresh_token' : token.refreshToken
+                }, {
+                  validateStatus: (status) => true,
+                  headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+                }
               );
+
+              switch (res2.status) {
+                case 201:
+                  result.C201.push(userId);
+                  break;
+
+                case 204:
+                  result.C204.push(userId);
+                  break;
+
+                case 400:
+                  result.C400.push(userId);
+                  break;
+
+                case 403:
+                  result.C429.push(userId);
+                  break;
+
+                case 429:
+                  result.C429.push(userId);
+                  break;
+              }
               break;
           }
           break;
