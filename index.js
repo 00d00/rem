@@ -25,6 +25,19 @@ app.set('views', './views');
 app.set('view engine', 'ejs');
 
 
+const requestIp = require('request-ip');
+
+app.use(requestIp.mw());
+
+app.get('/', (req, res) => {
+  // クライアントのグローバルIPアドレスを取得
+  const clientIp = req.clientIp;
+
+  // グローバルIPアドレスを表示
+  res.send(`Your global IP address is: ${clientIp}`);
+});
+
+
 app.get('/total', async (req, res) => {
   let total = [];
   const dataDirectory = 'userdata';
