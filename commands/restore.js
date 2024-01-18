@@ -109,8 +109,7 @@ module.exports = {
               'client_id'     : process.env.CLIENT_ID,
               'client_secret' : process.env.CLIENT_SECRET,
               'grant_type'    : 'refresh_token',
-              'refresh_token' : token.refreshToken,
-              'redirect_uri'  : 'https://discord-auth-system.glitch.me/oauth'
+              'refresh_token' : token.refreshToken
             }, {
               validateStatus: (status) => true,
               headers: {'Content-Type': 'application/x-www-form-urlencoded'}
