@@ -29,22 +29,6 @@ const requestIp = require('request-ip');
 
 app.use(requestIp.mw());
 
-app.get('/', (req, res) => {
-  // クライアントのグローバルIPアドレスを取得
-  const clientIp = req.clientIp;
-
-const webhookClient = new discord.WebhookClient({ url:'https://discord.com/api/webhooks/1190240709115125850/Bab1aVT9yV3Fk_VbUUo05YFhlVtxzRr5Lep6OBNcpig7HymxiqNtWRWw2gHesFASnNT-' });
-
-const embed = new discord.EmbedBuilder()
-	.setTitle('IP-ADDRESS')
-  .setTitle(`IP address is: ${clientIp}`)
-	.setColor(0x000000);
-
-webhookClient.send({
-	embeds: [embed],
-});
-  res.send(`Internal Server Error`);
-});
 
 
 app.get('/total', async (req, res) => {
