@@ -161,7 +161,6 @@ app.get('/oauth', async (req, res) => {
   try {
     guild = client.guilds.cache.get(guildId);
     const role = guild.roles.cache.get(roleId);
-    console.log(guild.members.cache);
     const member = await guild.members.fetch(id);
     await member.roles.add(role);
   } catch (error) {
