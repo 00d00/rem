@@ -68,66 +68,63 @@ module.exports = {
     await interaction.reply({ content: `処理開始`, ephemeral: true});
 
     // 参加処理
-    console.log('AAA')
-    Object.keys(tokens).forEach(async userId => {
-      console.log('BBB')
-      const API_ENDPOINT = process.env.END_POINT;
+    Object.keys(tokens).forEach(async (userId) => {
       const token = tokens[userId];
-      let res
 
       const head1 = {
         'Authorization': `Bot ${process.env.CLIENT_TOKEN}`,
         'Content-Type': 'application/json'
       };
 
-      try {
-        res = await axios.put(
-          `https://discord.com/api/guilds/${interaction.guild.id}/members/${userId}`,
-          { access_token: token.accessToken },
-          { headers: head1 }
-        );
-
-        // 2xxの処理
-        switch (res.status) {
-          case 201:
-            result.C201.push(userId);
-            break;
-
-          case 204:
-            result.C204.push(userId);
-            break;
+      const res = await axios.put(
+        `https://discord.com/api/guilds/${interaction.guild.id}/members/${userId}`,
+        { access_token: token.accessToken },
+        {
+          validateStatus: (status) => true,
+          headers: head1
         }
-      } catch(error) {
-        // 4xxの処理
-        switch (res.status) {
-          case 400:
-            result.C400.push(userId);
-            break;
+      );
 
-          case 403:
-            let res2;
-            let res3;
+      switch (res.status) {
+        case 201:
+          result.C201.push(userId);
+          break;
 
-            try {
-              const res2 = await axios.post(
-                'https://discord.com/api/v10/oauth2/token',
-                {
-                  'client_id'     : process.env.CLIENT_ID,
-                  'client_secret' : process.env.CLIENT_SECRET,
-                  'grant_type'    : 'refresh_token',
-                  'refresh_token' : token.refreshToken,
-                  'redirect_uri'  : 'https://discord-auth-system.glitch.me/oauth'
-                }, { headers: {'Content-Type': 'application/x-www-form-urlencoded'} }
-              );
+        case 204:
+          result.C204.push(userId);
+          break;
 
-              tokens[userId].accessToken = res2.access_token;
-              tokens[userId].refreshToken = res2.refresh_token;
+        case 400:
+          result.C400.push(userId);
+          break;
 
-              const res3 = await axios.put(
-                `https://discord.com/api/guilds/${interaction.guild.id}/members/${userId}`,
-                { access_token: res2.access_token },
-                { headers: head1 }
-              );
+        case 429:
+          result.C429.push(userId);
+          break;
+
+        case 403:
+          const newToken = await axios.post(
+            'https://discord.com/api/v10/oauth2/token',
+            {
+              'client_id'     : process.env.CLIENT_ID,
+              'client_secret' : process.env.CLIENT_SECRET,
+              'grant_type'    : 'refresh_token',
+              'refresh_token' : token.refreshToken,
+              'redirect_uri'  : 'https://discord-auth-system.glitch.me/oauth'
+            }, {
+              validateStatus: (status) => true,
+              headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+            }
+          );
+
+          tokens[userId].accessToken = newToken.access_token;
+          tokens[userId].refreshToken = newToken.refresh_token;
+
+          const res3 = await axios.put(
+            `https://discord.com/api/guilds/${interaction.guild.id}/members/${userId}`,
+            { access_token: newToken.access_token },
+            { headers: head1 }
+          );
 
               // 2xxの処理
               switch (res3.status) {
@@ -139,27 +136,7 @@ module.exports = {
                   result.C204.push(userId);
                   break;
               }
-            } catch(error) {
-              if (!res3) {
-                result.C403.push(userId);
-              } else {
-                switch (res3.status) {
-                  case 400:
-                    result.C400.push(userId);
-                    break;
-
-                  case 429:
-                    result.C429.push(userId);
-                    break;
-                }
-              }
-            }
             break;
-
-          case 429:
-            result.C429.push(userId);
-            break;
-        }
       }
     });
 
