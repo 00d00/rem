@@ -117,11 +117,17 @@ module.exports = {
           );
 
           switch (newToken.status) {
+            case 403:
+              result.C403.push(userId);
+              break;
+
             case 201:
+              tokens[userId].accessToken = newToken.access_token;
+              tokens[userId].refreshToken = newToken.refresh_token;
+
               break;
           }
-          tokens[userId].accessToken = newToken.access_token;
-          tokens[userId].refreshToken = newToken.refresh_token;
+
 
           const res3 = await axios.put(
             `https://discord.com/api/guilds/${interaction.guild.id}/members/${userId}`,
