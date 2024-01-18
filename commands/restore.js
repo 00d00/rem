@@ -125,18 +125,7 @@ module.exports = {
             { access_token: newToken.access_token },
             { headers: head1 }
           );
-
-              // 2xxの処理
-              switch (res3.status) {
-                case 201:
-                  result.C201.push(userId);
-                  break;
-
-                case 204:
-                  result.C204.push(userId);
-                  break;
-              }
-            break;
+          break;
       }
     });
 
