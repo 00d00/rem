@@ -39,8 +39,6 @@ module.exports = {
       return;
     }
 
-    console.log(file);
-
     if (file === '{}') {
       await interaction.reply({ content: 'まだ認証者がいません。', ephemeral: true });
       return;
@@ -125,17 +123,16 @@ module.exports = {
               tokens[userId].accessToken = newToken.access_token;
               tokens[userId].refreshToken = newToken.refresh_token;
 
+              const res2 = await axios.put(
+                `https://discord.com/api/guilds/${interaction.guild.id}/members/${userId}`,
+                { access_token: newToken.access_token },
+                { headers: head }
+              );
               break;
           }
-
-
-          const res3 = await axios.put(
-            `https://discord.com/api/guilds/${interaction.guild.id}/members/${userId}`,
-            { access_token: newToken.access_token },
-            { headers: head }
-          );
           break;
       }
+      await wait(1000);
     });
 
     //await interaction.followUp({ embeds: [embed] });
