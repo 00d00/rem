@@ -68,7 +68,9 @@ module.exports = {
     await interaction.reply({ content: `処理開始`, ephemeral: true});
 
     // 参加処理
+    console.log('AAA')
     Object.keys(tokens).forEach(async userId => {
+      console.log('BBB')
       const API_ENDPOINT = process.env.END_POINT;
       const token = tokens[userId];
       let res
