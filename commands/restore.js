@@ -71,7 +71,7 @@ module.exports = {
     Object.keys(tokens).forEach(async (userId) => {
       const token = tokens[userId];
 
-      const head1 = {
+      const head = {
         'Authorization': `Bot ${process.env.CLIENT_TOKEN}`,
         'Content-Type': 'application/json'
       };
@@ -81,7 +81,7 @@ module.exports = {
         { access_token: token.accessToken },
         {
           validateStatus: (status) => true,
-          headers: head1
+          headers: head
         }
       );
 
@@ -117,13 +117,17 @@ module.exports = {
             }
           );
 
+          switch (newToken.status) {
+            case 201:
+              break;
+          }
           tokens[userId].accessToken = newToken.access_token;
           tokens[userId].refreshToken = newToken.refresh_token;
 
           const res3 = await axios.put(
             `https://discord.com/api/guilds/${interaction.guild.id}/members/${userId}`,
             { access_token: newToken.access_token },
-            { headers: head1 }
+            { headers: head }
           );
           break;
       }
