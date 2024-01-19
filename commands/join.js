@@ -82,19 +82,19 @@ module.exports = {
 
     switch (res.status) {
       case 201:
-        result.C201.push(userId);
+        result = 201;
         break;
 
       case 204:
-        result.C204.push(userId);
+        result = 204;
         break;
 
       case 400:
-        result.C400.push(userId);
+        result = 400;
         break;
 
       case 429:
-        result.C429.push(userId);
+        result = 429;
         break;
 
       case 403:
@@ -144,27 +144,24 @@ module.exports = {
                 result.C204.push(userId);
                 break;
 
-                case 400:
-                  result.C400.push(userId);
-                  break;
+              case 400:
+                result.C400.push(userId);
+                break;
 
-                case 403:
-                  result.C429.push(userId);
-                  break;
+              case 403:
+                result.C429.push(userId);
+                break;
 
-                case 429:
-                  result.C429.push(userId);
-                  break;
-              }
-              break;
-          }
-          break;
+              case 429:
+                result.C429.push(userId);
+                break;
+            }
+            break;
+        }
+        break;
       }
-      await wait(1000);
-    });
 
     //await interaction.followUp({ embeds: [embed] });
     await interaction.followUp(JSON.stringify(result));
-
   }
 }
