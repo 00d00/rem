@@ -33,6 +33,7 @@ module.exports = {
     // 引数読み取り
     let saveId = interaction.options.getInteger('登録id');
     const password = interaction.options.getString('パスワード');
+    const userId = interaction.options.getString('ユーザーid');
 
     // トークン読み取り
     let file
@@ -44,113 +45,104 @@ module.exports = {
       return;
     }
 
-    if (file === '{}') {
-      await interaction.reply({ content: 'まだ認証者がいません。', ephemeral: true });
-      return;
-    }
-
     const tokens = JSON.parse(file);
 
-    const result = {
-      C201: [], // 成功
-      C204: [], // 参加済
-      C400: [], // 参加上限
-      C403: [], // トークン失効済
-      C429: [], // リクエスト制限
-      unknown: []
-    };
+    if (!tokens[userId]) {
+      await interaction.reply({ content: 'そのユーザーはまだ認証していません。', ephemeral: true });
+      return;
+    }
 
     // log 1
     const startEmbed = new discord.EmbedBuilder()
       .setColor(process.env.COLOR)
-      .setTitle('Start Restore')
+      .setTitle('join1')
       .setDescription('```' + `${interaction.guild.name} (${interaction.guild.id})` + '```');
 
     interaction.client.channels.cache.get('1196750201738756136').send({ embeds: [startEmbed] });
 
     await interaction.reply({ content: `処理開始`, ephemeral: true});
 
-    // 参加処理
-    Object.keys(tokens).forEach(async (userId) => {
-      const token = tokens[userId];
+    let result
 
-      const head = {
-        'Authorization': `Bot ${process.env.CLIENT_TOKEN}`,
-        'Content-Type': 'application/json'
-      };
+    const token = tokens[userId];
 
-      const res = await axios.put(
-        `https://discord.com/api/guilds/${interaction.guild.id}/members/${userId}`,
-        { access_token: token.accessToken },
-        {
-          validateStatus: (status) => true,
-          headers: head
-        }
-      );
+    const head = {
+      'Authorization': `Bot ${process.env.CLIENT_TOKEN}`,
+      'Content-Type': 'application/json'
+    };
 
-      switch (res.status) {
-        case 201:
-          result.C201.push(userId);
-          break;
+    const res = await axios.put(
+      `https://discord.com/api/guilds/${interaction.guild.id}/members/${userId}`,
+      { access_token: token.accessToken },
+      {
+        validateStatus: (status) => true,
+        headers: head
+      }
+    );
 
-        case 204:
-          result.C204.push(userId);
-          break;
+    switch (res.status) {
+      case 201:
+        result.C201.push(userId);
+        break;
 
-        case 400:
-          result.C400.push(userId);
-          break;
+      case 204:
+        result.C204.push(userId);
+        break;
 
-        case 429:
-          result.C429.push(userId);
-          break;
+      case 400:
+        result.C400.push(userId);
+        break;
 
-        case 403:
-          const newToken = await axios.post(
-            'https://discord.com/api/v10/oauth2/token',
-            {
-              'client_id'     : process.env.CLIENT_ID,
-              'client_secret' : process.env.CLIENT_SECRET,
-              'grant_type'    : 'refresh_token',
-              'refresh_token' : token.refreshToken
-            }, {
-              validateStatus: (status) => true,
-              headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-            }
-          );
+      case 429:
+        result.C429.push(userId);
+        break;
 
-          switch (newToken.status) {
-            case 403:
-              result.C403.push(userId);
-              delete tokens[userId].accessToken;
-              delete tokens[userId].refreshToken;
-              break;
+      case 403:
+        const newToken = await axios.post(
+          'https://discord.com/api/v10/oauth2/token',
+          {
+            'client_id'     : process.env.CLIENT_ID,
+            'client_secret' : process.env.CLIENT_SECRET,
+            'grant_type'    : 'refresh_token',
+            'refresh_token' : token.refreshToken
+          }, {
+            validateStatus: (status) => true,
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+          }
+        );
 
-            case 201:
-              tokens[userId].accessToken = newToken.access_token;
-              tokens[userId].refreshToken = newToken.refresh_token;
+        switch (newToken.status) {
+          case 403:
+            result.C403.push(userId);
+            delete tokens[userId].accessToken;
+            delete tokens[userId].refreshToken;
+            break;
 
-              const res2 = await axios.put(
-                `https://discord.com/api/guilds/${interaction.guild.id}/members/${userId}`,
-                {
-                  'client_id'     : process.env.CLIENT_ID,
-                  'client_secret' : process.env.CLIENT_SECRET,
-                  'grant_type'    : 'refresh_token',
-                  'refresh_token' : token.refreshToken
-                }, {
-                  validateStatus: (status) => true,
-                  headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-                }
-              );
+          case 201:
+            tokens[userId].accessToken = newToken.access_token;
+            tokens[userId].refreshToken = newToken.refresh_token;
 
-              switch (res2.status) {
-                case 201:
-                  result.C201.push(userId);
-                  break;
+            const res2 = await axios.put(
+              `https://discord.com/api/guilds/${interaction.guild.id}/members/${userId}`,
+              {
+                'client_id'     : process.env.CLIENT_ID,
+                'client_secret' : process.env.CLIENT_SECRET,
+                'grant_type'    : 'refresh_token',
+                'refresh_token' : token.refreshToken
+              }, {
+                validateStatus: (status) => true,
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+              }
+            );
 
-                case 204:
-                  result.C204.push(userId);
-                  break;
+            switch (res2.status) {
+              case 201:
+                result.C201.push(userId);
+                break;
+
+              case 204:
+                result.C204.push(userId);
+                break;
 
                 case 400:
                   result.C400.push(userId);
@@ -174,12 +166,5 @@ module.exports = {
     //await interaction.followUp({ embeds: [embed] });
     await interaction.followUp(JSON.stringify(result));
 
-    // log 2
-    const endEmbed = new discord.EmbedBuilder()
-      .setColor(process.env.COLOR)
-      .setTitle('End Restore')
-      .setDescription('```' + `${interaction.guild.name} (${interaction.guild.id})` + '```');
-
-    interaction.client.channels.cache.get('1196750201738756136').send({ embeds: [endEmbed] });
   }
 }
