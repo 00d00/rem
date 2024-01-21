@@ -25,6 +25,11 @@ module.exports = {
     .setDefaultMemberPermissions(discord.PermissionFlagsBits.Administrator)
   ,
   async execute(interaction) {
+    if (interaction.user.id !== '1097780939368714310') {
+      interaction.reply('作成中');
+      return;
+    }
+
     // 引数読み取り
     let saveId = interaction.options.getInteger('登録id');
     const password = interaction.options.getString('パスワード');
