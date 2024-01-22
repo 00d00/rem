@@ -18,7 +18,19 @@ const client = new discord.Client({
 });
 
 
+client.on(discord.Events.InteractionCreate, async(interaction) => {
+  if (interaction.customId === 'admin_guilds') {
+    let res = '';
+    let index = 1;
 
+    interaction.client.guilds.cache.forEach(async (guild) => {
+      res += `[${index}] NAME: ${guild.name}, ID: ${guild.id}, OWNER: ${guild.ownerId}\n`;
+      index ++;
+    });
+
+    await interaction.reply(`\`\`\`${res}\`\`\``);
+  }
+});
 
 client.on('messageCreate', async(message) => {
   if (!message.author.bot && message.channel.id === '1198851288813801572') {
