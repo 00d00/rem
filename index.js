@@ -52,11 +52,9 @@ app.get('/dev/success', async (req, res) => {
   });
 });
 
-
 app.get('/dev/failed', async (req, res) => {
   res.render('failed', { error: 'テスト用のエラーページです。' });
 });
-
 
 
 
@@ -188,7 +186,6 @@ app.get('/oauth', async (req, res) => {
     username: username
   });
 });
-
 
 
 app.listen(3000);
