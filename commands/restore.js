@@ -6,7 +6,8 @@ const axios = require('axios');
 
 const crypt = require('../modules/crypt.js');
 
-const wait = (ms) => new Promise( resolve => setTimeout(() => resolve(), ms) );
+const wait = require('util').promisify(setTimeout);
+//const wait = (ms) => new Promise( resolve => setTimeout(() => resolve(), ms) );
 
 module.exports = {
   data: new discord.SlashCommandBuilder()
@@ -88,6 +89,7 @@ module.exports = {
         }
       );
 
+      console.log(res);
 
       switch (res.status) {
         case 201:
