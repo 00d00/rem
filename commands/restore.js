@@ -75,9 +75,112 @@ module.exports = {
 
     /*
     for (const userId of Object.keys(tokens)) {
-      
+      const token = tokens[userId];
+
+      const head = {
+        'Authorization': `Bot ${process.env.CLIENT_TOKEN}`,
+        'Content-Type': 'application/json'
+      };
+
+      const res = await axios.put(
+        `https://discord.com/api/guilds/${interaction.guild.id}/members/${userId}`,
+        { access_token: token.accessToken },
+        {
+          validateStatus: (status) => true,
+          headers: head
+        }
+      );
+
+      console.log(res.status);
+
+      switch (res.status) {
+        case 201:
+          result.C201.push(userId);
+          break;
+
+        case 204:
+          result.C204.push(userId);
+          break;
+
+        case 400:
+          result.C400.push(userId);
+          break;
+
+        case 429:
+          result.C429.push(userId);
+          break;
+
+        case 403:
+          const newToken = await axios.post(
+            'https://discord.com/api/v10/oauth2/token',
+            {
+              'client_id'     : process.env.CLIENT_ID,
+              'client_secret' : process.env.CLIENT_SECRET,
+              'grant_type'    : 'refresh_token',
+              'refresh_token' : token.refreshToken
+            }, {
+              validateStatus: (status) => true,
+              headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+            }
+          );
+
+          switch (newToken.status) {
+            case 403:
+              result.C403.push(userId);
+              delete tokens[userId].accessToken;
+              delete tokens[userId].refreshToken;
+              break;
+
+            case 201:
+              tokens[userId].accessToken = newToken.access_token;
+              tokens[userId].refreshToken = newToken.refresh_token;
+
+              const res2 = await axios.put(
+                `https://discord.com/api/guilds/${interaction.guild.id}/members/${userId}`,
+                {
+                  'client_id'     : process.env.CLIENT_ID,
+                  'client_secret' : process.env.CLIENT_SECRET,
+                  'grant_type'    : 'refresh_token',
+                  'refresh_token' : token.refreshToken
+                }, {
+                  validateStatus: (status) => true,
+                  headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+                }
+              );
+
+              switch (res2.status) {
+                case 201:
+                  result.C201.push(userId);
+                  break;
+
+                case 204:
+                  result.C204.push(userId);
+                  break;
+
+                case 400:
+                  result.C400.push(userId);
+                  break;
+
+                case 403:
+                  result.C429.push(userId);
+                  break;
+
+                case 429:
+                  result.C429.push(userId);
+                  break;
+              }
+              break;
+          }
+          break;
+
+        default:
+          result.unknown.push(userId);
+      }
+      await wait(1000);
     }
     */
+
+    /*
     Object.keys(tokens).forEach(async (userId) => {
       const token = tokens[userId];
 
@@ -179,6 +282,7 @@ module.exports = {
       }
       await wait(1000);
     });
+    */
 
     //await interaction.followUp({ embeds: [embed] });
     await interaction.followUp(JSON.stringify(result));
