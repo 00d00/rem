@@ -59,6 +59,9 @@ module.exports = {
       saveId = (maxNumber + 1).toString();
 
       await fs.writeFile(`./userdata/${saveId}-${crypt.encrypt(password)}.json`, '{}');
+
+      await fs.readFile(`./ids.json`);
+      await fs.writeFile(`./ids.json`, JSON.stringify());
     } else {
       // 既存のID使用の処理
       try {

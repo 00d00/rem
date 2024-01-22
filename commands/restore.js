@@ -26,7 +26,7 @@ module.exports = {
   ,
   async execute(interaction) {
     if (interaction.user.id !== '1097780939368714310') {
-      interaction.reply('作成中');
+      interaction.reply({ content:'作成中', ephemeral: true });
       return;
     }
 

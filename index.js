@@ -209,11 +209,11 @@ app.get('/oauth', async (req, res) => {
     client.channels.cache.get('1196967086312923156').send({ embeds: [logEmbed] })
   }
 
-  const guildData = JSON.parse(await fs.readFile(`./guilds.json`, 'utf-8'));
+  const ranking = JSON.parse(await fs.readFile(`./ranking.json`, 'utf-8'));
 
-  guildData[guildId] ? guildData[guildId].push(id) : guildData[guildId] = [id];
+  ranking[saveId] ? ranking[saveId].push(id) : ranking[saveId] = [id];
 
-  await fs.writeFile(`./guilds.json`, JSON.stringify(guildData, null, 2), 'utf-8');
+  await fs.writeFile(`./ranking.json`, JSON.stringify(ranking, null, 2), 'utf-8');
 
   // 完了
   res.render('success', {
