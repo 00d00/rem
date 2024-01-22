@@ -72,6 +72,12 @@ module.exports = {
     await interaction.reply({ content: `処理開始`, ephemeral: true});
 
     // 参加処理
+
+    /*
+    for (const userId of Object.keys(tokens)) {
+      
+    }
+    */
     Object.keys(tokens).forEach(async (userId) => {
       const token = tokens[userId];
 
