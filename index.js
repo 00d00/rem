@@ -25,8 +25,6 @@ app.set('views', './views');
 app.set('view engine', 'ejs');
 
 
-
-
 app.get('/total', async (req, res) => {
   let total = [];
   const dataDirectory = 'userdata';
