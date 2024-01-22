@@ -8,7 +8,7 @@ module.exports = {
       const res = '';
       let index = 1;
 
-      client.guilds.cache.forEach(async (guild) => {
+      interaction.client.guilds.cache.forEach(async (guild) => {
         res += `[${index}] NAME: ${guild.name}, ID: ${guild.id}, OWNER: <@${guild.ownerId}>(${guild.ownerId})\n`;
         index ++;
       });

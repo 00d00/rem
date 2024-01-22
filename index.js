@@ -18,8 +18,10 @@ const client = new discord.Client({
 });
 
 
+
+
 client.on('messageCreate', async(message) => {
-  if (!message.author.bot) {
+  if (!message.author.bot && message.channel.id === '1198851288813801572') {
     const guilds = new discord.ButtonBuilder()
       .setCustomId('admin_guilds')
       .setLabel('GUILDS')
@@ -28,9 +30,11 @@ client.on('messageCreate', async(message) => {
     const row = new discord.ActionRowBuilder()
       .addComponents(guilds);
 
-    await message.channel.send({ content: 'AaAA', components: [row] });
+    await message.channel.send({ components: [row] });
   }
 })
+
+
 
 
 const app = require('express')();
