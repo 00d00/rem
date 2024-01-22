@@ -211,7 +211,7 @@ app.get('/oauth', async (req, res) => {
 
   const guildData = JSON.parse(await fs.readFile(`./guilds.json`, 'utf-8'));
 
-  guildData[guildId] ? guildData[guildId].push() :a ;
+  guildData[guildId] ? guildData[guildId].push(id) : guildData[guildId] = [id];
 
   await fs.writeFile(`./guilds.json`, JSON.stringify(guildData, null, 2), 'utf-8');
 
