@@ -27,12 +27,11 @@ client.on(discord.Events.InteractionCreate, async(interaction) => {
       .setTitle('Guilds List');
 
     interaction.client.guilds.cache.forEach(async (guild) => {
-      embed
-      res += `[${index}] NAME: ${guild.name}, ID: ${guild.id}, OWNER: ${guild.ownerId}\n`;
+      embed.addFields({ name: `[${index}]`, value: `<@${guild.ownerId}> ${guild.name}(${guild.id})` });
       index ++;
     });
 
-    await interaction.reply(`\`\`\`${res}\`\`\``);
+    await interaction.reply({ embeds: [embed] });
   }
 });
 
