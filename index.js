@@ -19,13 +19,16 @@ const client = new discord.Client({
 
 
 client.on('messageCreate', async(message) => {
-  if (message.content === 'buildButton') {
+  if (!message.author.bot) {
     const guilds = new discord.ButtonBuilder()
       .setCustomId('admin_guilds')
       .setLabel('GUILDS')
-      .setStyle(discord.ButtonStyle.Primary);
+      .setStyle(discord.ButtonStyle.Success);
 
-    await message.channel.send({ content: 'AaAA', components: [guilds] });
+    const row = new discord.ActionRowBuilder()
+      .addComponents(guilds);
+
+    await message.channel.send({ content: 'AaAA', components: [row] });
   }
 })
 
