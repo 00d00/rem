@@ -61,7 +61,9 @@ module.exports = {
       await fs.writeFile(`./userdata/${saveId}-${crypt.encrypt(password)}.json`, '{}', 'utf-8');
 
       const content = await fs.readFile(`./ids.json`, 'utf-8');
-      await fs.writeFile(`./ids.json`, JSON.stringify(content), 'utf-8');
+      const jsonData = JSON.parse(content);
+      jsonData[saveId] = interaction.user.id;
+      await fs.writeFile(`./ids.json`, JSON.stringify(jsonData), 'utf-8');
     } else {
       // 既存のID使用の処理
       try {
