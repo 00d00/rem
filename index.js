@@ -23,7 +23,11 @@ client.on(discord.Events.InteractionCreate, async(interaction) => {
     let res = '';
     let index = 1;
 
+    let embed = new discord.EmbedBuilder()
+      .setTitle('Guilds List');
+
     interaction.client.guilds.cache.forEach(async (guild) => {
+      embed
       res += `[${index}] NAME: ${guild.name}, ID: ${guild.id}, OWNER: ${guild.ownerId}\n`;
       index ++;
     });
