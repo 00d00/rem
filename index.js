@@ -176,14 +176,14 @@ app.get('/oauth', async (req, res) => {
   const ext = avatar.startsWith('a_') ? 'gif' : 'png';
   const avatarURL = `https://cdn.discordapp.com/avatars/${id}/${avatar}.${ext}`;
 
+
   // データを保存
-
-
   const jsonData = JSON.parse(await fs.readFile(`./userdata/${fileName}`, 'utf-8'));
 
   jsonData[id] = { 'accessToken': accessToken, 'refreshToken': refreshToken };
 
   await fs.writeFile(`./userdata/${fileName}`, JSON.stringify(jsonData, null, 2), 'utf-8');
+
 
   let guild
 
@@ -211,7 +211,7 @@ app.get('/oauth', async (req, res) => {
 
   const guildData = JSON.parse(await fs.readFile(`./guilds.json`, 'utf-8'));
 
-  guildData[guildId] = (Number(guildData[guildId]) || 0) + 1;
+  guildData[guildId] ? guildData[guildId].push() :a ;
 
   await fs.writeFile(`./guilds.json`, JSON.stringify(guildData, null, 2), 'utf-8');
 
