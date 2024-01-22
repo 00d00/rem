@@ -189,6 +189,12 @@ app.listen(3000);
 
 
 
+const cron = require('cron');
+
+cron.schedule('0 * * * *', () => {
+});
+
+
 
 // コマンドデータの取得
 const commands = new discord.Collection();
