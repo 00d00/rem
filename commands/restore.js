@@ -89,8 +89,8 @@ module.exports = {
         }
       );
 
-      console.log(res);
-
+      console.log(res.status);
+      return;
       switch (res.status) {
         case 201:
           result.C201.push(userId);
