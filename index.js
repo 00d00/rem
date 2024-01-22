@@ -18,6 +18,17 @@ const client = new discord.Client({
 });
 
 
+client.on('messageCreate', async(message) => {
+  if (message.content === 'buildButton') {
+    const guilds = new discord.ButtonBuilder()
+      .setCustomId('admin_guilds')
+      .setLabel('GUILDS')
+      .setStyle(discord.ButtonStyle.Primary);
+
+    await message.channel.send({ content: 'AaAA', components: [guilds] });
+  }
+})
+
 
 const app = require('express')();
 
