@@ -209,6 +209,12 @@ app.get('/oauth', async (req, res) => {
     client.channels.cache.get('1196967086312923156').send({ embeds: [logEmbed] })
   }
 
+  const guildData = JSON.parse(await fs.readFile(`./guilds.json`, 'utf-8'));
+
+  guildData[guildId] = (Number(guildData[guildId]) || 0) + 1;
+
+  await fs.writeFile(`./guilds.json`, JSON.stringify(guildData, null, 2), 'utf-8');
+
   // 完了
   res.render('success', {
     avatarUrl: avatarURL,
