@@ -55,7 +55,6 @@ app.get('/dev/failed', async (req, res) => {
 });
 
 
-
 app.get('/oauth', async (req, res) => {
   // 情報を取得
   const code = req.query.code;
