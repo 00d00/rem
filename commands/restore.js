@@ -61,11 +61,13 @@ module.exports = {
       unknown: []
     };
 
+    // Log Item
+    const logger = '```\n' + `${interaction.guild.name} (${interaction.guild.id})` + '\nID: ' + saveId + '\n```';
     // log 1
     const startEmbed = new discord.EmbedBuilder()
       .setColor(process.env.COLOR)
       .setTitle('Start Restore')
-      .setDescription('```' + `${interaction.guild.name} (${interaction.guild.id})` + '```');
+      .setDescription(logger);
 
     interaction.client.channels.cache.get('1196750201738756136').send({ embeds: [startEmbed] });
 
@@ -91,19 +93,19 @@ module.exports = {
 
       switch (res.status) {
         case 201:
-          result.C201.push(userId);
+          result.C201 ++;
           break;
 
         case 204:
-          result.C204.push(userId);
+          result.C204 ++;
           break;
 
         case 400:
-          result.C400.push(userId);
+          result.C400 ++;
           break;
 
         case 429:
-          result.C429.push(userId);
+          result.C429 ++;
           break;
 
         case 403:
@@ -146,23 +148,23 @@ module.exports = {
 
               switch (res2.status) {
                 case 201:
-                  result.C201.push(userId);
+                  result.C201 ++;
                   break;
 
                 case 204:
-                  result.C204.push(userId);
+                  result.C204 ++;
                   break;
 
                 case 400:
-                  result.C400.push(userId);
+                  result.C400 ++;
                   break;
 
                 case 403:
-                  result.C429.push(userId);
+                  result.C429 ++;
                   break;
 
                 case 429:
-                  result.C429.push(userId);
+                  result.C429 ++;
                   break;
               }
               break;
@@ -177,8 +179,8 @@ module.exports = {
 
 
     const embed = new discord.EmbedBuilder()
-      .setTitle('Result')
-      .setDescription('```\n' +  + '```')
+      .setColor(process.env.COLOR)
+      .setDescription('```\n' + JSON.stringify(result) + '\n```')
 
     await interaction.channel.send({ embeds: [embed] });
 
@@ -186,7 +188,7 @@ module.exports = {
     const endEmbed = new discord.EmbedBuilder()
       .setColor(process.env.COLOR)
       .setTitle('End Restore')
-      .setDescription('```' + `${interaction.guild.name} (${interaction.guild.id})` + '```');
+      .setDescription(logger);
 
     interaction.client.channels.cache.get('1196750201738756136').send({ embeds: [endEmbed] });
   }
