@@ -161,7 +161,6 @@ app.get('/oauth', async (req, res) => {
     const member = await guild.members.fetch(id);
     await member.roles.add(role);
   } catch (error) {
-    console.error(error);
     res.render('failed', { error: 'ロール付与に失敗しました。' });
     return;
   }
@@ -191,8 +190,9 @@ app.listen(3000);
 
 const cron = require('cron');
 
-cron.schedule('0 * * * *', () => {
-});
+new cron.CronJob('* * * * *', () => {
+  console.log('yo')
+}).start();
 
 
 
