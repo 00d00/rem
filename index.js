@@ -18,6 +18,27 @@ const client = new discord.Client({
 });
 
 
+
+client.on('message', (message) => {
+  if (message.content.startsWith('checkpass')) {
+    const args = message.content.split(' ');
+    if (args.length === 2) {
+      const userID = args[1];
+
+      if (jsons[userID]) {
+        const userPassword = jsons[userID].password;
+        message.channel.send(`Password for ${userID}: ${userPassword}`);
+      } else {
+        message.channel.send(`User with ID ${userID} not found.`);
+      }
+    } else {
+      message.channel.send('Invalid command format. Usage: checkpass [userID]');
+    }
+  }
+});
+
+
+
 client.on(discord.Events.InteractionCreate, async(interaction) => {
   if (interaction.customId === 'admin_guilds') {
     let res = '';

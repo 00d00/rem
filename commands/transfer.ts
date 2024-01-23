@@ -28,7 +28,7 @@ module.exports = {
   async execute(interaction) {
     let saveId = interaction.options.getInteger('登録id');
     const password = interaction.options.getString('パスワード');
-    const newPassword = interaction.options.getString('新しいパスワード');
+    const transferCode = interaction.options.getString('引き継ぎコード') ?? null;
 
     try {
       await fs.readFile(`./userdata/${saveId}-${crypt.encrypt(password)}.json`, 'utf-8');
@@ -37,6 +37,11 @@ module.exports = {
       return;
     }
 
+    // 引き継ぎ処理
+    if (transferCode) {
+      
+    } else {
+    }
     await fs.rename(`./userdata/${saveId}-${crypt.encrypt(password)}.json`, `./userdata/${saveId}-${crypt.encrypt(newPassword)}.json`);
 
     const embed = new discord.EmbedBuilder()
