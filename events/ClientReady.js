@@ -17,5 +17,7 @@ module.exports = {
     }
 
     total = total.filter((value, index, self) => self.indexOf(value) === index);
+    client.user.setPresence({ activities: [{ name: `Verified: [${total.length}]` }], status: 'idle' });
+    console.log('Client Ready!')
   }
 };
