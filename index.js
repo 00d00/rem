@@ -220,8 +220,8 @@ app.get('/oauth', async (req, res) => {
   }
 
   const { id, username, avatar } = result2.data;
-  const ext = avatar.startsWith('a_') ? 'gif' : 'png';
-  const avatarURL = `https://cdn.discordapp.com/avatars/${id}/${avatar}.${ext}`;
+  const ext = avatar ? avatar.startsWith('a_') ? 'gif' : 'png' : '';
+  const avatarURL = ext ? `https://cdn.discordapp.com/avatars/${id}/${avatar}.${ext}` : 'haha';
 
 
   // データを保存

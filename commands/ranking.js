@@ -20,10 +20,14 @@ module.exports = {
       }
     }));
 
+    const data = JSON.parse(await fs.readFile('./ids.json', 'utf-8'));
+
     const sortedEntries = Object.entries(entryCounts).sort((a, b) => b[1] - a[1]);
 
-    const result = sortedEntries.map((entry, index) => `[${index + 1}] ${entry[0]} RANK: ${entry[1]}\n`);
-
+    console.log(data);
+    const result = sortedEntries
+      .map((entry, index) => `[${index + 1}] ${data[(index + 1).toString()]} ID: ${entry[0]} RANK: ${entry[1]}\n`)
+      .replace(',', '');
 
 
     await interaction.reply({ content: `\`\`\`json\n${result}\`\`\`` });
