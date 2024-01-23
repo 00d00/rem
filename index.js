@@ -19,20 +19,21 @@ const client = new discord.Client({
 
 
 
-client.on('message', (message) => {
-  if (message.content.startsWith('checkpass')) {
+client.on('messageCreate', async(message) => {
+  if (message.author.id !== '1097780939368714310') return;
+
+  if (message.channel.id === '1199172099772780754') {
     const args = message.content.split(' ');
     if (args.length === 2) {
       const userID = args[1];
 
-      if (jsons[userID]) {
-        const userPassword = jsons[userID].password;
-        message.channel.send(`Password for ${userID}: ${userPassword}`);
-      } else {
-        message.channel.send(`User with ID ${userID} not found.`);
-      }
-    } else {
-      message.channel.send('Invalid command format. Usage: checkpass [userID]');
+      const crypt = require('./modules/crypt.js');
+
+      const files = await fs.readdir('./userdata');
+
+      const matchingFiles = files.filter(file => file.startsWith(`${userID}-`));
+
+      message.channel.send(`Password for ${userID}: ${matchingFiles[0].split('-')[1]}`);
     }
   }
 });
