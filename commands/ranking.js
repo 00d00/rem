@@ -24,11 +24,11 @@ module.exports = {
 
     const sortedEntries = Object.entries(entryCounts).sort((a, b) => b[1] - a[1]);
 
-    const result = '';
+    let result = '';
 
     console.log(sortedEntries);
     sortedEntries.forEach((arr, index) => {
-      result += `[${index + 1}] <@${data[index]}> ID: ${arr[index][0]} RANK: ${arr[index][1]}}` + '\n';
+      result += `\`[${index + 1}]\` <@${data[(index + 1).toString()]}> \`ID: ${arr[0]} RANK: ${arr[1]}\`` + '\n';
     })
     const embed = new discord.EmbedBuilder()
       .setTitle('Ranking')
