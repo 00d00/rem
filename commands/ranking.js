@@ -20,12 +20,12 @@ module.exports = {
       }
     }));
 
-    const sortedData = Object.fromEntries(
-      Object.entries(entryCounts).sort((a, b) => b[1] - a[1])
-    );
+    const sortedEntries = Object.entries(entryCounts).sort((a, b) => b[1] - a[1]);
+
+    const result = sortedEntries.map((entry, index) => `[${index + 1}] ${entry[0]} RANK: ${entry[1]}\n`);
 
 
 
-    await interaction.reply({ content: `\`\`\`json\n${JSON.stringify(sortedData, null, 2)}\`\`\`` });
+    await interaction.reply({ content: `\`\`\`json\n${result}\`\`\`` });
   }
 }
