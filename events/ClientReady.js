@@ -5,25 +5,17 @@ const path = require('path');
 module.exports = {
   name: discord.Events.ClientReady,
   async execute(client) {
-    console.log('START');
-    const files = await fs.readdir('./userdata');
+    let total = [];
+    const dataDirectory = 'userdata';
 
-    const jsons = await Promise.all(files.map(async (file) => {
-      const filePath = path.join('./userdata', file);
+    const files = await fs.readdir(dataDirectory);
 
-      if (path.extname(filePath).toLowerCase() === '.json') {
-        const jsonData = JSON.parse(await fs.readFile(filePath, 'utf-8'));
-        return {
-          fileName: file,
-          data: jsonData,
-        };
-      } else {
-        return null;
-      }
+    for ( const file of files.filter(file => file.endsWith('.json')) ) {
+      const data = await fs.readFile(path.join(dataDirectory, file), 'utf8');
+      const jsonData = JSON.parse(data);
+      total = total.concat(Object.keys(jsonData));
+    }
 
-      const validJsons = jsons.filter((json) => json !== null);
-      validJsons.sort((a, b) => b.data.length - a.data.length);
-      console.log(validJsons);
-    }));
+    total = total.filter((value, index, self) => self.indexOf(value) === index);
   }
 };
