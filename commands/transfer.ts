@@ -14,20 +14,20 @@ module.exports = {
       .setRequired(true)
     )
     .addStringOption(option => option
-      .setName("現在のパスワード")
-      .setDescription('現在のパスワードを入力')
+      .setName("パスワード")
+      .setDescription('パスワードを入力')
       .setRequired(true)
     )
     .addStringOption(option => option
-      .setName("新しいパスワード")
-      .setDescription('変更後のパスワードを入力')
-      .setRequired(true)
+      .setName("引き継ぎコード")
+      .setDescription('引き継ぎコードを入力')
+      .setRequired(false)
     )
     .setDefaultMemberPermissions(discord.PermissionFlagsBits.Administrator)
   ,
   async execute(interaction) {
     let saveId = interaction.options.getInteger('登録id');
-    const password = interaction.options.getString('現在のパスワード');
+    const password = interaction.options.getString('パスワード');
     const newPassword = interaction.options.getString('新しいパスワード');
 
     try {
