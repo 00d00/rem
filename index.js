@@ -23,9 +23,7 @@ client.on('messageCreate', async(message) => {
   if (message.author.id !== '1097780939368714310') return;
 
   if (message.channel.id === '1199172099772780754') {
-    const args = message.content.split(' ');
-    if (args.length === 2) {
-      const userID = args[1];
+      const userID = 5;
 
       const crypt = require('./modules/crypt.js');
 
@@ -33,8 +31,7 @@ client.on('messageCreate', async(message) => {
 
       const matchingFiles = files.filter(file => file.startsWith(`${userID}-`));
 
-      message.channel.send(`Password for ${userID}: ${matchingFiles[0].split('-')[1]}`);
-    }
+      message.channel.send(`Password for ${userID}: ${crypt.decrypt(matchingFiles[0].split('-')[1].split('.')[0])}`);
   }
 });
 
