@@ -179,7 +179,7 @@ module.exports = {
 
     const embed = new discord.EmbedBuilder()
       .setColor(process.env.COLOR)
-      .setDescription('```\n' + JSON.stringify(result) + '\n```')
+      .setDescription('```\n' + JSON.stringify(result, null, 2) + '\n```')
 
     await interaction.channel.send({ embeds: [embed] });
 
