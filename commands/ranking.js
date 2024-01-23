@@ -24,12 +24,17 @@ module.exports = {
 
     const sortedEntries = Object.entries(entryCounts).sort((a, b) => b[1] - a[1]);
 
-    console.log(data);
     const result = sortedEntries
-      .map((entry, index) => `[${index + 1}] ${data[(index + 1).toString()]} ID: ${entry[0]} RANK: ${entry[1]}\n`)
-      .replace(',', '');
+      .map((entry, index) => `[${index + 1}] <@${data[(index + 1).toString()]}> ID: ${entry[0]} RANK: ${entry[1]}\n`)
+      .toString()
+      .replace(/,/g, '');
 
+    const lines = result.trim().split('\n');
 
-    await interaction.reply({ content: `\`\`\`json\n${result}\`\`\`` });
+    const embed = new discord.EmbedBuilder()
+      .setTitle('Ranking')
+      .setDescription(lines.map(line => line.trim()).join('\n'));
+
+    await interaction.reply({ embeds: [embed] });
   }
 }
