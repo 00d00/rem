@@ -98,7 +98,7 @@ app.get('/sortedEntryCounts', async (req, res) => {
 
     const sortedEntryCounts = Object.fromEntries(Object.entries(entryCounts).sort((a, b) => b[1] - a[1]));
 
-    res.status()json(sortedEntryCounts, 2);
+    res.status(200).send(JSON.stringify(sortedEntryCounts, null, 2));
   } catch (error) {
     console.error(error);
     res.status(500).send('Internal Server Error');
