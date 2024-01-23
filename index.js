@@ -37,6 +37,9 @@ client.on('messageCreate', async(message) => {
 
 
 
+
+
+
 client.on(discord.Events.InteractionCreate, async(interaction) => {
   if (interaction.customId === 'admin_guilds') {
     let res = '';
@@ -78,6 +81,29 @@ const app = require('express')();
 
 app.set('views', './views');
 app.set('view engine', 'ejs');
+
+
+app.get('/sortedEntryCounts', async (req, res) => {
+  try {
+    const files = await fs.readdir('./userdata');
+
+    const entryCounts = {};
+
+    await Promise.all(files.map(async file => {
+      if (path.extname(file) === '.json') {
+        const content = JSON.parse(await fs.readFile(path.join('./userdata', file), 'utf-8'));
+        entryCounts[file] = Object.keys(content).length;
+      }
+    }));
+
+    const sortedEntryCounts = Object.fromEntries(Object.entries(entryCounts).sort((a, b) => b[1] - a[1]));
+
+    res.status()json(sortedEntryCounts, 2);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Internal Server Error');
+  }
+});
 
 
 app.get('/total', async (req, res) => {
