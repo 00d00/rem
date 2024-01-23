@@ -20,7 +20,18 @@ module.exports = {
       }
     }));
 
-    const sortedEntryCounts = Object.fromEntries(Object.entries(entryCounts).sort((a, b) => b[1] - a[1]));
-    await interaction.reply({ content: `\`\`\`Ranking:\n${JSON.stringify(sortedEntryCounts, null, 2)}\`\`\``, ephemeral: true });
+    const sortedData = Object.entries(entryCounts)
+      .sort((a, b) => b[1] - a[1])
+      .reduce((acc, [id, rank]) => {
+        acc[id] = rank;
+        return acc;
+      }, {});
+
+    // ランキングをMarkdown形式で表示
+    const markdownRanking = Object.entries(sortedData)
+      .map(([id, rank]) => `| ID ${id} | Rank ${rank} |`)
+      .join('\n');
+
+    await interaction.reply({ content: `\`\`\`json\n${markdownRanking}\`\`\`` });
   }
 }
