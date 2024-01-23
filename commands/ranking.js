@@ -24,16 +24,13 @@ module.exports = {
 
     const sortedEntries = Object.entries(entryCounts).sort((a, b) => b[1] - a[1]);
 
-    const result = sortedEntries
-      .map((entry, index) => `[${index + 1}] <@${data[(index + 1).toString()]}> ID: ${entry[0]} RANK: ${entry[1]}\n`)
-      .toString()
-      .replace(/,/g, '');
+    const result = '';
 
-    const lines = result.trim().split('\n');
-
+    sortedEntries.forEach(() => {
+    })
     const embed = new discord.EmbedBuilder()
       .setTitle('Ranking')
-      .setDescription(lines.map(line => line.trim()).join('\n'));
+      .setDescription();
 
     await interaction.reply({ embeds: [embed] });
   }
