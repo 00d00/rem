@@ -297,11 +297,14 @@ client.on(discord.Events.ClientReady, async() => {
       const command = require(`./commands/${file}`);
       commands[command.data.name] = command;
     });
+
   const data = [];
   for (const commandName in commands) {
     data.push(commands[commandName].data)
   }
-  await client.application.commands.set(data);
+  await client.application.commands.set(data, f || undefined);
+
+  const server = [];
 });
 
 
