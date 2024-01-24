@@ -281,16 +281,11 @@ new cron.CronJob('0 0 * * *', () => {
 const commands = new discord.Collection();
 
 
-fsa.readdirSync('commands')
-  .filter(file => file.endsWith('.js'))
-  .forEach(file => {
-    const command = require(`./commands/${file}`);
-    commands[command.data.name] = command;
-  });
+
 
 
 //コマンドを登録
-client.on(discord.Events.ClientReady, async() => {
+client.once(discord.Events.ClientReady, async() => {
   fsa.readdirSync('commands')
     .filter(file => file.endsWith('.js'))
     .forEach(file => {
@@ -299,10 +294,11 @@ client.on(discord.Events.ClientReady, async() => {
     });
 
   const data = [];
+
   for (const commandName in commands) {
     data.push(commands[commandName].data)
   }
-  await client.application.commands.set(data, f || undefined);
+  await client.application.commands.set(data);
 
   const server = [];
 });
