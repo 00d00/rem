@@ -26,7 +26,6 @@ module.exports = {
 
     let result = '';
 
-    console.log(sortedEntries);
     sortedEntries.forEach((arr, index) => {
       result += `\`[${index + 1}]\` <@${data[(index + 1).toString()]}> \`ID: ${arr[0]} RANK: ${arr[1]}\`` + '\n';
     })
