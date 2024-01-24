@@ -282,8 +282,6 @@ const commands = new discord.Collection();
 
 
 
-
-
 //コマンドを登録
 client.once(discord.Events.ClientReady, async() => {
   fsa.readdirSync('commands')
