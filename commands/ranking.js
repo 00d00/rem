@@ -26,8 +26,20 @@ module.exports = {
 
     let result = '';
 
+    function getRank(points) {
+      let rank = 1;
+      let requiredPoints = 100;
+
+      while (points >= requiredPoints) {
+        rank++;
+        requiredPoints = Math.floor(requiredPoints * 1.3);
+      }
+
+      return rank;
+    }
+
     sortedEntries.forEach((arr, index) => {
-      result += `\`[${index + 1}]\` <@${data[(index + 1).toString()]}> \`ID: ${arr[0]} RANK: ${arr[1]}\`` + '\n';
+      result += `\`[${index + 1}]\` <@${data[(index + 1).toString()]}> \`ID: ${arr[0]} RANK: ${getRank(arr[1])}\`` + '\n';
     });
 
     const embed = new discord.EmbedBuilder()
