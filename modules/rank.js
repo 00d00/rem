@@ -3,21 +3,22 @@ class rank {
     this.points = points;
   }
 
-  getRank(points) {
+  getRank() {
     let rank = 1;
     let requiredPoints = 30;
-    while (points >= requiredPoints) {
+
+    while (this.points >= requiredPoints) {
       rank++;
       requiredPoints = Math.floor(requiredPoints * 1.3);
     }
-    const next = requiredPoints - points;
+
+    const next = requiredPoints - this.points;
     return { rank, next };
   }
 
   generateBar() {
     const filledLength = Math.floor(per * 10);
-    const gauge = ':green_square:'.repeat(filledLength) + ':white_large_square:'.repeat(10 - 
-    filledLength);
+    return ':green_square:'.repeat(filledLength) + ':white_large_square:'.repeat(10 - filledLength);
   }
 }
 
