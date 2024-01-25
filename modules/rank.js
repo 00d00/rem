@@ -1,3 +1,18 @@
+class rank {
+  constructor(points) {
+    this.points = points;
+  }
+
+  getRank() {
+  }
+
+  generateBar(per) {
+    const filledLength = Math.floor(per * 10);
+    const gauge = ':green_square:'.repeat(filledLength) + ':white_large_square:'.repeat(10 - 
+    filledLength);
+  }
+}
+
 module.exports = {
   getRank: async(points) => {
     let rank = 1;
