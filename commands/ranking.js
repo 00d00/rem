@@ -23,7 +23,7 @@ module.exports = {
     const data = JSON.parse(await fs.readFile('./ids.json', 'utf-8'));
 
     const sortedEntries = Object.entries(entryCounts).sort((a, b) => b[1] - a[1]);
-
+    console.log(data)
     let result = '';
 
     function getRank(points) {
