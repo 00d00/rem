@@ -28,7 +28,7 @@ module.exports = {
 
     function getRank(points) {
       let rank = 1;
-      let requiredPoints = 100;
+      let requiredPoints = 30;
 
       while (points >= requiredPoints) {
         rank++;
