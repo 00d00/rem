@@ -39,7 +39,7 @@ module.exports = {
     }
 
     sortedEntries.forEach((arr, index) => {
-      result += `\`[${index + 1}]\` <@${data[(index + 1).toString()]}> \`ID: ${arr[0]} RANK: ${getRank(arr[1])}\`` + '\n';
+      result += `\`[${index + 1}]\` <@${data[(index + 1).toString()]}> \`ID: ${arr[0]} RANK: ${getRank(arr[1])}($pts)\`` + '\n';
     });
 
     const embed = new discord.EmbedBuilder()
