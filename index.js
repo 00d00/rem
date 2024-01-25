@@ -271,10 +271,13 @@ app.listen(3000);
 
 const cron = require('cron');
 
-new cron.CronJob('0 0 * * *', () => {
-   client.channels.cache.get('1097792839011811338').send('00:00ですね。');
+new cron.CronJob({
+  cronTime: '0 0 * * *',
+  onTick: () => {
+    client.channels.cache.get('1097792839011811338').send('00:00ですね。');
+  },
+  timeZone: 'Asia/Tokyo',
 }).start();
-
 
 
 // コマンドデータの取得
