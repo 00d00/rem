@@ -4,11 +4,19 @@ const path = require('path');
 
 module.exports = {
   data: new discord.SlashCommandBuilder()
-    .setName('ranking')
-    .setDescription('ランキングを表示')
+    .setName('rank')
+    .setDescription('ランクを表示')
     .setDefaultMemberPermissions(discord.PermissionFlagsBits.Administrator)
   ,
   async execute(interaction) {
+    function f(obj, searchValue) {
+      const foundKeys = [];
+      for (const key in obj) {
+        if (obj[key] === searchValue) foundKeys.push(key);
+      }
+      return foundKeys;
+    }
+
     const files = await fs.readdir('./userdata');
 
     const entryCounts = {};
