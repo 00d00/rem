@@ -9,13 +9,18 @@ module.exports = {
     .setDefaultMemberPermissions(discord.PermissionFlagsBits.Administrator)
   ,
   async execute(interaction) {
-    function f(obj, searchValue) {
+    function findKeys(obj, searchValue) {
       const foundKeys = [];
       for (const key in obj) {
         if (obj[key] === searchValue) foundKeys.push(key);
       }
       return foundKeys;
     }
+
+    const users = JSON.parse(await fs.readFile('./ids.json', 'utf-8'));
+
+    const keys = findKeys(users, interaction.user.id);
+    // ここから
 
     const files = await fs.readdir('./userdata');
 
@@ -28,7 +33,6 @@ module.exports = {
       }
     }));
 
-    const data = JSON.parse(await fs.readFile('./ids.json', 'utf-8'));
 
     const sortedEntries = Object.entries(entryCounts).sort((a, b) => b[1] - a[1]);
 
