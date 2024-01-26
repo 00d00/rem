@@ -24,6 +24,8 @@ module.exports = {
 
     const files = await fs.readdir('./userdata');
 
+    const matchingFiles.push(files.filter(file => file.startsWith(keys[index])));
+
     const entryCounts = {};
 
     await Promise.all(files.map(async file => {
