@@ -20,11 +20,11 @@ module.exports = {
     const users = JSON.parse(await fs.readFile('./ids.json', 'utf-8'));
 
     const keys = findKeys(users, interaction.user.id);
-    // ここから
 
     const files = await fs.readdir('./userdata');
 
-    const matchingFiles.push(files.filter(file => file.startsWith(keys[index])));
+    let res = [];
+    keys.forEach(index => res.push(files.filter(file => file.startsWith(index))))
 
     const entryCounts = {};
 
@@ -57,7 +57,7 @@ module.exports = {
     });
 
     const embed = new discord.EmbedBuilder()
-      .setTitle('Ranking')
+      .setTitle(`r`)
       .setDescription(result);
 
     await interaction.reply({ embeds: [embed] });
