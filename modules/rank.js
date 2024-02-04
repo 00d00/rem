@@ -17,8 +17,8 @@ class rank {
   }
 
   generateBar() {
-    const filledLength = Math.floor(per * 10);
-    return ':green_square:'.repeat(filledLength) + ':white_large_square:'.repeat(10 - filledLength);
+    const length = Math.floor(per * 10);
+    return ':green_square:'.repeat(length) + ':white_large_square:'.repeat(10 - length);
   }
 }
 
