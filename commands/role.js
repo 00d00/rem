@@ -75,6 +75,7 @@ export default {
       interaction.options.getRole('role10'),
     ];
 
+    const emoji = ['1⃣', '']
     let result = '';
     let i = 0;
 
@@ -85,17 +86,20 @@ export default {
       i ++;
     }
 
+    await interaction.reply({ content: 'パネルを作成しました', ephemeral: true });
 
     const embed = new discord.EmbedBuilder()
       .setColor(process.env.COLOR)
       .setTitle(interaction.options.getString('title'))
       .setDescription(result);
 
-    const message = await interaction.reply({ embeds: [embed] });
+    const message = await interaction.channel.send({ embeds: [embed] });
+
 
     for (let j = 0; j <= i; j++) {
-      const charCode = 97 + ;
-      //message.react();
+      const charCode = 97 + j;
+      console.log(String.fromCharCode(charCode));
+      await message.react(`:regional_indicator_${String.fromCharCode(charCode)}:`);
     }
   }
 };
