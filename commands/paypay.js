@@ -90,10 +90,6 @@ export default {
       const result = await paypay.login({ uuid: uuid });
 
 
-      const info = await paypay.getUserInfo();
-      console.log(info);
-
-
       const balance = await paypay.getBalance();
 
       const walletSummary = balance.raw.payload.walletSummary;
@@ -101,14 +97,14 @@ export default {
       const payoutableBalance = walletSummary.payoutableBalanceInfo.balance;
 
       const embed = new discord.EmbedBuilder()
-        .setTitle('paypay-info')
         .setColor(process.env.COLOR)
-        .addFields(
-          { name: 'Total Balance', value: `**${transferableBalance}**JPY` },
-          { name: 'PayPay Money', value: `${payoutableBalance} ${walletSummary.payoutableBalanceInfo.currency}` },
-          { name: 'PayPay Money Lite', value: `${payoutableBalance} ${walletSummary.payoutableBalanceInfo.currency}` }
+        .setTitle('paypay-info')
+        .setDescription(
+          `Total Balance: **${transferableBalance}円**` + '\n' +
+          `PayPay Money: **${payoutableBalance}円**` + '\n' +
+          `PayPay Money Lite: **${transferableBalance - payoutableBalance}円**`
         )
-        .setFooter({ text: `Update Date: ${balance.updated_at}` });
+        .setTimestamp()
 
       interaction.reply({ embeds: [embed] });
     }
