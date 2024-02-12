@@ -24,8 +24,8 @@ export default {
     )
 
     .addSubcommand((command) => command
-      .setName('info')
-      .setDescription('PayPay情報を取得')
+      .setName('balance')
+      .setDescription('PayPay残高を取得')
     )
 
     .addSubcommand((command) => command
@@ -82,7 +82,7 @@ export default {
         throw new Error(`未知のPayPayステータス: ${result.status}`);
       }
 
-    } else if (command === 'info') {
+    } else if (command === 'balance') {
 
       let content
 
