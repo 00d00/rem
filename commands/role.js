@@ -62,20 +62,21 @@ export default {
     )
   ,
   async execute(interaction) {
-    const role1 = interaction.options.getRole('role1');
-    const role2 = interaction.options.getRole('role2');
-    const role3 = interaction.options.getRole('role3');
-    const role4 = interaction.options.getRole('role4');
-    const role5 = interaction.options.getRole('role5');
-    const role6 = interaction.options.getRole('role6');
-    const role7 = interaction.options.getRole('role7');
-    const role8 = interaction.options.getRole('role8');
-    const role9 = interaction.options.getRole('role9');
-    const role10 = interaction.options.getRole('role10');
+    const role = [
+      interaction.options.getRole('role1'),
+      interaction.options.getRole('role2'),
+      interaction.options.getRole('role3'),
+      interaction.options.getRole('role4'),
+      interaction.options.getRole('role5'),
+      interaction.options.getRole('role6'),
+      interaction.options.getRole('role7'),
+      interaction.options.getRole('role8'),
+      interaction.options.getRole('role9'),
+      interaction.options.getRole('role10'),
+    ];
 
     const embed = new discord.EmbedBuilder()
       .setColor(process.env.COLOR)
-      .setThumbnail("https://i.imgur.com/AfFp7pu.png")
       .setTitle("log-channel")
       .setDescription("設定を変更しました！");
 
