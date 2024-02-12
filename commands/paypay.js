@@ -27,6 +27,16 @@ export default {
       .setName('info')
       .setDescription('PayPay情報を取得')
     )
+
+    .addSubcommand((command) => command
+      .setName('accept')
+      .setDescription('PayPayリンクを受け取る')
+      .addStringOption((option) =>option
+        .setName('url')
+        .setDescription('URL')
+        .setRequired(true)
+      )
+    )
   ,
   async execute(interaction) {
 
@@ -89,6 +99,15 @@ export default {
       const paypay = new PayPay(phone, password);
       const result = await paypay.login({ uuid: uuid });
 
+      if (!result.status) {
+        const error = new discord.EmbedBuilder()
+          .setColor(process.env.COLOR)
+          .setTitle('paypay-info')
+          .setDescription('ログイン情報が変更されたためログインできませんでした。');
+
+        interaction.reply({ embeds: [error], ephemeral: true });
+        return;
+      }
 
       const balance = await paypay.getBalance();
 
@@ -106,7 +125,33 @@ export default {
         )
         .setTimestamp()
 
-      interaction.reply({ embeds: [embed] });
+      await interaction.reply({ embeds: [embed] });
+
+    } else if (command === 'accept') {
+
+      const url = interaction.options.getString('url');
+
+      const content = await fs.readFile(`./paypay/${interaction.user.id}`, 'utf-8');
+      let [ phone, password, uuid ] = content.split('.');
+
+      phone = crypt.decrypt(phone);
+      password = crypt.decrypt(password);
+      uuid = crypt.decrypt(uuid);
+
+      const paypay = new PayPay(phone, password);
+      const result = await paypay.login({ uuid: uuid });
+
+      if (!result.status) {
+        const error = new discord.EmbedBuilder()
+          .setColor(process.env.COLOR)
+          .setTitle('paypay-info')
+          .setDescription('ログイン情報が変更されたためログインできませんでした。');
+
+        interaction.reply({ embeds: [error], ephemeral: true });
+        return;
+      }
+
+      const a = await paypay.receiveLink(url);
     }
   }
 };
