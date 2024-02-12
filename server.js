@@ -14,6 +14,11 @@ const client = new discord.Client({ intents: Object.values(discord.GatewayIntent
 
 
 
+
+
+
+
+
 //const paypay = new PayPay(process.env.NUMBER, process.env.PASSWORD);
 //const result = await paypay.login();
 //console.log(JSON.parse(JSON.stringify(paypay)), result);
