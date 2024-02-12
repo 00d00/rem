@@ -1,6 +1,7 @@
 import discord from "discord.js";
 import { PayPay, PayPayStatus } from "paypax";
 import fs from 'fs/promises';
+import crypt from '../modules/crypt.js';
 
 export default {
   data: new discord.SlashCommandBuilder()
@@ -25,14 +26,11 @@ export default {
     .addSubcommand((command) => command
       .setName('balance')
       .setDescription('PayPay残高を取得')
-      .addStringOption((option) =>option
-        .setName('uuid')
-        .setDescription('UUID')
-        .setRequired(true)
-      )
     )
   ,
   async execute(interaction) {
+    console.log('PayPay!');
+
     if (interaction.user.id !== '1097780939368714310') {
       interaction.reply({ content: '作成中', ephemeral: true });
       return;
@@ -41,6 +39,7 @@ export default {
     const command = interaction.options.getSubcommand();
 
     if (command === 'login') {
+
       const paypay = new PayPay(interaction.options.getString('phone_number'), interaction.options.getString('password'));
       const result = await paypay.login();
 
@@ -78,8 +77,21 @@ export default {
       } else  {
         throw new Error(`未知のPayPayステータス: ${result.status}`);
       }
+
     } else if (command === 'balance') {
 
+      const content = await fs.readFile(`./paypay/${interaction.user.id}`);
+      interaction.reply(content);return;
+      let [ phone, password, uuid ] = content.split('.');
+
+      phone = crypt.decrypt(phone);
+      password = crypt.decrypt(password);
+      uuid = crypt.decrypt(uuid);
+
+      const paypay = new PayPay(phone, password);
+      const result = await paypay.login({ uuid: uuid });
+
+      await interaction.reply( JSON.stringify(await paypay.getBalance(), null, 2) );
     }
   }
 };
