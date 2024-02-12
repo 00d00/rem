@@ -89,25 +89,28 @@ export default {
       const paypay = new PayPay(phone, password);
       const result = await paypay.login({ uuid: uuid });
 
-      const walletSummary = result.raw.payload.walletSummary;
-      const totalBalance = walletSummary.totalBalanceInfo.balance;
-      const usableBalance = walletSummary.usableBalanceInfoWithoutCashback.balance;
+
+      const info = await paypay.getUserInfo();
+      console.log(info);
+
+
+      const balance = await paypay.getBalance();
+
+      const walletSummary = balance.raw.payload.walletSummary;
       const transferableBalance = walletSummary.transferableBalanceInfo.balance;
       const payoutableBalance = walletSummary.payoutableBalanceInfo.balance;
 
       const embed = new discord.EmbedBuilder()
-        .setTitle('所持金情報')
-        .setColor('#3498db') // Embedの色を指定
+        .setTitle('paypay-info')
+        .setColor(process.env.COLOR)
         .addFields(
-          { name: '全体の残高', value: `${totalBalance} ${walletSummary.totalBalanceInfo.currency}`, inline: true },
-          { name: '利用可能残高', value: `${usableBalance} ${walletSummary.usableBalanceInfoWithoutCashback.currency}`, inline: true },
-          { name: '\u200B', value: '\u200B' }, // 空白行
-          { name: '振り込み可能残高', value: `${transferableBalance} ${walletSummary.transferableBalanceInfo.currency}`, inline: true },
-          { name: '支払い可能残高', value: `${payoutableBalance} ${walletSummary.payoutableBalanceInfo.currency}`, inline: true }
+          { name: 'Total Balance', value: `**${transferableBalance}**JPY` },
+          { name: 'PayPay Money', value: `${payoutableBalance} ${walletSummary.payoutableBalanceInfo.currency}` },
+          { name: 'PayPay Money Lite', value: `${payoutableBalance} ${walletSummary.payoutableBalanceInfo.currency}` }
         )
-        .setFooter(`更新日時: ${result.updated_at}`);
+        .setFooter({ text: `Update Date: ${balance.updated_at}` });
 
-      interaction.reply('Check console!');
+      interaction.reply({ embeds: [embed] });
     }
   }
 };
