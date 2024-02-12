@@ -84,7 +84,17 @@ export default {
 
     } else if (command === 'info') {
 
+      try {
       const content = await fs.readFile(`./paypay/${interaction.user.id}`, 'utf-8');
+      } catch(e) {
+        const error = new discord.EmbedBuilder()
+          .setColor(process.env.COLOR)
+          .setTitle('paypay-info')
+          .setDescription('まだログインされていません。');
+
+        interaction.reply({ embeds: [error], ephemeral: true });
+        return;
+      }
       let [ phone, password, uuid ] = content.split('.');
 
       phone = crypt.decrypt(phone);
@@ -124,8 +134,6 @@ export default {
 
     } else if (command === 'accept') {
 
-      interaction.reply('作成中');
-      return;
       const url = interaction.options.getString('url');
 
       const content = await fs.readFile(`./paypay/${interaction.user.id}`, 'utf-8');
@@ -148,7 +156,21 @@ export default {
         return;
       }
 
-      //const get = await paypay.getLink(url);
+      let get
+
+      try {
+        get = await paypay.getLink(url);
+      } catch(e) {
+        const error = new discord.EmbedBuilder()
+          .setColor('Red')
+          .setTitle('paypay-accept')
+          .setDescription('リンクが無効です。');
+
+        interaction.reply({ embeds: [error], ephemeral: true });
+        return;
+      }
+
+      console.log(get);return;
 
       const receive = await paypay.receiveLink(url);
       console.log(JSON.stringify(receive, null, 2));
