@@ -1,0 +1,51 @@
+import discord from 'discord.js';
+import fs from 'fs/promises';
+import path from 'path';
+
+
+export default {
+  data: new discord.SlashCommandBuilder()
+    .setName('ranking')
+    .setDescription('ランキングを表示')
+    .setDefaultMemberPermissions(discord.PermissionFlagsBits.Administrator)
+  ,
+  async execute(interaction) {
+    const files = await fs.readdir('./userdata');
+
+    const entryCounts = {};
+
+    await Promise.all(files.map(async file => {
+      if (path.extname(file) === '.json') {
+        const content = JSON.parse(await fs.readFile(path.join('./userdata', file), 'utf-8'));
+        entryCounts[file.split('-')[0]] = Object.keys(content).length;
+      }
+    }));
+
+    const data = JSON.parse(await fs.readFile('./ids.json', 'utf-8'));
+
+    const sortedEntries = Object.entries(entryCounts).sort((a, b) => b[1] - a[1]);
+    let result = '';
+
+    function getRank(points) {
+      let rank = 1;
+      let requiredPoints = 30;
+
+      while (points >= requiredPoints) {
+        rank++;
+        requiredPoints = Math.floor(requiredPoints * 1.3);
+      }
+
+      return rank;
+    }
+
+    sortedEntries.forEach((arr, index) => {
+      result += `\`[${index + 1}]\` <@${data[(index+1).toString()]}> \`ID: ${arr[0]} RANK: ${getRank(arr[1])}(${arr[1]}pts)\`` + '\n';
+    });
+
+    const embed = new discord.EmbedBuilder()
+      .setTitle('Ranking')
+      .setDescription(result);
+
+    await interaction.reply({ embeds: [embed] });
+  }
+}
