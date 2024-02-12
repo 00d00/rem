@@ -1,0 +1,40 @@
+import { SlashCommandBuilder } from 'discord.js';
+import { promises as fs } from 'fs';
+import crypto from 'crypto';
+import crypt from '../modules/crypt.js';
+
+export default {
+  data: new SlashCommandBuilder()
+    .setName('count')
+    .setDescription('認証済みの人数を取得')
+    .addIntegerOption(option => option
+      .setName("登録id")
+      .setDescription('IDを指定')
+      .setRequired(true)
+    )
+    .addStringOption(option => option
+      .setName("パスワード")
+      .setDescription('パスワードを入力')
+      .setRequired(true)
+    )
+    .setDefaultMemberPermissions(8) // Administrator permission flag
+  ,
+  async execute(interaction) {
+    // 引数取得
+    let saveId = interaction.options.getInteger('登録id');
+    const password = interaction.options.getString('パスワード');
+
+    let file;
+
+    try {
+      file = await fs.readFile(`./userdata/${saveId}-${crypt.encrypt(password)}.json`, 'utf-8');
+    } catch(err) {
+      interaction.reply({ content: 'IDまたはパスワードが間違っています。', ephemeral: true });
+      return;
+    }
+
+    const num = Object.keys(JSON.parse(file)).length;
+
+    await interaction.reply({ content: `\`\`\`Verified: ${num}\`\`\``, ephemeral: true });
+  }
+}

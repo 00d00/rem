@@ -1,0 +1,8 @@
+module.exports = {
+	data: {
+    name: "name",
+    description: "description",
+  },
+	async execute(interaction, discord) {
+	}
+}
