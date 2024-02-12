@@ -75,10 +75,18 @@ export default {
       interaction.options.getRole('role10'),
     ];
 
+    let result = '';
+
+    for (let i = 0; i <= 9; i++) {
+      if (!role[i]) break;
+      const charCode = 65 + i;
+      result += `:regional_indicator_${String.fromCharCode(charCode)}: <@${role[i].id}>\n`;
+    }
+
     const embed = new discord.EmbedBuilder()
       .setColor(process.env.COLOR)
-      .setTitle("log-channel")
-      .setDescription("設定を変更しました！");
+      .setTitle(interaction.options.getString('title'))
+      .setDescription(result);
 
     await interaction.reply({ embeds: [embed] });
   }
