@@ -151,10 +151,10 @@ export default {
         return;
       }
 
-      const get = await paypay.getLink(url)
+      //const get = await paypay.getLink(url);
 
-      //const receive = await paypay.receiveLink(url);
-      console.log(JSON.stringify(get, null, 2));
+      const receive = await paypay.receiveLink(url);
+      console.log(JSON.stringify(receive, null, 2));
     }
   }
 };
