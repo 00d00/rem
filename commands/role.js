@@ -4,11 +4,6 @@ export default {
   data: new discord.SlashCommandBuilder()
     .setName('role')
     .setDescription("ロール付与パネルを設置")
-    .addStringOption((option) =>option
-      .setName('title')
-      .setDescription('タイトル')
-      .setRequired(true)
-    )
 
     .addRoleOption((option) =>option
       .setName('role1')
@@ -55,11 +50,6 @@ export default {
       .setDescription('ロール9')
       .setRequired(false)
     )
-    .addRoleOption((option) =>option
-      .setName('role10')
-      .setDescription('ロール10')
-      .setRequired(false)
-    )
   ,
   async execute(interaction) {
     const role = [
@@ -71,18 +61,18 @@ export default {
       interaction.options.getRole('role6'),
       interaction.options.getRole('role7'),
       interaction.options.getRole('role8'),
-      interaction.options.getRole('role9'),
-      interaction.options.getRole('role10'),
+      interaction.options.getRole('role9')
     ];
 
-    const emoji = ['1⃣', '']
+    const emoji = [ '1⃣', '2⃣', '3⃣', '4⃣', '5⃣', '6⃣', '7⃣', '8⃣', '9⃣' ]
+
     let result = '';
     let i = 0;
 
     while (true) {
       if (!role[i]) break;
       const charCode = 97 + i;
-      result += `:regional_indicator_${String.fromCharCode(charCode)}: : <@&${role[i].id}>\n`;
+      result += `${emoji[i]} : <@&${role[i].id}>\n`;
       i ++;
     }
 
@@ -90,7 +80,7 @@ export default {
 
     const embed = new discord.EmbedBuilder()
       .setColor(process.env.COLOR)
-      .setTitle(interaction.options.getString('title'))
+      .setTitle('ロール付与パネル')
       .setDescription(result);
 
     const message = await interaction.channel.send({ embeds: [embed] });
@@ -99,7 +89,7 @@ export default {
     for (let j = 0; j <= i; j++) {
       const charCode = 97 + j;
       console.log(String.fromCharCode(charCode));
-      await message.react(`:regional_indicator_${String.fromCharCode(charCode)}:`);
+      await message.react(emoji[j]);
     }
   }
 };
