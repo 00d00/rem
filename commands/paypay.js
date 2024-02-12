@@ -49,7 +49,7 @@ export default {
           .setTitle('paypay-login')
           .setDescription('電話番号またはメールアドレスが間違っています。');
 
-        await interaction.reply({ embeds: [embed] });
+        await interaction.reply({ embeds: [embed], ephemeral: true});
         return;
 
       } else if (result.status === PayPayStatus.LoginNeedOTP) {
@@ -100,9 +100,9 @@ export default {
         .setColor(process.env.COLOR)
         .setTitle('paypay-info')
         .setDescription(
-          `Total Balance: **${transferableBalance}円**` + '\n' +
-          `PayPay Money: **${payoutableBalance}円**` + '\n' +
-          `PayPay Money Lite: **${transferableBalance - payoutableBalance}円**`
+          `PayPay残高: **${transferableBalance.toLocaleString()}円**` + '\n' +
+          `PayPayマネー: **${payoutableBalance.toLocaleString()}円**` + '\n' +
+          `PayPayマネーライト: **${(transferableBalance - payoutableBalance).toLocaleString()}円**`
         )
         .setTimestamp()
 
