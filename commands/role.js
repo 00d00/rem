@@ -76,18 +76,26 @@ export default {
     ];
 
     let result = '';
+    let i = 0;
 
-    for (let i = 0; i <= 9; i++) {
+    while (true) {
       if (!role[i]) break;
-      const charCode = 65 + i;
-      result += `:regional_indicator_${String.fromCharCode(charCode)}: <@${role[i].id}>\n`;
+      const charCode = 97 + i;
+      result += `:regional_indicator_${String.fromCharCode(charCode)}: : <@&${role[i].id}>\n`;
+      i ++;
     }
+
 
     const embed = new discord.EmbedBuilder()
       .setColor(process.env.COLOR)
       .setTitle(interaction.options.getString('title'))
       .setDescription(result);
 
-    await interaction.reply({ embeds: [embed] });
+    const message = await interaction.reply({ embeds: [embed] });
+
+    for (let j = 0; j <= i; j++) {
+      const charCode = 97 + ;
+      //message.react();
+    }
   }
 };
