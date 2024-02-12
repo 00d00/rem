@@ -84,17 +84,20 @@ export default {
 
     } else if (command === 'info') {
 
+      let content
+
       try {
-      const content = await fs.readFile(`./paypay/${interaction.user.id}`, 'utf-8');
+        content = await fs.readFile(`./paypay/${interaction.user.id}`, 'utf-8');
       } catch(e) {
         const error = new discord.EmbedBuilder()
-          .setColor(process.env.COLOR)
+          .setColor('Red')
           .setTitle('paypay-info')
-          .setDescription('まだログインされていません。');
+          .setDescription('まだログインされていません。\n/paypay loginでログインしてください。');
 
         interaction.reply({ embeds: [error], ephemeral: true });
         return;
       }
+
       let [ phone, password, uuid ] = content.split('.');
 
       phone = crypt.decrypt(phone);
@@ -136,7 +139,20 @@ export default {
 
       const url = interaction.options.getString('url');
 
-      const content = await fs.readFile(`./paypay/${interaction.user.id}`, 'utf-8');
+      let content
+
+      try {
+        content = await fs.readFile(`./paypay/${interaction.user.id}`, 'utf-8');
+      } catch(e) {
+        const error = new discord.EmbedBuilder()
+          .setColor('Red')
+          .setTitle('paypay-info')
+          .setDescription('まだログインされていません。\n/paypay loginでログインしてください。');
+
+        interaction.reply({ embeds: [error], ephemeral: true });
+        return;
+      }
+
       let [ phone, password, uuid ] = content.split('.');
 
       phone = crypt.decrypt(phone);
@@ -170,10 +186,28 @@ export default {
         return;
       }
 
-      console.log(get);return;
+      try {
+        await paypay.receiveLink(url);
 
-      const receive = await paypay.receiveLink(url);
-      console.log(JSON.stringify(receive, null, 2));
+        const embed = new discord.EmbedBuilder()
+          .setColor('Blue')
+          .setTitle('paypay-accept')
+          .addFields(
+            { name: '金額', value: get.amount.toString() },
+            { name: 'オーダーID', value: get.orderId },
+            { name: '送金者', value: get.sender_name }
+          )
+
+        interaction.reply({ embeds: [embed] });
+      } catch(e) {
+        const error = new discord.EmbedBuilder()
+          .setColor('Red')
+          .setTitle('paypay-accept')
+          .setDescription('リンクが使用済みです。');
+
+        interaction.reply({ embeds: [error], ephemeral: true });
+        return;
+      }
     }
   }
 };
