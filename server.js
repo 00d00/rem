@@ -11,8 +11,6 @@ global.fetch = fetch;
 
 const client = new discord.Client({ intents: Object.values(discord.GatewayIntentBits) });
 
-console.log('Logged')
-
 
 
 

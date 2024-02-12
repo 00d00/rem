@@ -29,7 +29,6 @@ export default {
     )
   ,
   async execute(interaction) {
-    console.log('PayPay!');
 
     if (interaction.user.id !== '1097780939368714310') {
       interaction.reply({ content: '作成中', ephemeral: true });
@@ -80,8 +79,7 @@ export default {
 
     } else if (command === 'balance') {
 
-      const content = await fs.readFile(`./paypay/${interaction.user.id}`);
-      interaction.reply(content);return;
+      const content = await fs.readFile(`./paypay/${interaction.user.id}`, 'utf-8');
       let [ phone, password, uuid ] = content.split('.');
 
       phone = crypt.decrypt(phone);
@@ -91,7 +89,7 @@ export default {
       const paypay = new PayPay(phone, password);
       const result = await paypay.login({ uuid: uuid });
 
-      await interaction.reply( JSON.stringify(await paypay.getBalance(), null, 2) );
+      await interaction.reply(JSON.stringify(await paypay.getBalance(), null, 2));
     }
   }
 };
