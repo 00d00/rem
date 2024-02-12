@@ -40,11 +40,6 @@ export default {
   ,
   async execute(interaction) {
 
-    if (interaction.user.id !== '1097780939368714310') {
-      interaction.reply({ content: '作成中', ephemeral: true });
-      return;
-    }
-
     const command = interaction.options.getSubcommand();
 
     if (command === 'login') {
@@ -129,6 +124,8 @@ export default {
 
     } else if (command === 'accept') {
 
+      interaction.reply('作成中');
+      return;
       const url = interaction.options.getString('url');
 
       const content = await fs.readFile(`./paypay/${interaction.user.id}`, 'utf-8');
