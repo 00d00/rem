@@ -24,8 +24,8 @@ export default {
     )
 
     .addSubcommand((command) => command
-      .setName('balance')
-      .setDescription('PayPay残高を取得')
+      .setName('info')
+      .setDescription('PayPay情報を取得')
     )
   ,
   async execute(interaction) {
@@ -77,7 +77,7 @@ export default {
         throw new Error(`未知のPayPayステータス: ${result.status}`);
       }
 
-    } else if (command === 'balance') {
+    } else if (command === 'info') {
 
       const content = await fs.readFile(`./paypay/${interaction.user.id}`, 'utf-8');
       let [ phone, password, uuid ] = content.split('.');
@@ -89,7 +89,25 @@ export default {
       const paypay = new PayPay(phone, password);
       const result = await paypay.login({ uuid: uuid });
 
-      await interaction.reply(JSON.stringify(await paypay.getBalance(), null, 2));
+      const walletSummary = result.raw.payload.walletSummary;
+      const totalBalance = walletSummary.totalBalanceInfo.balance;
+      const usableBalance = walletSummary.usableBalanceInfoWithoutCashback.balance;
+      const transferableBalance = walletSummary.transferableBalanceInfo.balance;
+      const payoutableBalance = walletSummary.payoutableBalanceInfo.balance;
+
+      const embed = new discord.EmbedBuilder()
+        .setTitle('所持金情報')
+        .setColor('#3498db') // Embedの色を指定
+        .addFields(
+          { name: '全体の残高', value: `${totalBalance} ${walletSummary.totalBalanceInfo.currency}`, inline: true },
+          { name: '利用可能残高', value: `${usableBalance} ${walletSummary.usableBalanceInfoWithoutCashback.currency}`, inline: true },
+          { name: '\u200B', value: '\u200B' }, // 空白行
+          { name: '振り込み可能残高', value: `${transferableBalance} ${walletSummary.transferableBalanceInfo.currency}`, inline: true },
+          { name: '支払い可能残高', value: `${payoutableBalance} ${walletSummary.payoutableBalanceInfo.currency}`, inline: true }
+        )
+        .setFooter(`更新日時: ${result.updated_at}`);
+
+      interaction.reply('Check console!');
     }
   }
 };
