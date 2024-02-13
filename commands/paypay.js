@@ -149,7 +149,7 @@ export default {
           .setTitle('paypay-info')
           .setDescription('まだログインされていません。\n/paypay loginでログインしてください。');
 
-        interaction.reply({ embeds: [error], ephemeral: true });
+        await interaction.reply({ embeds: [error], ephemeral: true });
         return;
       }
 
@@ -168,7 +168,7 @@ export default {
           .setTitle('paypay-info')
           .setDescription('ログイン情報が変更されたためログインできませんでした。');
 
-        interaction.reply({ embeds: [error], ephemeral: true });
+        await interaction.reply({ embeds: [error], ephemeral: true });
         return;
       }
 
@@ -182,7 +182,7 @@ export default {
           .setTitle('paypay-accept')
           .setDescription('リンクが無効です。');
 
-        interaction.reply({ embeds: [error], ephemeral: true });
+        await interaction.reply({ embeds: [error], ephemeral: true });
         return;
       }
 
@@ -198,14 +198,14 @@ export default {
             { name: '送金者', value: get.sender_name }
           )
 
-        interaction.reply({ embeds: [embed] });
+        await interaction.reply({ embeds: [embed] });
       } catch(e) {
         const error = new discord.EmbedBuilder()
           .setColor('Red')
           .setTitle('paypay-accept')
           .setDescription('リンクが使用済みです。');
 
-        interaction.reply({ embeds: [error], ephemeral: true });
+        await interaction.reply({ embeds: [error], ephemeral: true });
         return;
       }
     }

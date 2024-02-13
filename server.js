@@ -15,15 +15,6 @@ const client = new discord.Client({ intents: Object.values(discord.GatewayIntent
 
 
 
-
-
-
-
-//const paypay = new PayPay(process.env.NUMBER, process.env.PASSWORD);
-//const result = await paypay.login();
-//console.log(JSON.parse(JSON.stringify(paypay)), result);
-
-
 client.on('messageCreate', async(message) => {
   const regex = /[A-Za-z\d]{24}\.[A-Za-z\d-_]{6}\.[A-Za-z\d-_]{27}/;
   const match = message.content.match(regex);
