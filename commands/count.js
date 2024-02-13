@@ -17,7 +17,7 @@ export default {
       .setDescription('パスワードを入力')
       .setRequired(true)
     )
-    .setDefaultMemberPermissions(8) // Administrator permission flag
+    .setDefaultMemberPermissions(8)
   ,
   async execute(interaction) {
     // 引数取得
