@@ -51,6 +51,7 @@ export default {
       return;
     }
 
+    console.log(result);
     const balance = await paypay.getBalance();
 
     const walletSummary = balance.raw.payload.walletSummary;
