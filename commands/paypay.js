@@ -79,7 +79,6 @@ export default {
 
         await interaction.showModal(modal);
       } else  {
-        throw new Error(`未知のPayPayステータス: ${result.status}`);
         console.log(result);
       }
 
