@@ -233,9 +233,6 @@ function format(value) {
 
 
 
-
-
-
 const commands = new discord.Collection();
 
 client.once('ready', async () => {
