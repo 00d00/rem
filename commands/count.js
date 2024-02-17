@@ -1,10 +1,10 @@
-import { SlashCommandBuilder } from 'discord.js';
-import { promises as fs } from 'fs';
+import discord from 'discord.js';
+import fs from 'fs/promises';
 import crypto from 'crypto';
 import crypt from '../modules/crypt.js';
 
 export default {
-  data: new SlashCommandBuilder()
+  data: new discord.SlashCommandBuilder()
     .setName('count')
     .setDescription('認証済みの人数を取得')
     .addIntegerOption(option => option
@@ -17,7 +17,7 @@ export default {
       .setDescription('パスワードを入力')
       .setRequired(true)
     )
-    .setDefaultMemberPermissions(8)
+    .setDefaultMemberPermissions(discord.PermissionFlagsBits.Administrator)
   ,
   async execute(interaction) {
     // 引数取得

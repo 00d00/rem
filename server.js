@@ -3,11 +3,6 @@ import discord from 'discord.js';
 import fs from 'fs/promises';
 import path from 'path';
 
-import { PayPay, PayPayStatus } from 'paypax'
-
-import fetch from 'node-fetch';
-global.fetch = fetch;
-
 
 const client = new discord.Client({ intents: Object.values(discord.GatewayIntentBits) });
 
@@ -194,7 +189,7 @@ app.get('/oauth', async (req, res) => {
     .setTitle('Verify Log')
     .setDescription('```' + `${username} (${id})` + '``````' + `${guild.name} (${guild.id}` + ')```');
 
-  client.channels.cache.get('1203674135784460338').send({ embeds: [logEmbed] })
+  client.channels.cache.get('1203674135784460338').send({ embeds: [logEmbed] });
 
 
   // 完了
