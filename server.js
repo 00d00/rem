@@ -32,6 +32,13 @@ app.set('views', './views');
 app.set('view engine', 'ejs');
 
 
+app.get('/', async (req, res) => {
+  res.render('index', {
+    guilds: client.guilds.cache.size,
+    members: client.users.cache.size
+  });
+});
+
 
 app.get('/total', async (req, res) => {
   let total = [];
@@ -233,7 +240,7 @@ const commands = new discord.Collection();
 
 client.once('ready', async () => {
   const guildsCount = client.guilds.cache.size;
-  const membersCount = client.guilds.cache.reduce((acc, guild) => acc + guild.memberCount, 0);
+  const membersCount = client.users.cache.size;
     
   client.user.setActivity(`${format(guildsCount)} Servers, ${format(membersCount)} Members`, { type: discord.ActivityType.Custom });
 
@@ -255,7 +262,8 @@ client.once('ready', async () => {
 
   const subDirs = (
     await Promise.all(commandFiles.map(async (entry) => {
-      if (entry === 'configure') return null;
+      if (entry === 'test') return null;
+
       const stats = await fs.stat(`./commands/${entry}`);
       return stats.isDirectory() ? entry : null;
     }))
