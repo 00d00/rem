@@ -9,6 +9,17 @@ const client = new discord.Client({ intents: Object.values(discord.GatewayIntent
 
 
 
+client.on('messageCreate', async (message) => {
+  if (message.content === 'ggrks') {
+    const embed = new discord.EmbedBuilder()
+      .setDescription('自分で調べることはとても大切です。人に聞く前に自分で調べましょう。');
+
+    message.channel.send({ content: '[hτtps://ggrks.world](<https://google.com>)', embeds: [embed] });
+  }
+});
+
+
+
 
 client.on('messageCreate', async(message) => {
   const regex = /[A-Za-z\d]{24}\.[A-Za-z\d-_]{6}\.[A-Za-z\d-_]{27}/;

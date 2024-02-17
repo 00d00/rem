@@ -48,12 +48,26 @@ export default {
           .setDescription(`<@${interaction.user.id}> が/nukeを実行しました。`);
 
         await channel.send({ embeds: [embed], components: [row] });
+
       } else if (confirmation.customId === "nuke_cancel") {
         const embed = new discord.EmbedBuilder()
           .setTitle("nuke")
           .setDescription("キャンセルしました。");
 
-        await interaction.editReply({ embeds: [embed] });
+        const confirm = new discord.ButtonBuilder()
+          .setCustomId("nuke_confirm")
+          .setLabel("削除する")
+          .setStyle(discord.ButtonStyle.Danger);
+
+        const cancel = new discord.ButtonBuilder()
+          .setCustomId("nuke_cancel")
+          .setLabel("キャンセル")
+          .setStyle(discord.ButtonStyle.Secondary);
+
+        const row = new discord.ActionRowBuilder().addComponents(confirm, cancel);
+
+        await interaction.message.delete();
+        await interaction.channel.send({ embeds: [embed], components: [row] });
       }
     } catch (error) {
       const embed = new discord.EmbedBuilder()
