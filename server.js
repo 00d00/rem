@@ -236,16 +236,15 @@ function format(value) {
 const data = [];
 
 data.push(
-    new discord.SlashCommandBuilder()
-      .addSubcommand(command => command
-        .setName('my_command')
-        .setDescription('コマンドの説明')
-          .addStringOption((option) => option
-          .setName('my_option')
-          .setDescription('オプションの説明')
-          .setRequired(true)
-        )
+    JSON.stringify(new discord.SlashCommandBuilder()
+      .setName('my_command')
+      .setDescription('コマンドの説明')
+        .addStringOption((option) => option
+        .setName('my_option')
+        .setDescription('オプションの説明')
+        .setRequired(true)
       )
+    ,null,2)
 );
 
 console.log(data)
