@@ -236,7 +236,6 @@ function format(value) {
 const data = [];
 
 data.push(
-  JSON.stringify(
     new discord.SlashCommandBuilder()
       .addSubcommand(command => command
         .setName('my_command')
@@ -247,8 +246,6 @@ data.push(
           .setRequired(true)
         )
       )
-    , null, 2
-  )
 );
 
 console.log(data)
