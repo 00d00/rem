@@ -233,6 +233,26 @@ function format(value) {
 
 
 
+const data = [];
+
+data.push(
+  JSON.stringify(
+    new discord.SlashCommandBuilder()
+      .addSubcommand(command => command
+        .setName('my_command')
+        .setDescription('コマンドの説明')
+          .addStringOption((option) => option
+          .setName('my_option')
+          .setDescription('オプションの説明')
+          .setRequired(true)
+        )
+      )
+    , null, 2
+  )
+);
+
+console.log(data)
+
 const commands = new discord.Collection();
 
 client.once('ready', async () => {
