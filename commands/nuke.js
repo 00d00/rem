@@ -54,20 +54,7 @@ export default {
           .setTitle("nuke")
           .setDescription("キャンセルしました。");
 
-        const confirm = new discord.ButtonBuilder()
-          .setCustomId("nuke_confirm")
-          .setLabel("削除する")
-          .setStyle(discord.ButtonStyle.Danger);
-
-        const cancel = new discord.ButtonBuilder()
-          .setCustomId("nuke_cancel")
-          .setLabel("キャンセル")
-          .setStyle(discord.ButtonStyle.Secondary);
-
-        const row = new discord.ActionRowBuilder().addComponents(confirm, cancel);
-
-        await interaction.message.delete();
-        await interaction.channel.send({ embeds: [embed], components: [row] });
+        await interaction.editReply({ embeds: [embed], components: [row] });
       }
     } catch (error) {
       const embed = new discord.EmbedBuilder()
