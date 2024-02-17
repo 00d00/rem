@@ -8,17 +8,27 @@ export default {
   data: new discord.SlashCommandBuilder()
     .setName('radix')
     .setDescription('radix変換')
-    .addUserOption(option => option
-      .setName('user')
-      .setDescription('set user')
+    .addIntegerOption(option => option
+      .setName('from_radix')
+      .setDescription('変換前の基数')
       .setRequired(true)
     )
-    .setDefaultMemberPermissions(discord.PermissionFlagsBits.Administrator)
+    .addIntegerOption(option => option
+      .setName('to_radix')
+      .setDescription('変換後の基数')
+      .setRequired(true)
+    )
+    .addIntegerOption(option => option
+      .setName('number')
+      .setDescription('変換する数')
+      .setRequired(true)
+    )
   ,
   async execute(interaction) {
-    if (interaction.user.id !== '1097780939368714310') {
-      await interaction.reply('Admin Only');
-      return;
-    }
+    const from = interaction.options.getInteger('from_radix');
+    const to = interaction.options.getInteger('to_radix');
+    const number = interaction.options.getInteger('number');
+
+    interaction.reply(`\`\`\`${parseInt(number, from).toString(to).toUpperCase()}\`\`\``);
   }
 };
