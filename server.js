@@ -238,19 +238,35 @@ client.once('ready', async () => {
   client.user.setActivity(`${format(guildsCount)} Servers, ${format(membersCount)} Members`, { type: discord.ActivityType.Custom });
 
   // Load Commands
+  const data = [];
+
   const commandFiles = await fs.readdir('./commands');
+
   const jsFiles = commandFiles.filter(file => file.endsWith('.js'));
+
   for (const file of jsFiles) {
-    let command = await import(`./commands/${file}`);
-    command = command.default;
+    const command = (await import(`./commands/${file}`)).default;
 
     commands[command.data.name] = command;
     console.log(`Loaded command: ${command.data.name}`);
   }
-  const data = [];
+
+  /*
+  const subDirs = commandFiles.filter(async (entry) => {
+    const stats = await fs.stat(`./commands/${entry}`);
+    return stats.isDirectory();
+  });
+
+  for (const subDir of subDirs) {
+    const command = (await import(`./commands/${subDir}/index.js`)).default;
+    commands[command.data.name] = command;
+  }
+  */
+
   for (const commandName in commands) {
     data.push(commands[commandName].data);
   }
+
   await client.application.commands.set(data);
 
   // Load Events
