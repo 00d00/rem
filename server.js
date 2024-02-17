@@ -238,7 +238,6 @@ client.once('ready', async () => {
   client.user.setActivity(`${format(guildsCount)} Servers, ${format(membersCount)} Members`, { type: discord.ActivityType.Custom });
 
   // Load Commands
-  ['./commands/Admin', './commands/General', './commands/Other']
   const commandFiles = await fs.readdir('./commands');
   const jsFiles = commandFiles.filter(file => file.endsWith('.js'));
   for (const file of jsFiles) {
