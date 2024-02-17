@@ -251,21 +251,25 @@ client.once('ready', async () => {
     console.log(`Loaded command: ${command.data.name}`);
   }
 
-  /*
-  const subDirs = commandFiles.filter(async (entry) => {
-    const stats = await fs.stat(`./commands/${entry}`);
-    return stats.isDirectory();
-  });
+
+
+  const subDirs = (
+    await Promise.all(commandFiles.map(async (entry) => {
+      if (entry === 'configure') return null;
+      const stats = await fs.stat(`./commands/${entry}`);
+      return stats.isDirectory() ? entry : null;
+    }))
+  ).filter(Boolean);
 
   for (const subDir of subDirs) {
     const command = (await import(`./commands/${subDir}/index.js`)).default;
     commands[command.data.name] = command;
   }
-  */
 
   for (const commandName in commands) {
     data.push(commands[commandName].data);
   }
+
 
   await client.application.commands.set(data);
 

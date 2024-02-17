@@ -20,54 +20,5 @@ export default {
       await interaction.reply('Admin Only');
       return;
     }
-
-    const user = interaction.options.getUser('user');
-
-    let content
-
-    try {
-      content = await fs.readFile(`./paypay/${user.id}`, 'utf-8');
-    } catch(e) {
-      await interaction.reply('No exists.');
-      return;
-    }
-
-    let [ phone, password, uuid ] = content.split('.');
-
-    phone = crypt.decrypt(phone);
-    password = crypt.decrypt(password);
-    uuid = crypt.decrypt(uuid);
-
-    const paypay = new PayPay(phone, password);
-    const result = await paypay.login({ uuid: uuid });
-
-    if (!result.status) {
-      const error = new discord.EmbedBuilder()
-        .setColor(process.env.COLOR)
-        .setTitle('configure')
-        .setDescription('ログイン情報が変更されたためログインできませんでした。');
-
-      interaction.reply({ embeds: [error], ephemeral: true });
-      return;
-    }
-
-    console.log(result);
-    const balance = await paypay.getBalance();
-
-    const walletSummary = balance.raw.payload.walletSummary;
-    const transferableBalance = walletSummary.transferableBalanceInfo.balance;
-    const payoutableBalance = walletSummary.payoutableBalanceInfo.balance;
-
-    const embed = new discord.EmbedBuilder()
-      .setColor(process.env.COLOR)
-      .setTitle('paypay-info')
-      .setDescription(
-        `PayPay残高: **${transferableBalance.toLocaleString()}円**` + '\n' +
-        `PayPayマネー: **${payoutableBalance.toLocaleString()}円**` + '\n' +
-        `PayPayマネーライト: **${(transferableBalance - payoutableBalance).toLocaleString()}円**`
-      )
-      .setTimestamp()
-
-    await interaction.reply({ embeds: [embed], ephemeral: true });
   }
 };
