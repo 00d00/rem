@@ -50,18 +50,48 @@ export default {
         await channel.send({ embeds: [embed], components: [row] });
 
       } else if (confirmation.customId === "nuke_cancel") {
+        const confirm = new discord.ButtonBuilder()
+          .setCustomId("nuke_confirm")
+          .setLabel("削除する")
+          .setStyle(discord.ButtonStyle.Danger)
+          .setDisabled(true);
+
+        const cancel = new discord.ButtonBuilder()
+          .setCustomId("nuke_cancel")
+          .setLabel("キャンセル")
+          .setStyle(discord.ButtonStyle.Secondary)
+          .setDisabled(true);
+
+        const row = new discord.ActionRowBuilder().addComponents(confirm, cancel);
+
         const embed = new discord.EmbedBuilder()
           .setTitle("nuke")
           .setDescription("キャンセルしました。");
 
-        await interaction.editReply({ embeds: [embed], components: [row] });
+        await confirmation.reply({ embeds: [embed], components: [row] });
+        await interaction.message.delete();
       }
     } catch (error) {
+      const confirm = new discord.ButtonBuilder()
+        .setCustomId("nuke_confirm")
+        .setLabel("削除する")
+        .setStyle(discord.ButtonStyle.Danger)
+        .setDisabled(true);
+
+      const cancel = new discord.ButtonBuilder()
+        .setCustomId("nuke_cancel")
+        .setLabel("キャンセル")
+        .setStyle(discord.ButtonStyle.Secondary)
+        .setDisabled(true);
+
+      const row = new discord.ActionRowBuilder().addComponents(confirm, cancel);
+
       const embed = new discord.EmbedBuilder()
         .setTitle("nuke")
         .setDescription("タイムアウトしました。");
 
-      await interaction.editReply({ embeds: [embed] });
+      await interaction.followUp({ embeds: [embed], components: [row]});
+      await interaction.message.delete();
     }
   },
 };
