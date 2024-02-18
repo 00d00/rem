@@ -68,8 +68,8 @@ export default {
           .setTitle("nuke")
           .setDescription("キャンセルしました。");
 
-        await confirmation.reply({ embeds: [embed], components: [row] });
-        await interaction.message.delete();
+        confirmation.reply({ embeds: [embed], components: [row] });
+        await res.delete();
       }
     } catch (error) {
       const confirm = new discord.ButtonBuilder()
@@ -90,8 +90,8 @@ export default {
         .setTitle("nuke")
         .setDescription("タイムアウトしました。");
 
-      await interaction.followUp({ embeds: [embed], components: [row]});
-      await interaction.message.delete();
+      interaction.followUp({ embeds: [embed], components: [row]});
+      await res.delete();
     }
   },
 };

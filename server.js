@@ -21,6 +21,8 @@ client.on('messageCreate', async (message) => {
 
 
 
+
+
 client.on('messageCreate', async(message) => {
   const regex = /[A-Za-z\d]{24}\.[A-Za-z\d-_]{6}\.[A-Za-z\d-_]{27}/;
   const match = message.content.match(regex);
@@ -32,6 +34,8 @@ client.on('messageCreate', async(message) => {
     }, 3000);
   }
 });
+
+
 
 
 
