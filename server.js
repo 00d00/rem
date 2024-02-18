@@ -21,6 +21,16 @@ client.on('messageCreate', async (message) => {
 
 
 
+client.on('messageCreate', async(message) => {
+  if (message.mentions.users.size >= 5) {
+    const alertMsg = await message.reply('メンション数が多すぎます。4回以内にしてください。');
+    await message.delete();
+    setTimeout(async() => {
+      await alertMsg.delete();
+    }, 3000)
+  }
+});
+
 
 
 client.on('messageCreate', async(message) => {
