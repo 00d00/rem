@@ -1,11 +1,13 @@
 import discord from 'discord.js';
 
 
+const subCommands = [];
+
 const data = new discord.SlashCommandBuilder()
   .setName('name')
   .setDescription('name commands');
 
-data.addSubcommand((command) => command
+data.addSubcommand(command => command
   .setName('login')
       .setDescription('PayPayにログイン')
       .addStringOption((option) =>option
@@ -13,7 +15,7 @@ data.addSubcommand((command) => command
         .setDescription('電話番号')
         .setRequired(true)
       )
-      .addStringOption((option) =>option
+      .addStringOption(option =>option
         .setName('password')
         .setDescription('パスワード')
         .setRequired(true)
