@@ -7,6 +7,10 @@ const data = new discord.SlashCommandBuilder()
   .setName('name')
   .setDescription('name commands');
 
+for (let name of subCommands) {
+  const item = await import(name);
+}
+
 data.addSubcommand(command => command
   .setName('login')
       .setDescription('PayPayにログイン')
