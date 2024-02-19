@@ -10,7 +10,7 @@ const data = new discord.SlashCommandBuilder()
 data.addSubcommand(command => command
   .setName('login')
       .setDescription('PayPayにログイン')
-      .addStringOption((option) =>option
+      .addStringOption(option =>option
         .setName('phone_number')
         .setDescription('電話番号')
         .setRequired(true)
