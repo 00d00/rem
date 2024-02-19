@@ -8,7 +8,9 @@ const data = new discord.SlashCommandBuilder()
   .setDescription('name commands');
 
 for (let name of subCommands) {
-  const item = await import(name);
+  import(name).then(module => {
+    const item = module.default;
+  });
 }
 
 data.addSubcommand(command => command
