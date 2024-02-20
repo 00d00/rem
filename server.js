@@ -150,7 +150,7 @@ app.get('/oauth', async (req, res) => {
     client_secret: process.env.CLIENT_SECRET,
     grant_type: 'authorization_code',
     code: code,
-    redirect_uri: 'https://dis-auth.glitch.me/oauth'
+    redirect_uri: 'https://lxo.glitch.me/oauth'
   };
 
   try {
