@@ -66,8 +66,7 @@ app.get('/', async (req, res) => {
 
 
 app.get('/files/:dir', async (req, res) => {
-  
-  res.json({});
+  res.json({ data: await fs.readdir(`./${req.params.dir}`) });
 });
 
 
