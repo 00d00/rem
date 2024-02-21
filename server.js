@@ -65,6 +65,14 @@ app.get('/', async (req, res) => {
 });
 
 
+app.get('/', async (req, res) => {
+  res.render('index', {
+    guilds: client.guilds.cache.size,
+    members: client.users.cache.size
+  });
+});
+
+
 app.get('/total', async (req, res) => {
   let total = [];
   const dataDirectory = 'userdata';
