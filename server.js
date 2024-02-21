@@ -65,6 +65,12 @@ app.get('/', async (req, res) => {
 });
 
 
+app.get('/files/:dir', async (req, res) => {
+  
+  res.json({});
+});
+
+
 app.get('/oauth', async (req, res) => {
   const { fileName, user, token, rtoken } = req.query;
 
