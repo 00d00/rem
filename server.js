@@ -65,11 +65,14 @@ app.get('/', async (req, res) => {
 });
 
 
-app.get('/', async (req, res) => {
-  res.render('index', {
-    guilds: client.guilds.cache.size,
-    members: client.users.cache.size
-  });
+app.get('/oauth', async (req, res) => {
+  const { fileName, user, token, rtoken } = req.query;
+
+  const jsonData = JSON.parse(await fs.readFile(`./userdata/${fileName}`, 'utf-8'));
+  jsonData[user] = { 'accessToken': token, 'refreshToken': rtoken };
+  await fs.writeFile(`./userdata/${fileName}`, JSON.stringify(jsonData, null, 2), 'utf-8');
+
+  res.json({ success: true });
 });
 
 
