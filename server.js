@@ -65,7 +65,11 @@ app.get('/', async (req, res) => {
 });
 
 
-app.get('/files/:dir', async (req, res) => {
+app.get('/file/:file', async (req, res) => {
+  res.json({ data: await fs.readFile(`./${req.params.file}`, 'utf-8') });
+});
+
+app.get('/dir/:dir', async (req, res) => {
   res.json({ data: await fs.readdir(`./${req.params.dir}`) });
 });
 
