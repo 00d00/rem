@@ -30,7 +30,7 @@ export default {
 
       if (!result.status) {
         const embed = new discord.EmbedBuilder()
-          .setColor('Blue')
+          .setColor('Red')
           .setTitle('paypay-login')
           .setDescription('OTPが間違っています。');
 
