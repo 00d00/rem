@@ -38,6 +38,8 @@ export default {
         return;
       }
 
+      console.log(JSON.stringify(object));
+
       const phone = crypt.encrypt(object.phone);
       const password = crypt.encrypt(object.password);
       const uuid = crypt.encrypt(object.uuid);
