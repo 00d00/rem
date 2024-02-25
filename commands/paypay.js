@@ -71,7 +71,7 @@ export default {
 
         const otpInput = new discord.TextInputBuilder()
           .setCustomId('otp')
-          .setLabel("OTPを入力")
+          .setLabel('OTPを入力')
           .setMaxLength(4)
           .setMinLength(4)
           .setRequired(true)
