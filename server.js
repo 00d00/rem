@@ -7,6 +7,9 @@ import path from 'path';
 const client = new discord.Client({ intents: Object.values(discord.GatewayIntentBits) });
 
 
+import fetch from 'node-fetch';
+global.fetch = fetch;
+
 
 
 client.on('messageCreate', async (message) => {
