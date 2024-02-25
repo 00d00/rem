@@ -111,7 +111,7 @@ export default {
 
       if (!result.status) {
         const error = new discord.EmbedBuilder()
-          .setColor(process.env.COLOR)
+          .setColor('Red')
           .setTitle('paypay-info')
           .setDescription('ログイン情報が変更されたためログインできませんでした。');
 
@@ -126,7 +126,7 @@ export default {
       const payoutableBalance = walletSummary.payoutableBalanceInfo.balance;
 
       const embed = new discord.EmbedBuilder()
-        .setColor(process.env.COLOR)
+        .setColor('Red')
         .setTitle('paypay-info')
         .setDescription(
           `PayPay残高: **${transferableBalance.toLocaleString()}円**` + '\n' +
@@ -166,7 +166,7 @@ export default {
 
       if (!result.status) {
         const error = new discord.EmbedBuilder()
-          .setColor(process.env.COLOR)
+          .setColor('Red')
           .setTitle('paypay-info')
           .setDescription('ログイン情報が変更されたためログインできませんでした。');
 
