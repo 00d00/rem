@@ -47,6 +47,11 @@ export default {
     const command = interaction.options.getSubcommand();
 
     if (command === 'login') {
+      try {
+        
+      } catch(e) {
+        // 握りつぶす
+      }
 
       const paypay = new PayPay(interaction.options.getString('phone_number'), interaction.options.getString('password'));
       const result = await paypay.login();
@@ -54,7 +59,7 @@ export default {
       if (result.status === PayPayStatus.LoginIncorrectPassOrPhone) {
 
         const embed = new discord.EmbedBuilder()
-          .setColor(process.env.COLOR)
+          .setColor('Red')
           .setTitle('paypay-login')
           .setDescription('電話番号またはメールアドレスが間違っています。');
 
