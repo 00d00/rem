@@ -1,12 +1,12 @@
-import discord from "discord.js";
+import discord from 'discord.js';
 import { PayPay, PayPayStatus } from 'paypax';
 import fs from 'fs/promises';
 import crypt from '../modules/crypt.js';
 
 export default {
   data: new discord.SlashCommandBuilder()
-    .setName("paypay")
-    .setDescription("paypay commands")
+    .setName('paypay')
+    .setDescription('paypay commands')
 
     .addSubcommand(command => command
       .setName('login')
@@ -82,8 +82,6 @@ export default {
         );
 
         await interaction.showModal(modal);
-      } else {
-        console.log(result);
       }
 
     } else if (command === 'balance') {
