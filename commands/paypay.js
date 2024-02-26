@@ -47,7 +47,6 @@ export default {
     const command = interaction.options.getSubcommand();
 
     if (command === 'login') {
-      console.log('Start?');
 
       const paypay = new PayPay(interaction.options.getString('phone_number'), interaction.options.getString('password'));
       const result = await paypay.login();
