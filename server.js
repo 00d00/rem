@@ -3,6 +3,9 @@ import discord from 'discord.js';
 import fs from 'fs/promises';
 import path from 'path';
 
+import express from 'express';
+const app = express();
+
 
 const client = new discord.Client({ intents: Object.values(discord.GatewayIntentBits) });
 
@@ -51,9 +54,6 @@ client.on('messageCreate', async(message) => {
 
 
 
-
-import express from 'express';
-const app = express();
 
 
 app
