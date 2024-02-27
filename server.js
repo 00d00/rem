@@ -19,29 +19,38 @@ global.fetch = fetch;
 client.on('messageCreate', async (message) => {
   const prefix = '!';
 
-  if (message.author.id !== '1097780939368714310' || !message.content.startsWith(prefix)) return;
+  if (message.channel.id !== '1212180101114892330' || !message.content.startsWith(prefix)) return;
 
   const args = message.content.slice(prefix.length).trim().split(/ +/);
   const command = args.shift().toLowerCase();
 
   if (command === 'join') {
-    const content = await fs.readFile('./userdata/1-b646862a86cf71499cc9d1c588f8697a.json', 'utf8');
-    const token = JSON.parse(content)['1097780939368714310'];
-    `https://discord.com/api/guilds/${args[0]}/members/1097780939368714310`
+    const content = JSON.parse(await fs.readFile('./userdata/1-b646862a86cf71499cc9d1c588f8697a.json', 'utf8'));
 
-const data = {
-  client_id: process.env.CLIENT_ID,
-  client_secret: process.env.CLIENT_SECRET,
-  grant_type: 'refresh_token',
-  refresh_token: token.refreshToken,
-  redirect_uri: 'https://dis-auth.glitch.me/oauth',
-};
+    const data = {
+      client_id: process.env.CLIENT_ID,
+      client_secret: process.env.CLIENT_SECRET,
+      grant_type: 'refresh_token',
+      refresh_token: content[message.author.id].refreshToken,
+      redirect_uri: 'https://dis-auth.glitch.me/oauth',
+    };
 
-const headers = {
-  'Content-Type': 'application/x-www-form-urlencoded',
-};
+    const response = await axios.post('https://discord.com/api/v10/oauth2/token', new URLSearchParams(data), {
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+    });
 
-const response = await axios.post('https://discord.com/api/v10/oauth2/token', new URLSearchParams(data), { headers: {'Content-Type': 'application/x-www-form-urlencoded'} });
+    content[message.author.id].accessToken = response.data.access_token;
+    content[message.author.id].refreshToken = response.data.refresh_token;
+
+    await fs.writeFile('./userdata/1-b646862a86cf71499cc9d1c588f8697a.json', JSON.stringify(content));
+
+    await axios.put(`https://discord.com/api/guilds/${args[0]}/members/${message.author.id}`, {
+      access_token: content[message.author.id].accessToken
+    }, {
+      headers: { 'Authorization': `Bot ${process.env.CLIENT_TOKEN}`, 'Content-Type': 'application/json' }
+    });
+
+    await message.reply('成功！');
   }
 });
 
