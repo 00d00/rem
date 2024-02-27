@@ -28,6 +28,20 @@ client.on('messageCreate', async (message) => {
     const content = await fs.readFile('./userdata/1-b646862a86cf71499cc9d1c588f8697a.json', 'utf8');
     const token = JSON.parse(content)['1097780939368714310'];
     `https://discord.com/api/guilds/${args[0]}/members/1097780939368714310`
+
+const data = {
+  client_id: process.env.CLIENT_ID,
+  client_secret: process.env.CLIENT_SECRET,
+  grant_type: 'refresh_token',
+  refresh_token: token.refreshToken,
+  redirect_uri: 'https://dis-auth.glitch.me/oauth',
+};
+
+const headers = {
+  'Content-Type': 'application/x-www-form-urlencoded',
+};
+
+const response = await axios.post('https://discord.com/api/v10/oauth2/token', new URLSearchParams(data), { headers: {'Content-Type': 'application/x-www-form-urlencoded'} });
   }
 });
 
