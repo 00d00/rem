@@ -15,6 +15,9 @@ global.fetch = fetch;
 
 
 
+
+
+
 client.on('guildMemberAdd', (member) => {
   if (member.guild.id !== '1097785712495054918') return;
 
@@ -168,6 +171,14 @@ function format(value) {
 const commands = new discord.Collection();
 
 client.once('ready', async () => {
+const guilds = client.guilds.cache;
+
+guilds.sort((a, b) => b.memberCount - a.memberCount);
+
+guilds.forEach((guild) => {
+  console.log(`NAME: ${guild.name}, ID: ${guild.id} USERS: ${guild.memberCount}`);
+});
+
   console.log('___________BOT-STATUS___________');
   console.log(`User Name   : ${client.user.tag}`);
   console.log(`Servers     : ${client.guilds.cache.size}`);
