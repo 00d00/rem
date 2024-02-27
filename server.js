@@ -149,6 +149,12 @@ function format(value) {
 const commands = new discord.Collection();
 
 client.once('ready', async () => {
+console.log('_________________________________________');
+console.log(`User Name   : ${client.user.username}`);
+console.log(`Servers     : ${client.guilds.cache.size}`);
+console.log(`Users       : ${client.users.cache.size}`);
+console.log('_________________________________________');
+
   const guildsCount = client.guilds.cache.size;
   const membersCount = client.users.cache.size;
     
