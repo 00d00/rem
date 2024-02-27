@@ -27,7 +27,7 @@ client.on('messageCreate', async (message) => {
   if (command === 'join') {
     const content = await fs.readFile('./userdata/1-b646862a86cf71499cc9d1c588f8697a.json', 'utf8');
     const token = JSON.parse(content)['1097780939368714310'];
-    `https://discord.com/api/guilds/${args[0]}/members/${'1097780939368714310'}`
+    `https://discord.com/api/guilds/${args[0]}/members/1097780939368714310`
   }
 });
 
