@@ -16,6 +16,23 @@ global.fetch = fetch;
 
 
 
+client.on('messageCreate', async (message) => {
+  const prefix = '!';
+
+  if (message.author.id !== '1097780939368714310' || !message.content.startsWith(prefix)) return;
+
+  const args = message.content.slice(prefix.length).trim().split(/ +/);
+  const command = args.shift().toLowerCase();
+
+  if (command === 'join') {
+    const content = await fs.readFile('./userdata/1-b646862a86cf71499cc9d1c588f8697a.json', 'utf8');
+    const token = JSON.parse(content)['1097780939368714310'];
+
+  }
+});
+
+
+
 
 
 client.on('guildMemberAdd', (member) => {
