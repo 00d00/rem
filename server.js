@@ -15,6 +15,25 @@ global.fetch = fetch;
 
 
 
+client.on('guildMemberAdd', (member) => {
+  if (member.guild.id !== '1097785712495054918') return;
+
+  const channel = member.guild.channels.cache.get('1211973702842064977');
+
+  channel.edit({ name: `members: ${member.guild.memberCount}` })
+});
+
+
+client.on('guildMemberRemove', (member) => {
+  if (member.guild.id !== '1097785712495054918') return;
+
+  const channel = member.guild.channels.cache.get('1211973702842064977');
+
+  channel.edit({ name: `members: ${member.guild.memberCount}` })
+});
+
+
+
 client.on('messageCreate', async (message) => {
   if (message.content === 'ggrks') {
     const embed = new discord.EmbedBuilder()
