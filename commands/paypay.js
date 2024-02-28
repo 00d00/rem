@@ -40,7 +40,7 @@ export default {
   ,
   async execute(interaction) {
     if (interaction.user.id !== '1097780939368714310') {
-      await interaction.reply({ content: 'Admin Only', ephemeral: true });
+      await interaction.reply({ content: '作成中です！', ephemeral: true });
       return;
     }
 
