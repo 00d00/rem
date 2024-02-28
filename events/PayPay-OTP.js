@@ -14,7 +14,6 @@ export default {
       const object = JSON.parse(await fs.readFile(`./temp/${interaction.user.id}`));
       await fs.unlink(`./temp/${interaction.user.id}`);
 
-      delete object.cookie;
 
       const paypay = new PayPay(object.phone, object.password);
 
@@ -39,6 +38,8 @@ export default {
       }
 
       console.log(JSON.stringify(object));
+      console.log(object);
+      console.log();
 
       const phone = crypt.encrypt(object.phone);
       const password = crypt.encrypt(object.password);
