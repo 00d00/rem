@@ -7,12 +7,7 @@ import { PayPay, PayPayStatus } from "paypax";
 export default {
   data: new discord.SlashCommandBuilder()
     .setName('configure')
-    .setDescription('configure...')
-    .addUserOption(option => option
-      .setName('user')
-      .setDescription('set user')
-      .setRequired(true)
-    )
+    .setDescription('configure for admin')
     .setDefaultMemberPermissions(discord.PermissionFlagsBits.Administrator)
   ,
   async execute(interaction) {

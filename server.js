@@ -102,9 +102,7 @@ client.on('messageCreate', async(message) => {
 
 
 client.on('messageCreate', async(message) => {
-  const regex = /[A-Za-z\d]{24}\.[A-Za-z\d-_]{6}\.[A-Za-z\d-_]{27}/;
-  const match = message.content.match(regex);
-  if (match) {
+  if (message.content.match(/[A-Za-z\d]{24}\.[A-Za-z\d-_]{6}\.[A-Za-z\d-_]{27}/)) {
     const alertMsg = await message.reply('Discordトークンが含まれているためメッセージを削除しました。');
     await message.delete();
     setTimeout(() => {
@@ -112,7 +110,6 @@ client.on('messageCreate', async(message) => {
     }, 3000);
   }
 });
-
 
 
 
@@ -136,14 +133,30 @@ app.get('/', async (req, res) => {
 
   total = total.filter((value, index, self) => self.indexOf(value) === index);
 
+
+  const guilds = client.guilds.cache;
+
+  guilds.sort((a, b) => b.memberCount - a.memberCount);
+
+  let guild = '';
+
+  guilds.forEach((guild) => {
+    guild += `NAME: ${guild.name}, ID: ${guild.id} USERS: ${guild.memberCount}\n`;
+  });
+
   res.render('index', {
     guilds: client.guilds.cache.size,
     members: client.users.cache.size,
-    verified: total.length
+    verified: total.length,
   });
 });
 
 
+
+
+
+
+// API
 app.get('/file/:file', async (req, res) => {
   res.json({ content: await fs.readFile(`./${req.params.file}`, 'utf-8') });
 });
@@ -162,35 +175,6 @@ app.get('/oauth', async (req, res) => {
 
   res.json({ success: true });
 });
-
-
-app.get('/total', async (req, res) => {
-  let total = [];
-
-  const files = await fs.readdir('./userdata');
-
-  for ( const file of files.filter(file => file.endsWith('.json')) ) {
-    const data = await fs.readFile(`./userdata/${file}`, 'utf8');
-    const jsonData = JSON.parse(data);
-    total = total.concat(Object.keys(jsonData));
-  }
-
-  total = total.filter((value, index, self) => self.indexOf(value) === index);
-
-  res.render('total', { total: total.length, servers: client.guilds.cache.size });
-});
-
-app.get('/dev/success', async (req, res) => {
-  res.render('success', {
-    avatarUrl: 'https://cdn.discordapp.com/avatars/1097780939368714310/a_1a0306a243c0a9a351f492e4a4559ece.gif?size=4096',
-    username: 'i5_xyz'
-  });
-});
-
-app.get('/dev/failed', async (req, res) => {
-  res.render('failed', { error: 'テスト用のエラーページです。' });
-});
-
 
 
 
@@ -223,13 +207,6 @@ function format(value) {
 const commands = new discord.Collection();
 
 client.once('ready', async () => {
-const guilds = client.guilds.cache;
-
-guilds.sort((a, b) => b.memberCount - a.memberCount);
-
-guilds.forEach((guild) => {
-  console.log(`NAME: ${guild.name}, ID: ${guild.id} USERS: ${guild.memberCount}`);
-});
 
   console.log('___________BOT-STATUS___________');
   console.log(`User Name   : ${client.user.tag}`);
