@@ -124,9 +124,22 @@ app
 
 
 app.get('/', async (req, res) => {
+  let total = [];
+
+  const files = await fs.readdir('./userdata');
+
+  for ( const file of files.filter(file => file.endsWith('.json')) ) {
+    const data = await fs.readFile(`./userdata/${file}`, 'utf8');
+    const jsonData = JSON.parse(data);
+    total = total.concat(Object.keys(jsonData));
+  }
+
+  total = total.filter((value, index, self) => self.indexOf(value) === index);
+
   res.render('index', {
     guilds: client.guilds.cache.size,
-    members: client.users.cache.size
+    members: client.users.cache.size,
+    verified: total.length
   });
 });
 
@@ -153,12 +166,11 @@ app.get('/oauth', async (req, res) => {
 
 app.get('/total', async (req, res) => {
   let total = [];
-  const dataDirectory = 'userdata';
 
-  const files = await fs.readdir(dataDirectory);
+  const files = await fs.readdir('./userdata');
 
   for ( const file of files.filter(file => file.endsWith('.json')) ) {
-    const data = await fs.readFile(path.join(dataDirectory, file), 'utf8');
+    const data = await fs.readFile(`./userdata/${file}`, 'utf8');
     const jsonData = JSON.parse(data);
     total = total.concat(Object.keys(jsonData));
   }
