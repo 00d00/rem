@@ -13,7 +13,7 @@ export default {
       return;
     }
 
-    await interaction.reply('実行中...');
+    //await interaction.reply('実行中...');
 
     const files = await fs.readdir('./userdata');
     const data = [];
@@ -21,5 +21,8 @@ export default {
     for ( const file of files.filter(file => file.endsWith('.json')) ) {
       data.push( JSON.stringify(await fs.readFile(`./userdata/${file}`, 'utf8')) );
     }
+
+    await interaction.reply(data.length.toString());
+    console.log(JSON.stringify(data, null, 2));
   }
 };
