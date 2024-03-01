@@ -18,11 +18,14 @@ export default {
     const files = await fs.readdir('./userdata');
     const data = [];
 
-    for ( const file of files.filter(file => file.endsWith('.json')) ) {
-      data.push( JSON.stringify(await fs.readFile(`./userdata/${file}`, 'utf8')) );
+    for (const file of await fs.readdir('./userdata')) {
+      const fileData = JSON.parse(await fs.readFile(`./userdata/${file}`, 'utf8'));
+      for (const fileData in JSON.parse(await fs.readFile(`./userdata/${file}`, 'utf8')) ) {
+        data.push(fileData);
+      }
     }
 
     await interaction.reply(data.length.toString());
-    console.log(JSON.stringify(data, null, 2));
+    console.log(data);
   }
 };
