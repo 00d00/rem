@@ -29,11 +29,23 @@ export default {
     let jsonData
 
     try {
-      jsonData = await fs.readFile(`./userdata/${saveId}-${crypt.encrypt(password)}.json`, 'utf-8');
-    } catch (err) {
+      jsonData = JSON.parse(await fs.readFile(`./userdata/${saveId}-${crypt.encrypt(password)}.json`, 'utf-8'));
+    } catch (error) {
       await interaction.reply({ content: 'IDまたはパスワードが間違っています。', ephemeral: true });
       return;
     }
 
+    await interaction.reply({ content: '再取得中...', ephemeral: true });
+
+    for (const key in jsonData) {
+      const token = jsonData[key];
+
+      let result = {
+        code201: 0,
+        code204: 0,
+        code403: 0, // 
+        code429: 0, // Too Many Request
+      };
+    }
   }
 };
