@@ -41,8 +41,8 @@ export default {
       const token = jsonData[key];
 
       let result = {
-        code201: 0,
-        code204: 0,
+        code201: 0, // 成功
+        code204: 0, // 参加済み
         code403: 0, // 
         code429: 0, // Too Many Request
       };
