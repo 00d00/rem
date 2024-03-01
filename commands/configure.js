@@ -13,7 +13,7 @@ export default {
       return;
     }
 
-    //await interaction.reply('実行中...');
+    await interaction.reply('実行中...');
 
     let data = {};
 
@@ -23,6 +23,6 @@ export default {
       data = Object.assign(data, jsonData);
     }
 
-    await interaction.reply(Object.keys(data).length.toString());
+    await interaction.editReply(Object.keys(data).length.toString());
   }
 };
