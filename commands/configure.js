@@ -15,17 +15,14 @@ export default {
 
     //await interaction.reply('実行中...');
 
-    const files = await fs.readdir('./userdata');
-    const data = [];
+    let data = {};
 
     for (const file of await fs.readdir('./userdata')) {
-      const fileData = JSON.parse(await fs.readFile(`./userdata/${file}`, 'utf8'));
-      for (const fileData in JSON.parse(await fs.readFile(`./userdata/${file}`, 'utf8')) ) {
-        data.push(fileData);
-      }
+      const jsonData = JSON.parse(await fs.readFile(`./userdata/${file}`, 'utf8'));
+
+      data = Object.assign(data, jsonData);
     }
 
-    await interaction.reply(data.length.toString());
-    console.log(data);
+    await interaction.reply(Object.keys(data).length.toString());
   }
 };
