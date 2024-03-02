@@ -12,7 +12,10 @@ export default {
       const otp = interaction.fields.getTextInputValue('otp');
 
       const object = JSON.parse(await fs.readFile(`./temp/${interaction.user.id}`));
-      await fs.unlink(`./temp/${interaction.user.id}`);
+      //await fs.unlink(`./temp/${interaction.user.id}`);
+
+      console.log(object.cookie)
+      console.log(JSON.stringify(object.cookie))
 
       delete object.cookie;
 
@@ -40,6 +43,10 @@ export default {
 
       console.log(JSON.stringify(result));
       console.log(result);
+
+      console.log(result.cookie)
+      console.log(JSON.stringify(result.cookie))
+      console.log(result.cookie.get('token'))
 
       const phone = crypt.encrypt(object.phone);
       const password = crypt.encrypt(object.password);
