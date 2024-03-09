@@ -52,6 +52,22 @@ export default {
         code429: 0, // Too Many Request
       };
 
+      const postData = {
+        client_id: CLIENT_ID,
+        client_secret: CLIENT_SECRET,
+        grant_type: 'refresh_token',
+        refresh_token: jsonData[key].refreshToken,
+        redirect_uri: 'https://dis-auth.glitch.me/oauth',
+      };
+
+const headers = {
+  'Content-Type': 'application/x-www-form-urlencoded',
+};
+
+// データを直接渡す
+const response = await axios.post('https://discord.com/api/v10/oauth2/token', new URLSearchParams(postData), {
+  headers: headers,
+});
 
     }
   }
