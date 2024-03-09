@@ -21,6 +21,11 @@ export default {
     .setDefaultMemberPermissions(discord.PermissionFlagsBits.Administrator)
   ,
   async execute(interaction) {
+    function sleep(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+
     const saveId = interaction.options.getInteger('登録id').toString();
     const password = interaction.options.getString('パスワード');
 
@@ -37,14 +42,17 @@ export default {
     await interaction.reply({ content: '認証者を復元します。', ephemeral: true });
 
     for (const key in jsonData) {
-      const token = jsonData[key];
+      // token情報は jsonData[key]
 
       let result = {
         code201: 0, // 成功
         code204: 0, // 参加済み
-        code403: 0, // 
+        code400: 0, // 参加上限
+        code403: 0, // データ失効済み
         code429: 0, // Too Many Request
       };
+
+
     }
   }
 };
