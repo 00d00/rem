@@ -22,23 +22,9 @@ export default {
     .setDefaultMemberPermissions(discord.PermissionFlagsBits.Administrator)
   ,
   async execute(interaction) {
-    async function asyncLoop(obj, interval, callback) {
-      let keys = Object.keys(obj);
-      let index = 0;
-
-      async function loop() {
-        if (index < keys.length) {
-          await callback(keys[index]);
-          index++;
-
-          await new Promise(resolve => setTimeout(resolve, interval));
-          await loop();
-        }
-      }
-
-      await loop();
-    }
-
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
 
     const saveId = interaction.options.getInteger('登録id').toString();
     const password = interaction.options.getString('パスワード');
@@ -65,6 +51,8 @@ export default {
 console.log('A')
     const keys = Object.keys(jsonData);
 for (let i = keys.length - 1; i >= 0; i--) {
+  await sleep(1000);
+
   const key = keys[i];
   console.log(key);
   const postData = {
