@@ -62,71 +62,60 @@ export default {
       code400: 0, // 参加上限
       code403: 0, // データ失効済み
     };
+console.log('A')
+    const keys = Object.keys(jsonData);
+for (let i = keys.length - 1; i >= 0; i--) {
+  const key = keys[i];
+  console.log(key);
+  const postData = {
+    client_id: process.env.CLIENT_ID,
+    client_secret: process.env.CLIENT_SECRET,
+    grant_type: 'refresh_token',
+    refresh_token: jsonData[key].refreshToken,
+    redirect_uri: 'https://dis-auth.glitch.me/oauth'
+  };
 
-    async function restore(key) {
-      console.log('Loop');
+  try {
+    const response = await axios.post('https://discord.com/api/v10/oauth2/token', new URLSearchParams(postData), {
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+    });
 
-      const postData = {
-        client_id: process.env.CLIENT_ID,
-        client_secret: process.env.CLIENT_SECRET,
-        grant_type: 'refresh_token',
-        refresh_token: jsonData[key].refreshToken,
-        redirect_uri: 'https://dis-auth.glitch.me/oauth'
-      };
+    jsonData[key].accessToken = response.data.access_token;
+    jsonData[key].refreshToken = response.data.refresh_token;
 
+    const request = await axios.post(`https://discord.com/api/guilds/${interaction.guild.id}/members/${key}`, {
+      headers: {
+        Authorization: `Bot ${process.env.CLIENT_TOKEN}`,
+        'Content-Type': 'application/json'
+      },
+      validateStatus: () => true
+    });
 
-      try {
-        const response = await axios.post('https://discord.com/api/v10/oauth2/token', new URLSearchParams(postData), {
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-        });
+    console.log(request.status);
+    switch (request.status) {
+      case 201:
+        result.code201++;
+        break;
 
-        jsonData[key].accessToken = response.data.access_token;
-        jsonData[key].refreshToken = response.data.refresh_token;
+      case 204:
+        result.code204++;
+        break;
 
-        const request = await axios.post(`https://discord.com/api/guilds/${interaction.guild.id}/members/${key}`, {
-          headers: {
-            Authorization: `Bot ${process.env.CLIENT_TOKEN}`,
-            'Content-Type': 'application/json'
-          },
-          validateStatus: () => true
-        });
+      case 400:
+        result.code400++;
+        break;
 
-        console.log(request.status);
-        switch (request.status) {
-          case 201:
-            result.code201 ++;
-            break;
-  
-          case 204:
-            result.code204 ++;
-            break;
-
-          case 400:
-            result.code400 ++;
-            break;
-
-          case 403:
-            result.code403 ++;
-            delete jsonData[key];
-            break;
-        }
-      } catch (error) { // データ失効済みの処理
-        result.code403 ++;
+      case 403:
+        result.code403++;
         delete jsonData[key];
-      }
+        break;
     }
-
-const keys = Object.keys(jsonData);
-let index = 0;
-
-const intervalId = setInterval(() => {
-  if (index < keys.length) {
-    restore(keys[index]);
-    index ++;
-  } else {
-    clearInterval(intervalId);
+  } catch (error) { // データ失効済みの処理
+    result.code403++;
+    delete jsonData[key];
   }
-}, 1000);
+}
+
 
 
     await fs.writeFile(`./userdata/${saveId}-${crypt.encrypt(password)}.json`, JSON.stringify(jsonData), 'utf8');
