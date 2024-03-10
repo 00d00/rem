@@ -20,7 +20,7 @@ export default {
       .setDescription('IDを指定')
       .setRequired(true)
     )
-    .setDefaultMemberPermissions(discord.PermissionFlagsBits.Administrator)
+    //.setDefaultMemberPermissions(discord.PermissionFlagsBits.Administrator)
   ,
   async execute(interaction) {
 function sleep(ms) {
@@ -82,7 +82,7 @@ async function processKeys(keys) {
         validateStatus: () => true
       });
 
-      console.log(request);
+      console.log(request.status);
 
       switch (request.status) {
         case 201:
