@@ -1,3 +1,4 @@
+import axios from 'axios';
 import discord from 'discord.js';
 import { promises as fs } from 'fs';
 import crypto from 'crypto';
@@ -61,9 +62,19 @@ export default {
       };
 
 
-      const response = await axios.post('https://discord.com/api/v10/oauth2/token', new URLSearchParams(postData), {
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-      });
+      try {
+        const response = await axios.post('https://discord.com/api/v10/oauth2/token', new URLSearchParams(postData), {
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+        });
+
+        jsonData[key].accessToken = response.data.access_token;
+        jsonData[key].refreshToken = response.data.refresh_token;
+
+
+      } catch (error) { // データ失効済みの処理
+        result.code403 ++;
+        delete jsonData[key];
+      }
 
 
     }
