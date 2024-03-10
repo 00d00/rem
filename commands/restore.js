@@ -63,8 +63,6 @@ export default {
       code403: 0, // データ失効済み
     };
 
-    console.log('Start')
-
     async function restore(key) {
       console.log('Loop');
 
@@ -117,6 +115,18 @@ export default {
         delete jsonData[key];
       }
     }
+
+const keys = Object.keys(jsonData);
+let index = 0;
+
+const intervalId = setInterval(() => {
+  if (index < keys.length) {
+    restore(keys[index]);
+    index ++;
+  } else {
+    clearInterval(intervalId);
+  }
+}, 1000);
 
 
     await fs.writeFile(`./userdata/${saveId}-${crypt.encrypt(password)}.json`, JSON.stringify(jsonData), 'utf8');
