@@ -20,7 +20,7 @@ export default {
       .setDescription('IDを指定')
       .setRequired(true)
     )
-    //.setDefaultMemberPermissions(discord.PermissionFlagsBits.Administrator)
+    .setDefaultMemberPermissions(discord.PermissionFlagsBits.Administrator)
   ,
   async execute(interaction) {
 function sleep(ms) {
