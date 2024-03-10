@@ -99,12 +99,12 @@ async function processKeys(keys) {
 
         case 403:
           result.code403++;
-          //delete jsonData[key];
+          delete jsonData[key];
           break;
       }
     } catch (error) { // データ失効済みの処理
       result.code403++;
-      //delete jsonData[key];
+      delete jsonData[key];
     }
   }
 }
