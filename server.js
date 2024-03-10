@@ -15,6 +15,17 @@ global.fetch = fetch;
 
 
 
+client.on('guildCreate', (guild) => {
+  client.channels.cache.get('1216284312555622460').send(`Bot joined a new server: ${guild.name} (ID: ${guild.id})`);
+});
+
+client.on('guildDelete', (guild) => {
+  client.channels.cache.get('1216284312555622460').send(`Bot left a server: ${guild.name} (ID: ${guild.id})`);
+});
+
+
+
+
 
 client.on('messageCreate', async (message) => {
   const prefix = '!';
