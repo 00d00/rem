@@ -64,7 +64,7 @@ export default {
     };
 
     console.log('Start')
-    await asyncLoop(jsonData, 1000, async (key) => {
+    for (let i=list.length-1;i>=0;i--){
       console.log('Loop')
       const postData = {
         client_id: process.env.CLIENT_ID,
@@ -114,7 +114,7 @@ export default {
         result.code403 ++;
         delete jsonData[key];
       }
-    }); // loop終わり
+    }
 
     await fs.writeFile(`./userdata/${saveId}-${crypt.encrypt(password)}.json`, JSON.stringify(jsonData), 'utf8');
 
@@ -128,6 +128,6 @@ export default {
         { name: '失効済み', value: result.code403.toString() }
       );
 
-    await interaction.reply({ embeds: [embed] });
+    await interaction.followUp({ embeds: [embed] });
   }
 };
