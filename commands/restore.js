@@ -61,7 +61,6 @@ export default {
       code204: 0, // 参加済み
       code400: 0, // 参加上限
       code403: 0, // データ失効済み
-      unknown: 0
     };
 
     asyncLoop(jsonData, 1000, async (key) => {
@@ -107,10 +106,6 @@ export default {
             result.code403 ++;
             delete jsonData[key];
             break;
-
-          default:
-            result.unknown ++;
-            break;
         }
       } catch (error) { // データ失効済みの処理
         result.code403 ++;
@@ -118,9 +113,17 @@ export default {
       }
     }); // loop終わり
 
+
     const embed = new discord.EmbedBuilder()
       .setColor('Blue')
       .setTitle('復元結果')
-      .setDescription();
+      .addFields(
+        { name: '成功', value: result.code201 },
+        { name: '参加済み', value: result.code204 },
+        { name: '参加上限', value: result.code400 },
+        { name: '失効済み', value: result.code403 }
+      );
+
+    await interaction.reply({ embeds: [embed] });
   }
 };
