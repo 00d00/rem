@@ -23,11 +23,11 @@ export default {
       .setTitle('nuke')
       .setDescription('本当にチャンネル履歴を削除しますか？');
 
-    const res = await interaction.reply({ embeds: [embed], components: [row] });
+    const response = await interaction.reply({ embeds: [embed], components: [row] });
 
     try {
-      const confirmation = await res.awaitMessageComponent({
-        filter: (i) => i.user.id === interaction.user.id,
+      const confirmation = await response.awaitMessageComponent({
+        filter: i => i.user.id === interaction.user.id,
         time: 60000,
       });
 
@@ -69,7 +69,7 @@ export default {
           .setDescription('キャンセルしました。');
 
         confirmation.reply({ embeds: [embed], components: [row] });
-        await res.delete();
+        await response.delete();
       }
     } catch (error) {
       const confirm = new discord.ButtonBuilder()
@@ -91,7 +91,7 @@ export default {
         .setDescription('タイムアウトしました。');
 
       interaction.followUp({ embeds: [embed], components: [row]});
-      await res.delete();
+      await response.delete();
     }
   }
 };
