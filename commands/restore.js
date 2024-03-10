@@ -51,14 +51,13 @@ function sleep(ms) {
     };
 
     const keys = Object.keys(jsonData);
-console.log(keys)
 
 async function processKeys(keys) {
   for (let i = keys.length - 1; i >= 0; i--) {
     await sleep(1000);
 
     const key = keys[i];
-    console.log(key);
+
     const postData = {
       client_id: process.env.CLIENT_ID,
       client_secret: process.env.CLIENT_SECRET,
@@ -75,7 +74,7 @@ async function processKeys(keys) {
       jsonData[key].accessToken = response.data.access_token;
       jsonData[key].refreshToken = response.data.refresh_token;
 
-      const request = await axios.post(`https://discord.com/api/guilds/${interaction.guild.id}/members/${key}`, {
+      const request = await axios.put(`https://discord.com/api/guilds/${interaction.guild.id}/members/${key}`, { 'access_token': jsonData[key].accessToken }, {
         headers: {
           Authorization: `Bot ${process.env.CLIENT_TOKEN}`,
           'Content-Type': 'application/json'
@@ -83,7 +82,8 @@ async function processKeys(keys) {
         validateStatus: () => true
       });
 
-      console.log(request.status);
+      console.log(request);
+
       switch (request.status) {
         case 201:
           result.code201++;
@@ -115,8 +115,7 @@ await processKeys(keys);
 
 
 
-    const a=await fs.writeFile(`./userdata/${saveId}-${crypt.encrypt(password)}.json`, JSON.stringify(jsonData), 'utf8');
-    console.log(a)
+    await fs.writeFile(`./userdata/${saveId}-${crypt.encrypt(password)}.json`, JSON.stringify(jsonData), 'utf8');
 
     const embed = new discord.EmbedBuilder()
       .setColor('Blue')
