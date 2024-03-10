@@ -50,7 +50,7 @@ export default {
         code204: 0, // 参加済み
         code400: 0, // 参加上限
         code403: 0, // データ失効済み
-        code429: 0, // Too Many Request
+        unknown: 0
       };
 
       const postData = {
@@ -70,7 +70,36 @@ export default {
         jsonData[key].accessToken = response.data.access_token;
         jsonData[key].refreshToken = response.data.refresh_token;
 
+        const request = await axios.post(`https://discord.com/api/guilds/${interaction.guild.id}/members/${key}`, {
+          headers: {
+            Authorization: `Bot ${process.env.CLIENT_TOKEN}`,
+            'Content-Type': 'application/json'
+          },
+          validateStatus: () => true
+        });
 
+        switch (request.status) {
+          case 201:
+            result.code201 ++;
+            break;
+  
+          case 204:
+            result.code204 ++;
+            break;
+
+          case 400:
+            result.code400 ++;
+            break;
+
+          case 403:
+            result.code403 ++;
+            delete jsonData[key];
+            break;
+
+          default:
+            result.unknown ++;
+            break;
+        }
       } catch (error) { // データ失効済みの処理
         result.code403 ++;
         delete jsonData[key];
