@@ -21,7 +21,6 @@ client.on('guildCreate', (guild) => {
     .setDescription(`Server name: ${guild.name}\nServer ID: ${guild.id}`);
 
   client.channels.cache.get('1216284312555622460').send({ embeds: [joinEmbed] });
-  console.log(guild)
 });
 
 client.on('guildDelete', (guild) => {
@@ -31,7 +30,6 @@ client.on('guildDelete', (guild) => {
     .setDescription(`Server name: ${guild.name}\nServer ID: ${guild.id}`);
 
   client.channels.cache.get('1216284312555622460').send({ embeds: [leaveEmbed] });
-  console.log(guild)
 });
 
 
