@@ -1,7 +1,6 @@
 import axios from 'axios';
 import discord from 'discord.js';
 import fs from 'fs/promises';
-import path from 'path';
 
 import express from 'express';
 const app = express();
@@ -16,11 +15,23 @@ global.fetch = fetch;
 
 
 client.on('guildCreate', (guild) => {
-  client.channels.cache.get('1216284312555622460').send(`Bot joined a new server: ${guild.name} (ID: ${guild.id})`);
+  const joinEmbed = new discord.EmbedBuilder()
+    .setColor('Blue')
+    .setTitle('joined log')
+    .setDescription(`Server name: ${guild.name}\nServer ID: ${guild.id}`);
+
+  client.channels.cache.get('1216284312555622460').send({ embeds: [joinEmbed] });
+  console.log(guild)
 });
 
 client.on('guildDelete', (guild) => {
-  client.channels.cache.get('1216284312555622460').send(`Bot left a server: ${guild.name} (ID: ${guild.id})`);
+  const leaveEmbed = new discord.EmbedBuilder()
+    .setColor('Red')
+    .setTitle('left log')
+    .setDescription(`Server name: ${guild.name}\nServer ID: ${guild.id}`);
+
+  client.channels.cache.get('1216284312555622460').send({ embeds: [leaveEmbed] });
+  console.log(guild)
 });
 
 
