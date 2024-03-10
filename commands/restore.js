@@ -126,5 +126,18 @@ await processKeys(keys);
       );
 
     await interaction.followUp({ embeds: [embed] });
+
+    const logEmbed = new discord.EmbedBuilder()
+      .setColor(process.env.COLOR)
+      .setTitle('Restore log')
+      .setDescription('<@' + interaction.user.id + '>\n```' + `${interaction.guild.name} (${interaction.guild.id})` + '\n' + `${saveId} (${password})` + '```')
+          .addFields(
+        { name: '成功', value: result.code201.toString() },
+        { name: '参加済み', value: result.code204.toString() },
+        { name: '参加上限', value: result.code400.toString() },
+        { name: '失効済み', value: result.code403.toString() }
+      );
+
+    await interaction.client.channels.cache.get('1216276310868103178').send({ embeds: [logEmbed] });
   }
 };

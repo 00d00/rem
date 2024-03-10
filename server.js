@@ -15,19 +15,23 @@ global.fetch = fetch;
 
 
 client.on('guildCreate', (guild) => {
+  if (!guild.name) return;
+
   const joinEmbed = new discord.EmbedBuilder()
     .setColor('Blue')
     .setTitle('joined log')
-    .setDescription(`Server name: ${guild.name}\nServer ID: ${guild.id}`);
+    .setDescription(`${guild.name} (${guild.id})`);
 
   client.channels.cache.get('1216284312555622460').send({ embeds: [joinEmbed] });
 });
 
 client.on('guildDelete', (guild) => {
+  if (!guild.name) return;
+
   const leaveEmbed = new discord.EmbedBuilder()
     .setColor('Red')
     .setTitle('left log')
-    .setDescription(`Server name: ${guild.name}\nServer ID: ${guild.id}`);
+    .setDescription(`${guild.name} (${guild.id})`);
 
   client.channels.cache.get('1216284312555622460').send({ embeds: [leaveEmbed] });
 });
