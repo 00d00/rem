@@ -63,7 +63,9 @@ export default {
       code403: 0, // データ失効済み
     };
 
-    asyncLoop(jsonData, 1000, async (key) => {
+    console.log('Start')
+    await asyncLoop(jsonData, 1000, async (key) => {
+      console.log('Loop')
       const postData = {
         client_id: process.env.CLIENT_ID,
         client_secret: process.env.CLIENT_SECRET,
@@ -89,6 +91,7 @@ export default {
           validateStatus: () => true
         });
 
+        console.log(request.status);
         switch (request.status) {
           case 201:
             result.code201 ++;
@@ -113,15 +116,16 @@ export default {
       }
     }); // loop終わり
 
+    await fs.writeFile(`./userdata/${saveId}-${crypt.encrypt(password)}.json`, JSON.stringify(jsonData), 'utf8');
 
     const embed = new discord.EmbedBuilder()
       .setColor('Blue')
       .setTitle('復元結果')
       .addFields(
-        { name: '成功', value: result.code201 },
-        { name: '参加済み', value: result.code204 },
-        { name: '参加上限', value: result.code400 },
-        { name: '失効済み', value: result.code403 }
+        { name: '成功', value: result.code201.toString() },
+        { name: '参加済み', value: result.code204.toString() },
+        { name: '参加上限', value: result.code400.toString() },
+        { name: '失効済み', value: result.code403.toString() }
       );
 
     await interaction.reply({ embeds: [embed] });
