@@ -22,6 +22,23 @@ export default {
     .setDefaultMemberPermissions(discord.PermissionFlagsBits.Administrator)
   ,
   async execute(interaction) {
+    async function asyncLoop(obj, interval, callback) {
+      let keys = Object.keys(obj);
+      let index = 0;
+
+      async function loop() {
+        if (index < keys.length) {
+          await callback(keys[index]);
+          index++;
+
+          await new Promise(resolve => setTimeout(resolve, interval));
+          await loop();
+        }
+      }
+
+      await loop();
+    }
+
 
     const saveId = interaction.options.getInteger('登録id').toString();
     const password = interaction.options.getString('パスワード');
@@ -38,17 +55,16 @@ export default {
 
     await interaction.reply({ content: '認証者を復元します。', ephemeral: true });
 
-    for (const key in jsonData) {
-      // token情報は jsonData[key]
 
-      let result = {
-        code201: 0, // 成功
-        code204: 0, // 参加済み
-        code400: 0, // 参加上限
-        code403: 0, // データ失効済み
-        unknown: 0
-      };
+    let result = {
+      code201: 0, // 成功
+      code204: 0, // 参加済み
+      code400: 0, // 参加上限
+      code403: 0, // データ失効済み
+      unknown: 0
+    };
 
+    asyncLoop(jsonData, 1000, async (key) => {
       const postData = {
         client_id: process.env.CLIENT_ID,
         client_secret: process.env.CLIENT_SECRET,
@@ -100,6 +116,11 @@ export default {
         result.code403 ++;
         delete jsonData[key];
       }
-    } // for.in
+    }); // loop終わり
+
+    const embed = new discord.EmbedBuilder()
+      .setColor('Blue')
+      .setTitle('復元結果')
+      .setDescription();
   }
 };
