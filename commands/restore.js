@@ -64,8 +64,10 @@ export default {
     };
 
     console.log('Start')
-    for (let i=list.length-1;i>=0;i--){
-      console.log('Loop')
+
+    async function restore(key) {
+      console.log('Loop');
+
       const postData = {
         client_id: process.env.CLIENT_ID,
         client_secret: process.env.CLIENT_SECRET,
@@ -115,6 +117,7 @@ export default {
         delete jsonData[key];
       }
     }
+
 
     await fs.writeFile(`./userdata/${saveId}-${crypt.encrypt(password)}.json`, JSON.stringify(jsonData), 'utf8');
 
