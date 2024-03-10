@@ -82,8 +82,6 @@ async function processKeys(keys) {
         validateStatus: () => true
       });
 
-      console.log(request.status);
-
       switch (request.status) {
         case 201:
           result.code201++;

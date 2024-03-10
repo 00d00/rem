@@ -208,11 +208,6 @@ const commands = new discord.Collection();
 
 client.once('ready', async () => {
 
-  console.log('___________BOT-STATUS___________');
-  console.log(`User Name   : ${client.user.tag}`);
-  console.log(`Servers     : ${client.guilds.cache.size}`);
-  console.log(`Users       : ${client.users.cache.size}`);
-  console.log('________________________________');
 
   const guildsCount = client.guilds.cache.size;
   const membersCount = client.users.cache.size;
@@ -230,9 +225,14 @@ client.once('ready', async () => {
     const command = (await import(`./commands/${file}`)).default;
 
     commands[command.data.name] = command;
-    console.log(`Loaded command: ${command.data.name}`);
   }
 
+  console.log('___________BOT-STATUS___________');
+  console.log(`User Name   : ${client.user.tag}`);
+  console.log(`Servers     : ${client.guilds.cache.size}`);
+  console.log(`Users       : ${client.users.cache.size}`);
+  console.log(`Commands    : ${jsFiles.length}`);
+  console.log('________________________________');
 
 
   const subDirs = (
