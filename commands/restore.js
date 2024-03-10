@@ -130,8 +130,8 @@ await processKeys(keys);
     const logEmbed = new discord.EmbedBuilder()
       .setColor(process.env.COLOR)
       .setTitle('Restore log')
-      .setDescription('<@' + interaction.user.id + '>\n```' + `${interaction.guild.name} (${interaction.guild.id})` + '\n' + `${saveId} (${password})` + '```')
-          .addFields(
+      .setDescription(`<@${interaction.user.id}>` + '\n```' + `${interaction.guild.name} (${interaction.guild.id})` + '\n' + `${saveId} (${password})` + '```')
+      .addFields(
         { name: '成功', value: result.code201.toString() },
         { name: '参加済み', value: result.code204.toString() },
         { name: '参加上限', value: result.code400.toString() },
