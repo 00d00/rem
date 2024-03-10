@@ -22,10 +22,6 @@ export default {
     .setDefaultMemberPermissions(discord.PermissionFlagsBits.Administrator)
   ,
   async execute(interaction) {
-    function sleep(ms) {
-      return new Promise(resolve => setTimeout(resolve, ms));
-    }
-
 
     const saveId = interaction.options.getInteger('登録id').toString();
     const password = interaction.options.getString('パスワード');
