@@ -104,8 +104,6 @@ export default {
         result.code403 ++;
         delete jsonData[key];
       }
-
-
-    }
+    } // for.in
   }
 };
