@@ -14,6 +14,13 @@ global.fetch = fetch;
 
 
 
+
+
+
+
+
+
+
 client.on('guildCreate', (guild) => {
   if (!guild.name) return;
 
