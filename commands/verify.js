@@ -23,7 +23,8 @@ export default {
       .setDescription('IDを指定')
       .setRequired(false)
     )
-    .setDefaultMemberPermissions(discord.PermissionFlagsBits.Administrator),
+    .setDefaultMemberPermissions(discord.PermissionFlagsBits.Administrator)
+  ,
   async execute(interaction) {
     // 引数取得
     const role = interaction.options.getRole('ロール');
