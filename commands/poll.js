@@ -63,8 +63,7 @@ export default {
     const message = await interaction.reply({ embeds: [embed] });
 
     choice.forEach((item, index) => {
-      console.log(message);
-      message.react(letters[index]);
+      await message.react(letters[index]);
     });
   }
 };
