@@ -57,11 +57,14 @@ export default {
 
     const embed = new discord.EmbedBuilder()
       .setColor('Blue')
+      .setTitle(`:bar_chart: ${title}`)
       .setDescription(description)
 
-    interaction.reply({
-      content: `:bar_chart: ${title}`,
-      embeds: [embed]
+    const message = await interaction.reply({ embeds: [embed] });
+
+    choice.forEach((item, index) => {
+      console.log(message);
+      message.react(letters[index]);
     });
   }
 };
