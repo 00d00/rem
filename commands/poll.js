@@ -47,11 +47,13 @@ export default {
       interaction.options.getString('choice_e'),
     ];
 
-  
     const embed = new discord.EmbedBuilder()
-      .setColor('Blue')
-      .setTitle()
-      .setDescription()
+      .setColor('Blue');
+
+    choice.forEach((item, index) => {'regional_indicator_'
+      const c = ['a', 'b', 'c', 'd', 'e'];
+    });
+
     interaction.reply({
       content: `:bar_chart: ${title}`,
       embeds: [embed]
