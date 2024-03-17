@@ -1,4 +1,4 @@
-import { SlashCommandBuilder } from '@discordjs/builders';
+import { SlashCommandBuilder } from 'discord.js';
 import { QueryType } from 'discord-player';
 import { entersState, AudioPlayerStatus, createAudioPlayer, createAudioResource, joinVoiceChannel, StreamType } from '@discordjs/voice';
 import ytdl from 'ytdl-core';
@@ -7,12 +7,13 @@ import ytsr from 'ytsr';
 export default {
     data: new SlashCommandBuilder()
         .setName('play')
-        .setDescription('音楽を検索して再生します')
-        .addStringOption(option =>
-            option.setName('keyword')
-                .setDescription('キーワードまたはurl')
-                .setRequired(true))
-,
+        .setDescription('音楽を再生します')
+        .addStringOption(option => option
+          .setName('keyword')
+          .setDescription('キーワードまたはurl')
+          .setRequired(true)
+        )
+    ,
     async execute(interaction) {
         const keyword = interaction.options.getString('keyword');
 
@@ -44,9 +45,9 @@ export default {
         connection.subscribe(player);
 
         const stream = ytdl(ytdl.getURLVideoID(url), {
-            filter: format => format.audioCodec === 'opus' && format.container === 'webm', //webm opus
+            filter: format => format.audioCodec === 'opus' && format.container === 'webm',
             quality: 'highest',
-            highWaterMark: 32 * 1024 * 1024, // https://github.com/fent/node-ytdl-core/issues/902
+            highWaterMark: 32 * 1024 * 1024,
         });
         const resource = createAudioResource(stream, {
             inputType: StreamType.WebmOpus
