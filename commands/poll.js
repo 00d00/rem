@@ -47,12 +47,17 @@ export default {
       interaction.options.getString('choice_e'),
     ];
 
-    const embed = new discord.EmbedBuilder()
-      .setColor('Blue');
+    const letters = ['🇦', '🇧', '🇨', '🇩', '🇪'];
 
-    choice.forEach((item, index) => {'regional_indicator_'
-      const c = ['a', 'b', 'c', 'd', 'e'];
+    let description = '';
+
+    choice.forEach((item, index) => {
+      if (item) description += `${letters[index]} ${choice[index]}` + '\n';
     });
+
+    const embed = new discord.EmbedBuilder()
+      .setColor('Blue')
+      .setDescription(description)
 
     interaction.reply({
       content: `:bar_chart: ${title}`,
