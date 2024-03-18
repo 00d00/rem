@@ -39,13 +39,15 @@ export default {
   async execute(interaction) {
     const title = interaction.options.getString('title');
 
-    const choice = [
+    let choice = [
       interaction.options.getString('choice_a'),
       interaction.options.getString('choice_b'),
       interaction.options.getString('choice_c'),
       interaction.options.getString('choice_d'),
       interaction.options.getString('choice_e'),
     ];
+
+    choice = choice.filter(item => item);
 
     const letters = ['🇦', '🇧', '🇨', '🇩', '🇪'];
 
@@ -62,7 +64,7 @@ export default {
 
     const message = await interaction.reply({ embeds: [embed] });
 
-    choice.forEach((item, index) => {
+    choice.forEach(async(item, index) => {
       await message.react(letters[index]);
     });
   }
