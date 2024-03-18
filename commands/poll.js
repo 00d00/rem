@@ -60,12 +60,16 @@ export default {
     const embed = new discord.EmbedBuilder()
       .setColor('Blue')
       .setTitle(`:bar_chart: ${title}`)
-      .setDescription(description)
+      .setDescription(description || null);
 
-    const reply = await interaction.reply({ embeds: [embed] });
-    const message = await reply.fetchReply()
+    await interaction.reply({ embeds: [embed] });
+    const message = await interaction.fetchReply();
+
     choice.forEach(async(item, index) => {
       await message.react(letters[index]);
     });
+
+    if (choice) {
+    }
   }
 };
