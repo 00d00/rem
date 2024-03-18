@@ -69,7 +69,9 @@ export default {
       await message.react(letters[index]);
     });
 
-    if (choice) {
+    if (choice.length === 0) {
+      await message.react('👍');
+      await message.react('👎');
     }
   }
 };
