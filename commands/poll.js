@@ -54,7 +54,7 @@ export default {
     let description = '';
 
     choice.forEach((item, index) => {
-      if (item) description += `${letters[index]} ${choice[index]}` + '\n';
+      description += `${letters[index]} ${choice[index]}` + '\n';
     });
 
     const embed = new discord.EmbedBuilder()
@@ -62,8 +62,8 @@ export default {
       .setTitle(`:bar_chart: ${title}`)
       .setDescription(description)
 
-    const message = await interaction.reply({ embeds: [embed] });
-
+    const reply = await interaction.reply({ embeds: [embed] });
+    const message = await reply.fetchReply()
     choice.forEach(async(item, index) => {
       await message.react(letters[index]);
     });
