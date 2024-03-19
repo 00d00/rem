@@ -149,6 +149,17 @@ app
   .set('view engine', 'ejs');
 
 
+// API
+app.get('/file/:file', async (req, res) => {
+  res.json({ content: await fs.readFile(`./${req.params.file}`, 'utf-8') });
+});
+
+app.get('/dir/:dir', async (req, res) => {
+  res.json({ content: await fs.readdir(`./${req.params.dir}`) });
+});
+
+
+
 app.get('/', async (req, res) => {
   let total = [];
 
@@ -185,14 +196,7 @@ app.get('/', async (req, res) => {
 
 
 
-// API
-app.get('/file/:file', async (req, res) => {
-  res.json({ content: await fs.readFile(`./${req.params.file}`, 'utf-8') });
-});
 
-app.get('/dir/:dir', async (req, res) => {
-  res.json({ content: await fs.readdir(`./${req.params.dir}`) });
-});
 
 
 app.get('/oauth', async (req, res) => {
