@@ -57,7 +57,7 @@ export default {
         .setColor(process.env.COLOR)
         .setTitle('チケット削除')
         .setDescription('チケットを削除します。');
-      
+
       await interaction.reply({ embeds: [embed] });
       setTimeout(() => {
         interaction.channel.delete();
