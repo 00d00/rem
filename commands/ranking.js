@@ -39,8 +39,9 @@ export default {
     }
 
     sortedEntries.slice(0, 10).forEach((arr, index) => {
-      const user = client.users.cache.get(data[arr[0]])
-      result += `\`[${index + 1}]\` <@${data[arr[0]]}> \`ID: ${arr[0]} | ${arr[1]}pts)\`` + '\n';
+      const user = interaction.client.users.cache.get(data[arr[0]]);
+
+      result += `\`[${(index + 1).toString().length === 2}${index + 1}]\` **${user.tag}** \`ID: ${arr[0]} | ${arr[1]}pts)\`` + '\n';
     });
 
     const embed = new discord.EmbedBuilder()
