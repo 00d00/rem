@@ -39,7 +39,7 @@ export default {
     }
 
     sortedEntries.slice(0, 10).forEach((arr, index) => {
-      result += `\`[${index + 1}]\` <@${data[(index+1).toString()]}> \`ID: ${arr[0]} | ${arr[1]}pts)\`` + '\n';
+      result += `\`[${index + 1}]\` <@${data[arr[0]]}> \`ID: ${arr[0]} | ${arr[1]}pts)\`` + '\n';
     });
 
     const embed = new discord.EmbedBuilder()
