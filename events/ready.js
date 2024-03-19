@@ -2,7 +2,7 @@ import discord from 'discord.js';
 
 export default {
   name: discord.Events.ClientReady,
-  async execute(client) {
+  async execute(client, readiedClient) {
     const guildsCount = client.guilds.cache.size;
     const membersCount = client.guilds.cache.reduce((acc, guild) => acc + guild.memberCount, 0);
     

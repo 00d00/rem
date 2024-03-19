@@ -36,7 +36,7 @@ export default {
     const embed = new discord.EmbedBuilder()
       .setTitle('Ranking')
       .setDescription(result)
-      .setFooter({ text: 'Pages-1' });
+      .setFooter({ text: 'p1' });
 
 
     const back = new discord.ButtonBuilder()
