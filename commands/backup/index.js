@@ -1,17 +1,20 @@
 import discord from 'discord.js';
 
-const obj = {};
-
-import verify from './verify.js';
-verify.type = 1;
-obj.verify = verify
+const commands = {};
 
 
 const data = new discord.SlashCommandBuilder()
   .setName('backup')
   .setDescription('backup')
 
+
+import verify from './verify.js';
+verify.type = 1;
+commands.verify = verify
 data.options.push(verify);
+
+
+
 
 
 
@@ -20,6 +23,6 @@ export default {
   async execute(interaction) {
     const command = interaction.options.getSubcommand();
 
-    verify.execute(interaction);
+    commands[command].execute(interaction);
   }
 }
