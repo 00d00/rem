@@ -1,4 +1,4 @@
-import { SlashCommandBuilder } from 'discord.js';
+import { SlashCommandBuilder, EmbedBuilder } from 'discord.js';
 import { QueryType } from 'discord-player';
 import { entersState, AudioPlayerStatus, createAudioPlayer, createAudioResource, joinVoiceChannel, StreamType } from '@discordjs/voice';
 import ytdl from 'ytdl-core';
@@ -26,10 +26,13 @@ export default {
 
     const member = interaction.member;
     if (!member || !member.voice.channel) {
-      return await interaction.reply({
-        content: 'ボイスチャンネルに参加してください',
-        ephemeral: true,
-      });
+      const embed = new EmbedBuilder()
+        .setColor('Red')
+        .setTitle('play')
+        .setDescription('ボイスチャンネルに接続してください');
+
+      await interaction.reply({ embeds: [embed] });
+      return;
     }
 
     const connection = joinVoiceChannel({
@@ -40,7 +43,12 @@ export default {
       selfMute: false
     });
 
-    await interaction.reply(url+"\n上記のURLを再生します");
+    const embed = new EmbedBuilder()
+      .setTitle('play')
+      .setDescription(url);
+
+    await interaction.reply({ embeds: [embed] });
+
     const player = createAudioPlayer();
     connection.subscribe(player);
 
@@ -49,13 +57,16 @@ export default {
       quality: 'highest',
       highWaterMark: 32 * 1024 * 1024,
     });
+
     const resource = createAudioResource(stream, {
       inputType: StreamType.WebmOpus
     });
 
     player.play(resource);
+
     await entersState(player,AudioPlayerStatus.Playing, 10 * 1000);
     await entersState(player,AudioPlayerStatus.Idle, 24 * 60 * 60 * 1000);
+
     connection.destroy();
   }
 }
