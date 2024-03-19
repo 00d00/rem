@@ -26,27 +26,20 @@ export default {
     const sortedEntries = Object.entries(entryCounts).sort((a, b) => b[1] - a[1]);
     let result = '';
 
-    function getRank(points) {
-      let rank = 1;
-      let requiredPoints = 30;
-
-      while (points >= requiredPoints) {
-        rank++;
-        requiredPoints = Math.floor(requiredPoints * 1.3);
-      }
-
-      return rank;
-    }
 
     sortedEntries.slice(0, 10).forEach((arr, index) => {
       const user = interaction.client.users.cache.get(data[arr[0]]);
 
-      result += `\`[${(index + 1).toString().length === 2}${index + 1}]\` **${user.tag}** \`ID: ${arr[0]} | ${arr[1]}pts)\`` + '\n';
+      result += `\`[${index + 1}]\` <@${data[arr[0]]}> \`ID: ${arr[0]} | ${arr[1]}pts\`` + '\n';
     });
 
     const embed = new discord.EmbedBuilder()
       .setTitle('Ranking')
       .setDescription(result);
+
+    const back = new discord.ButtonBuilder()
+      .setCustomId('back')
+      .setLabel('⏪️')
 
     await interaction.reply({ embeds: [embed] });
   }
