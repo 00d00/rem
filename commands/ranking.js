@@ -35,12 +35,24 @@ export default {
 
     const embed = new discord.EmbedBuilder()
       .setTitle('Ranking')
-      .setDescription(result);
+      .setDescription(result)
+      .setFooter({ text: 'Pages-1' });
+
 
     const back = new discord.ButtonBuilder()
-      .setCustomId('back')
+      .setCustomId('ranking-back')
       .setLabel('⏪️')
+      .setStyle(discord.ButtonStyle.Secondary);
 
-    await interaction.reply({ embeds: [embed] });
+    const next = new discord.ButtonBuilder()
+      .setCustomId('ranking-next')
+      .setLabel('⏩️')
+      .setStyle(discord.ButtonStyle.Secondary);
+
+    const row = new discord.ActionRowBuilder()
+      .addComponents(back, next);
+
+
+    await interaction.reply({ embeds: [embed], components: [row]});
   }
 }
