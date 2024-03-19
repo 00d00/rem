@@ -15,27 +15,6 @@ global.fetch = fetch;
 
 
 
-const a = new discord.SlashCommandBuilder()
-    .setName('verify')
-    .setDescription('認証パネルを配置')
-    .addRoleOption(option => option
-      .setName("ロール")
-      .setDescription('認証時のロールを選択')
-      .setRequired(true)
-    )
-    .addStringOption((option) => option
-      .setName("パスワード")
-      .setDescription('パスワードを入力')
-      .setRequired(true)
-    )
-    .addIntegerOption((option) => option
-      .setName("登録id")
-      .setDescription('IDを指定')
-      .setRequired(false)
-    )
-    .setDefaultMemberPermissions(discord.PermissionFlagsBits.Administrator);
-console.log(JSON.stringify(a, null, 2))
-
 
 
 

@@ -1,18 +1,12 @@
 import discord from 'discord.js';
+
 import { promises as fs } from 'fs';
 import crypto from 'crypto';
 
-import crypt from '../modules/crypt.js';
+import crypt from '../../modules/crypt.js';
 
 export default {
-  data: {
-    name: 'verify',
-    description: 'backup付き認証パネルを配置',
-    options: [
-      option => option
-        .setName()
-    ]
-  },
+  data: new discord.SlashCommandBuilder()
     .setName('verify')
     .setDescription('認証パネルを配置')
     .addRoleOption(option => option

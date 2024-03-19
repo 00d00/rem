@@ -1,32 +1,16 @@
 import discord from 'discord.js';
 
+import verify from './verify.js';
+verify.type = 1;
 
-const subCommands = [];
+
 
 const data = new discord.SlashCommandBuilder()
-  .setName('name')
-  .setDescription('name commands');
+  .setName('backup')
+  .setDescription('backup')
 
-for (let name of subCommands) {
-  import(name).then(module => {
-    const item = module.default;
-  });
-}
+data.options.push(verify);
 
-data.addSubcommand(command => command
-  .setName('login')
-      .setDescription('PayPayにログイン')
-      .addStringOption(option =>option
-        .setName('phone_number')
-        .setDescription('電話番号')
-        .setRequired(true)
-      )
-      .addStringOption(option =>option
-        .setName('password')
-        .setDescription('パスワード')
-        .setRequired(true)
-      )
-    )
 
 export default {
   data: data
