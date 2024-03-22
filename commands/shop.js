@@ -24,8 +24,12 @@ export default {
     }
     
     content[id] = content[id] || {};
+    const shop = content[id];
 
-    
+
+    for (let item in shop) {
+      
+    }
 
 
 
