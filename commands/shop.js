@@ -27,15 +27,17 @@ export default {
     const shop = content[id];
 
 
-    for (let item in shop) {
-      
-    }
+    let description = '';
 
+    for (let item in shop) {
+      description += `**${item}**\`\`\`${shop[item].price}円\`\`\`\n`;
+    }
 
 
     const embed = new discord.EmbedBuilder()
       .setColor('Blue')
       .setTitle('Shop')
+      .setDescription(description);
 
     await interaction.reply({ embeds: [embed] });
   }
