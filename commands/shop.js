@@ -23,8 +23,9 @@ export default {
       content = {};
     }
     
-    content[id] = content[id] || [];
+    content[id] = content[id] || {};
 
+    
 
 
 
