@@ -24,6 +24,6 @@ export default {
         '**/ranking**\n' +
         '認証者数ランキングを見れます。'
       )
-    interaction.reply({ embeds: [embed] });
+    await interaction.reply({ embeds: [embed] });
   }
 };
