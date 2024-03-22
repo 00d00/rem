@@ -23,7 +23,8 @@ export default {
         '\n' +
         '**/ranking**\n' +
         '認証者数ランキングを見れます。'
-      )
+      );
+
     await interaction.reply({ embeds: [embed] });
   }
 };
