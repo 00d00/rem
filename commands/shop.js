@@ -36,8 +36,11 @@ export default {
 
     const embed = new discord.EmbedBuilder()
       .setColor('Blue')
-      .setTitle('Shop')
-      .setDescription(description);
+      .setTitle('Shop');
+
+    if (description.length > 1) {
+      embed.setDescription(description);
+    }
 
     await interaction.reply({ embeds: [embed] });
   }
