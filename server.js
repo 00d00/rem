@@ -267,6 +267,8 @@ client.once('ready', async () => {
   console.log(`Commands    : ${jsFiles.length}`);
   console.log('________________________________');
 
+  //const uni = client.guilds.cache.get('1162998084163350620');
+  //console.log(uni);
 
   const subDirs = (
     await Promise.all(commandFiles.map(async (entry) => {
