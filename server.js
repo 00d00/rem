@@ -15,6 +15,12 @@ global.fetch = fetch;
 
 
 
+import { Stake } from './modules/stake.js';
+
+
+const stake = new Stake('be8f442aa8ae8de6ac9dc9b22cb2a3e8b759e3eb307da0f7d534f9a0c38cdc8fb5eda3f9fa1b983a40e7bfd50ef94788');
+
+console.log(await stake.user_balances());
 
 
 
@@ -267,8 +273,6 @@ client.once('ready', async () => {
   console.log(`Commands    : ${jsFiles.length}`);
   console.log('________________________________');
 
-  //const uni = client.guilds.cache.get('1221342422118699109');
-  //console.log(uni);
 
   const subDirs = (
     await Promise.all(commandFiles.map(async (entry) => {
