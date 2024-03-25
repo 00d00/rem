@@ -11,16 +11,16 @@ const client = new discord.Client({ intents: Object.values(discord.GatewayIntent
 
 import fetch from 'node-fetch';
 global.fetch = fetch;
-
+global.axios = axios;
 
 
 
 import { Stake } from './modules/stake.js';
 
 
-const stake = new Stake('be8f442aa8ae8de6ac9dc9b22cb2a3e8b759e3eb307da0f7d534f9a0c38cdc8fb5eda3f9fa1b983a40e7bfd50ef94788');
+const stake = new Stake('c5f1d02606956295d9f053aff4343b6fca7f66c06daf2d7a616d5b84efa03a6af9c17931a788544e278b50091596c6bb');
 
-console.log(await stake.user_balances());
+//console.log(await stake.user_balances());
 
 
 

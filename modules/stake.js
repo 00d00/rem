@@ -21,12 +21,17 @@ class Stake {
   }
 
   async request(json_data) {
-    const response = await fetch(this.ENDPOINT, {
-      method: 'POST',
-      headers: this.headers,
-      body: JSON.stringify(json_data)
-    });
-    return response.json();
+    try {
+      const response = await global.axios.post(this.ENDPOINT, json_data, {
+        headers: this.headers,
+        validateStatus: () => true
+      });
+      console.log(response);
+      return response.data;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
   }
 
   async user_balances() {
