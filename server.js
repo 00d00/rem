@@ -18,7 +18,7 @@ global.axios = axios;
 import { Stake } from './modules/stake.js';
 
 
-const stake = new Stake('065ede377708efa67ab6c53aa8f3497317fca69ac0b57a869e0928052e316c25f1b742ce1924a4175770944d61784cf1');
+const stake = new Stake('b8d45ac4ae4cdcaa581d01f1eec79b425133645780f40eca941e76e7d30b7740df1be2fc7456158b3a29a7e64423497c');
 
 //console.log(await stake.user_balances());
 
