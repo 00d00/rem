@@ -26,7 +26,6 @@ export default {
     .setDefaultMemberPermissions(discord.PermissionFlagsBits.Administrator)
   ,
   async execute(interaction) {
-    return await interaction.reply({content:'04/01まで使用できません。',ephemeral:true});
     // 引数取得
     const role = interaction.options.getRole('ロール');
     let saveId = interaction.options.getInteger('登録id');
