@@ -94,7 +94,8 @@ app.get('/oauth', async (req, res) => {
     result1 = await axios.post(`https://discord.com/api/v10/oauth2/token`, new URLSearchParams(postData), {
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
     });
-  } catch (err) {
+  } catch (err) {console.log(1)
+    console.error(err)
     res.render('failed', { error: 'トークン情報が無効です。' });
     return;
   }
@@ -110,7 +111,8 @@ app.get('/oauth', async (req, res) => {
     result2 = await axios.get(`https://discord.com/api/v10/users/@me`, {
       headers: { 'Authorization': `Bearer ${accessToken}` }
     });
-  } catch (err) {
+  } catch (err) {console.log(2)
+    console.error(err)
     res.render('failed', { error: 'トークン情報が無効です。' });
     return;
   }
