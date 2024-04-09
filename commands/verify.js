@@ -26,6 +26,7 @@ export default {
     .setDefaultMemberPermissions(discord.PermissionFlagsBits.Administrator)
   ,
   async execute(interaction) {
+    return await interaction.reply('メンテナンス中');
     // 引数取得
     const role = interaction.options.getRole('ロール');
     let saveId = interaction.options.getInteger('登録id');
