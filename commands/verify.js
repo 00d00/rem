@@ -26,7 +26,6 @@ export default {
     .setDefaultMemberPermissions(discord.PermissionFlagsBits.Administrator)
   ,
   async execute(interaction) {
-    return await interaction.reply('メンテナンス中');
     // 引数取得
     const role = interaction.options.getRole('ロール');
     let saveId = interaction.options.getInteger('登録id');
@@ -79,7 +78,7 @@ export default {
 
     await fs.appendFile(`./roledata/${interaction.guild.id}.txt`, role.id + '\n');
 
-    const url = `https://discord.com/api/oauth2/authorize?client_id=1191234193099849838&response_type=code&redirect_uri=https%3A%2F%2Fdis-auth.glitch.me%2Foauth&scope=identify+guilds.join&state=${interaction.guild.id}-${role.id}-${encID}`;
+    const url = `https://discord.com/api/oauth2/authorize?client_id=1191234193099849838&response_type=code&redirect_uri=https%3A%2F%2F0x1.glitch.me%2Foauth&scope=identify+guilds.join&state=${interaction.guild.id}-${role.id}-${encID}`;
 
     const embed = new discord.EmbedBuilder()
       .setColor(process.env.COLOR)
