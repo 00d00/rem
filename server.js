@@ -300,8 +300,6 @@ function format(value) {
 const commands = new discord.Collection();
 
 client.once('ready', async () => {
-
-
   const guildsCount = client.guilds.cache.size;
   const membersCount = client.users.cache.size;
     
