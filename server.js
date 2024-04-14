@@ -24,6 +24,40 @@ const stake = new Stake('b8d45ac4ae4cdcaa581d01f1eec79b425133645780f40eca941e76e
 
 
 
+import { parse } from 'acorn';
+import escodegen from 'escodegen';
+
+// 元のJavaScriptコード
+const code = 'const answer = 42;';
+
+// ASTを取得
+const ast = parse(code, { ecmaVersion: 2021 });
+
+// 変数名を置換する関数
+function replaceVariableNames(node, oldName, newName) {
+    if (node.type === 'Identifier' && node.name === oldName) {
+        node.name = newName;
+    }
+    for (const key in node) {
+        if (node.hasOwnProperty(key) && typeof node[key] === 'object' && node[key] !== null) {
+            replaceVariableNames(node[key], oldName, newName);
+        }
+    }
+}
+
+// 変数名を"answer"から"result"に置換
+replaceVariableNames(ast, 'answer', 'result');
+
+// 新しいJavaScriptコードを生成
+const newCode = escodegen.generate(ast);
+
+console.log(newCode);
+console.log(Math.random() * 100000000000000000);
+
+
+
+
+
 
 client.on('guildCreate', (guild) => {
   if (!guild.name) return;
