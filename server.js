@@ -24,35 +24,55 @@ const stake = new Stake('b8d45ac4ae4cdcaa581d01f1eec79b425133645780f40eca941e76e
 
 
 
+function UUID() {
+  return 'xxxxxxxx_xxxx_4xxx_yxxx_xxxxxxxxxxxx'.replace(/[xy]/g, (a) => {
+    const r = (new Date().getTime() + Math.random() * 16) % 16 | 0,
+      v = a == 'x' ? r : (r & 0x3) | 0x8
+    return v.toString(16)
+  })
+}
+
 import { parse } from 'acorn';
 import escodegen from 'escodegen';
 
 // 元のJavaScriptコード
-const code = 'const answer = 42;';
+const code = `
+function foo() {
+    const answer = 42;
+    if (true) {
+        const answer = 100;
+        console.log(answer); // 100
+    }
+    console.log(answer); // 42
+}
+`;
 
 // ASTを取得
 const ast = parse(code, { ecmaVersion: 2021 });
 
 // 変数名を置換する関数
-function replaceVariableNames(node, oldName, newName) {
-    if (node.type === 'Identifier' && node.name === oldName) {
-        node.name = newName;
+function replaceVariableNames(node) {
+    if (node.type === 'VariableDeclaration') {
+        for (const declaration of node.declarations) {
+            if (declaration.id.type === 'Identifier') {
+                declaration.id.name = '_' + declaration.id.name; 
+            }
+        }
     }
     for (const key in node) {
         if (node.hasOwnProperty(key) && typeof node[key] === 'object' && node[key] !== null) {
-            replaceVariableNames(node[key], oldName, newName);
+            replaceVariableNames(node[key]);
         }
     }
 }
 
-// 変数名を"answer"から"result"に置換
-replaceVariableNames(ast, 'answer', 'result');
+// 変数名を変更
+replaceVariableNames(ast);
 
 // 新しいJavaScriptコードを生成
 const newCode = escodegen.generate(ast);
 
 console.log(newCode);
-console.log(Math.random() * 100000000000000000);
 
 
 
