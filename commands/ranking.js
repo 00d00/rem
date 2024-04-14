@@ -2,6 +2,23 @@ import discord from 'discord.js';
 import fs from 'fs/promises';
 import path from 'path';
 
+function format(value) {
+  if (value < 1000) {
+    return Number.isInteger(value) ? value.toString() : value.toFixed(1);
+  }
+
+  let suffix = '';
+
+  if (value < 1000000) {
+    value = value / 1000;
+    suffix = 'k';
+  } else if (value < 1000000000) {
+    value = value / 1000000;
+    suffix = 'm';
+  }
+
+  return Number.isInteger(value) ? value.toString() + suffix : value.toFixed(1) + suffix;
+}
 
 export default {
   data: new discord.SlashCommandBuilder()
@@ -30,7 +47,7 @@ export default {
     sortedEntries.slice(0, 10).forEach((arr, index) => {
       const user = interaction.client.users.cache.get(data[arr[0]]);
 
-      result += `\`[${index + 1}]\` <@${data[arr[0]]}> \`ID: ${arr[0]} | ${arr[1]}pts\`` + '\n';
+      result += `\`[${index + 1}]\` <@${data[arr[0]]}> \`ID: ${arr[0]} | ${format(arr[1])}pts\`` + '\n';
     });
 
     const embed = new discord.EmbedBuilder()
