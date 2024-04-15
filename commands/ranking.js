@@ -20,6 +20,11 @@ function format(value) {
   return Number.isInteger(value) ? value.toString() + suffix : value.toFixed(1) + suffix;
 }
 
+function padStrings(...strings) {
+    const maxLength = Math.max(...strings.map(str => str.length));
+    return strings.map(str => str.padEnd(maxLength));
+}
+
 export default {
   data: new discord.SlashCommandBuilder()
     .setName('ranking')
@@ -42,12 +47,24 @@ export default {
 
     const sortedEntries = Object.entries(entryCounts).sort((a, b) => b[1] - a[1]);
     let result = '';
+    let name = [];
 
+    sortedEntries.slice(0, 10).forEach((arr, index) => {
+      const user = interaction.client.users.cache.get(data[arr[0]]);
+      name.push(user.tag);
+    });
+
+    name = padStrings(...name);
+
+    let i = 0;
 
     sortedEntries.slice(0, 10).forEach((arr, index) => {
       const user = interaction.client.users.cache.get(data[arr[0]]);
 
-      result += `\`[${index + 1}] ${user.tag} ID: ${arr[0]} | ${format(arr[1])}pts\`` + '\n';
+      let support1 = index + 1 === 10 ? '' : ' ';
+
+      result += `\`[${support1}${index + 1}] ${name[i]} ID: ${arr[0]} | ${format(arr[1])}pts\`` + '\n';
+      i++;
     });
 
     const embed = new discord.EmbedBuilder()
