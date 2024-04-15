@@ -69,7 +69,6 @@ export default {
     const row = new discord.ActionRowBuilder()
       .addComponents(back, next);
 
-
     await interaction.reply({ embeds: [embed], components: [row]});
   }
 }
