@@ -62,8 +62,9 @@ export default {
       const user = interaction.client.users.cache.get(data[arr[0]]);
 
       let support1 = index + 1 === 10 ? '' : ' ';
+      let support2 = arr[0].length !== 1 ? '' : ' ';
 
-      result += `\`[${support1}${index + 1}] ${name[i]} ID: ${arr[0]} | ${format(arr[1])}pts\`` + '\n';
+      result += `\`[${support1}${index + 1}] ${name[i]} ID: ${support2}${arr[0]} | ${format(arr[1])}pts\`` + '\n';
       i++;
     });
 
