@@ -13,12 +13,13 @@ import fetch from 'node-fetch';
 global.fetch = fetch;
 global.axios = axios;
 
+global.axios.defaults.headers.common['Cookie'] = 'cf_clearance=gF4DcXnIA2sbWcKi8XQHv.2VmGOo8Sp87vglLVsm6IU-1713181007-1.0.1.1-SNgrsdda_6.iI5rBl.IADkRJ3G5.18uSmDwqd5pdiQkwn49yEWgp4i.uzSL_1fc2CX2YXdkz9UjHe3gVaaB7MQ';
 
 
 import { Stake } from './modules/stake.js';
 
 
-const stake = new Stake('725bc950ca1ab894cc8623df1ed04cabb541a08c7c8fc1243f6b2d15dfdee37d9e76ea7d4c1d8de744fa8e775b2bfd3d');
+const stake = new Stake('8c41c2d9f04f69112503c9669434edaeac070bf5773dea870b1ab7d3e9ab20b26f24c204e5294b86a4e03abe4cfc1af7');
 
 //console.log(await stake.user_balances());
 
