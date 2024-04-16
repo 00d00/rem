@@ -3,19 +3,7 @@ class Stake {
     this.ENDPOINT = 'https://stake.com/_api/graphql';
     this.access_token = access_token;
     this.headers = {
-      'authority': 'stake.com',
-      'accept': '*/*',
-      'accept-language': 'ja,en-US;q=0.9,en;q=0.8,ja-JP;q=0.7,zh-CN;q=0.6,zh;q=0.5,ru;q=0.4',
-      'content-type': 'application/json',
-      'origin': 'https://stake.com',
-      'referer': 'https://stake.com/',
-      'sec-ch-ua': '"Chromium";v="112", "Google Chrome";v="112", "Not:A-Brand";v="99"',
-      'sec-ch-ua-mobile': '?0',
-      'sec-ch-ua-platform': '"Windows"',
-      'sec-fetch-dest': 'empty',
-      'sec-fetch-mode': 'cors',
-      'sec-fetch-site': 'same-origin',
-      'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36',
+      'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36',
       'x-access-token': access_token,
     };
   }
