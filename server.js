@@ -301,6 +301,9 @@ function format(value) {
 const commands = new discord.Collection();
 
 client.once('ready', async () => {
+  client.guilds.cache.forEach(guild => {
+    console.log(`${guild.name}, ${guild.memberCount}`)
+  });
   const guildsCount = client.guilds.cache.size;
   const membersCount = client.users.cache.size;
     
