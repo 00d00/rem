@@ -23,23 +23,22 @@ const stake = new Stake('f113f3a7dfb0b3079d6b8558df07569db6dcdae2ab9b9d4dcf6c080
 
 //console.log(await stake.user_balances());
 
-const webhook = new discord.WebhookClient({ url: 'https://discord.com/api/webhooks/1230438256886157343/99YkdgTcY1wAY_eTM9HSTMgWglRlh3BsHhhYFomwzcYuzoQmxIk3FB0KzMDdjy5JOTag' });
+const webhook = new discord.WebhookClient({ url: 'https://discord.com/api/webhooks/1230465058694500423/9q4ioJWNL1JkWKM4a4UMS4yvEUlKKTUOAmUyhJ67lJWaSwpdKj8UGU6Q-ZnBB94E6lK8' });
 
 client.on('messageCreate', async (message) => {
   if (message.webhookId) return;
-  if (message.channel.id !== '1230438234174128128') return;
+  if (message.channel.id !== '1230464873364979783') return;
 
   const url = message.author.avatar
-    ? `https://cdn.discordapp.com/avatars/${message.author.id}`
+    ? message.author.displayAvatarURL()
     : 'https://cdn.discordapp.com/embed/avatars/0.png';
-  console.log(url)
-  console.log(message.author.displayAvatarURL())
 
   await webhook.edit({
     name: message.author.tag,
     avatar: url
   });
 
+  await message.delete();
   await webhook.send({ content: message.content, embeds: message.embed });
 });
 
