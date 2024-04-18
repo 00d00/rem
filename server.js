@@ -26,14 +26,19 @@ const stake = new Stake('f113f3a7dfb0b3079d6b8558df07569db6dcdae2ab9b9d4dcf6c080
 const webhook = new discord.WebhookClient({ url: 'https://discord.com/api/webhooks/1230438256886157343/99YkdgTcY1wAY_eTM9HSTMgWglRlh3BsHhhYFomwzcYuzoQmxIk3FB0KzMDdjy5JOTag' });
 
 client.on('messageCreate', async (message) => {
-  console.log('A');
-  console.log(message.author.avatar);
+  if (message.webhookId) return;
+  if (message.channel.id !== '1230438234174128128') return;
 
   const url = message.author.avatar
     ? `https://cdn.discordapp.com/avatars/${message.author.id}`
     : 'https://cdn.discordapp.com/embed/avatars/0.png';
 
-  console.log(url);
+  await webhook.edit({
+    name: message.author.tag,
+    avatar: url
+  });
+
+  await webhook.send({ content: message.content, embeds: message.embed });
 });
 
 
