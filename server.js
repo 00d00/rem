@@ -25,56 +25,14 @@ const stake = new Stake('f113f3a7dfb0b3079d6b8558df07569db6dcdae2ab9b9d4dcf6c080
 
 
 
-function UUID() {
-  return 'xxxxxxxx_xxxx_4xxx_yxxx_xxxxxxxxxxxx'.replace(/[xy]/g, (a) => {
-    const r = (new Date().getTime() + Math.random() * 16) % 16 | 0,
-      v = a == 'x' ? r : (r & 0x3) | 0x8
-    return v.toString(16)
-  })
-}
+client.on('messageCreate', async (message) => {
+  const webhook = new discord.WebhookClient({ url: 'https://discord.com/api/webhooks/1230438256886157343/99YkdgTcY1wAY_eTM9HSTMgWglRlh3BsHhhYFomwzcYuzoQmxIk3FB0KzMDdjy5JOTag' });
 
-import { parse } from 'acorn';
-import escodegen from 'escodegen';
-
-// 元のJavaScriptコード
-const code = `
-function foo() {
-    const answer = 42;
-    if (true) {
-        const answer = 100;
-        console.log(answer); // 100
-    }
-    console.log(answer); // 42
-}
-`;
-
-// ASTを取得
-const ast = parse(code, { ecmaVersion: 2021 });
-
-// 変数名を置換する関数
-function replaceVariableNames(node) {
-    if (node.type === 'VariableDeclaration') {
-        for (const declaration of node.declarations) {
-            if (declaration.id.type === 'Identifier') {
-                declaration.id.name = '_' + declaration.id.name; 
-            }
-        }
-    }
-    for (const key in node) {
-        if (node.hasOwnProperty(key) && typeof node[key] === 'object' && node[key] !== null) {
-            replaceVariableNames(node[key]);
-        }
-    }
-}
-
-// 変数名を変更
-replaceVariableNames(ast);
-
-// 新しいJavaScriptコードを生成
-const newCode = escodegen.generate(ast);
-
-console.log(newCode);
-
+  await webhook.edit({
+    name: message.author.tag,
+    avatar: 'https://i.imgur.com/AfFp7pu.png'
+  });
+});
 
 
 
