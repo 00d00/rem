@@ -32,6 +32,8 @@ client.on('messageCreate', async (message) => {
   const url = message.author.avatar
     ? `https://cdn.discordapp.com/avatars/${message.author.id}`
     : 'https://cdn.discordapp.com/embed/avatars/0.png';
+  console.log(url)
+  console.log(message.author.displayAvatarURL())
 
   await webhook.edit({
     name: message.author.tag,
