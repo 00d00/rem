@@ -9,6 +9,27 @@ const app = express();
 const client = new discord.Client({ intents: Object.values(discord.GatewayIntentBits) });
 
 
+
+
+
+import os from 'os';
+
+// CPU使用率を取得
+const cpuUsage = os.loadavg()[0];
+
+// メモリ使用率を取得
+const totalMemory = os.totalmem();
+const freeMemory = os.freemem();
+const memoryUsage = (1 - (freeMemory / totalMemory)) * 100;
+
+console.log('CPU使用率:', cpuUsage.toFixed(2), '%');
+console.log('メモリ使用率:', memoryUsage.toFixed(2), '%');
+
+
+
+
+
+
 import fetch from 'node-fetch';
 global.fetch = fetch;
 global.axios = axios;
