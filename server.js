@@ -40,7 +40,7 @@ global.axios.defaults.headers.common['Cookie'] = '__cf_bm=UFiwWDwwEaOlp_oibK5kkw
 import { Stake } from './modules/stake.js';
 
 
-const stake = new Stake('f113f3a7dfb0b3079d6b8558df07569db6dcdae2ab9b9d4dcf6c080a387777e9ff8c1128ab53bcecf61095e79efcac92');
+const stake = new Stake('b0e1fee7f6faf621192e0f276d3563a12526e1db095ae327d1acc8be60ff09564bd240df4ceb660b2b43d9a5ec4320c0');
 
 //console.log(await stake.user_balances());
 
