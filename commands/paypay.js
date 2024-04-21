@@ -3,6 +3,46 @@ import { PayPay, PayPayStatus } from 'paypax';
 import fs from 'fs/promises';
 import crypt from '../modules/crypt.js';
 
+
+function ErrorEmbed(interaction, message) {
+  return new discord.EmbedBuilder()
+    .setColor('Red')
+    .setTitle(`paypay-${interaction.options.getSubcommand()}`)
+    .setDescription(message)
+}
+
+async function login(interaction) {
+  try {
+    const content = await fs.readFile(`./paypay/${interaction.user.id}.json`, 'utf-8');
+    const data = JSON.parse(content);
+
+    let { phone, password, uuid, token } = data;
+
+    phone = crypt.decrypt(phone);
+    password = crypt.decrypt(password);
+    uuid = crypt.decrypt(uuid);
+    token = crypt.decrypt(token);
+
+    const paypay = new PayPay(phone, password);
+    const result = await paypay.login({ uuid: uuid, token: token });
+
+    if (!result.status) {
+      return { status: false, data: 'ログイン情報が変更されたためログインできませんでした。' };
+    }
+
+    data.token = paypay.token;
+
+    await fs.writeFile(`./paypay/${interaction.user.id}.json`, JSON.stringify(data), 'utf-8');
+
+    return { status: true, data: paypay };
+
+  } catch (error) {
+    return { status: 'Error', data: 'まだログインされていません。' };
+  }
+}
+
+
+
 export default {
   data: new discord.SlashCommandBuilder()
     .setName('paypay')
@@ -50,14 +90,10 @@ export default {
 
       const paypay = new PayPay(interaction.options.getString('phone_number'), interaction.options.getString('password'));
       const result = await paypay.login();
-      console.log(JSON.stringify(result));
 
       if (result.status === PayPayStatus.LoginIncorrectPassOrPhone) {
 
-        const embed = new discord.EmbedBuilder()
-          .setColor('Red')
-          .setTitle('paypay-login')
-          .setDescription('電話番号またはメールアドレスが間違っています。');
+        const embed = ErrorEmbed(interaction, '電話番号またはメールアドレスが間違っています。');
 
         await interaction.reply({ embeds: [embed], ephemeral: true });
         return;
@@ -83,43 +119,29 @@ export default {
         );
 
         await interaction.showModal(modal);
+
+      } else if (result.status === PayPayStatus.LoginSuccess) {
+
+        const embed = new discord.EmbedBuilder()
+          .setColor('Blue')
+          .setTitle('paypay-login')
+          .setDescription('ログインに成功しました！');
+
+        await interaction.reply({ embeds: [embed], ephemeral: true });
+
       }
 
     } else if (command === 'balance') {
 
-      let content
+      const loginResult = await login(interaction);
 
-      try {
-        content = await fs.readFile(`./paypay/${interaction.user.id}`, 'utf-8');
-      } catch (e) {
-        const error = new discord.EmbedBuilder()
-          .setColor('Red')
-          .setTitle('paypay-info')
-          .setDescription('まだログインされていません。\n/paypay loginでログインしてください。');
-
-        interaction.reply({ embeds: [error], ephemeral: true });
+      if (!loginResult.status) {
+        const embed = ErrorEmbed(interaction, loginResult.data);
+        await interaction.reply({ embeds: [embed], ephemeral: true });
         return;
       }
 
-      let [phone, password, uuid] = content.split('.');
-
-      phone = crypt.decrypt(phone);
-      password = crypt.decrypt(password);
-      uuid = crypt.decrypt(uuid);
-
-      const paypay = new PayPay(phone, password);
-      const result = await paypay.login({ uuid: uuid });
-
-      if (!result.status) {
-        const error = new discord.EmbedBuilder()
-          .setColor('Red')
-          .setTitle('paypay-info')
-          .setDescription('ログイン情報が変更されたためログインできませんでした。');
-
-        interaction.reply({ embeds: [error], ephemeral: true });
-        return;
-      }
-
+      const paypay = loginResult.data;
       const balance = await paypay.getBalance();
 
       const walletSummary = balance.raw.payload.walletSummary;
@@ -164,7 +186,7 @@ export default {
 
       const paypay = new PayPay(phone, password);
       const result = await paypay.login({ uuid: uuid });
-
+ 
       if (!result.status) {
         const error = new discord.EmbedBuilder()
           .setColor('Red')

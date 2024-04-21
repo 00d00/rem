@@ -38,18 +38,19 @@ export default {
         return;
       }
 
-      console.log(result);
-      console.log(result);
-
-      console.log(result.cookie)
-      console.log(JSON.stringify(result.cookie))
-      console.log(result.cookie.get('token'))
+      console.log()
 
       const phone = crypt.encrypt(object.phone);
       const password = crypt.encrypt(object.password);
       const uuid = crypt.encrypt(object.uuid);
+      const token = crypt.encrypt(object.token);
 
-      await fs.writeFile(`./paypay/${interaction.user.id}`, `${phone}.${password}.${uuid}`);
+      await fs.writeFile(`./paypay/${interaction.user.id}.json`, JSON.stringify({
+        phone: phone,
+        password: password,
+        uuid: uuid,
+        token: token
+      }, null, 2));
 
 
       const embed = new discord.EmbedBuilder()
