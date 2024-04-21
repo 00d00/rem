@@ -22,6 +22,7 @@ async function login(interaction) {
     password = crypt.decrypt(password);
     uuid = crypt.decrypt(uuid);
     token = crypt.decrypt(token);
+    console.log(phone, password, uuid, token)
 
     const paypay = new PayPay(phone, password);
     const result = await paypay.login({ uuid: uuid, token: token });
@@ -32,12 +33,13 @@ async function login(interaction) {
 
     data.token = paypay.token;
 
-    await fs.writeFile(`./paypay/${interaction.user.id}.json`, JSON.stringify(data), 'utf-8');
+    await fs.writeFile(`./paypay/${interaction.user.id}.json`, JSON.stringify(data, null, 2), 'utf-8');
 
     return { status: true, data: paypay };
 
   } catch (error) {
-    return { status: 'Error', data: 'まだログインされていません。' };
+    console.log(error);
+    return { status: false, data: 'まだログインされていません。' };
   }
 }
 
@@ -100,7 +102,7 @@ export default {
 
       } else if (result.status === PayPayStatus.LoginNeedOTP) {
 
-        await fs.writeFile(`./temp/${interaction.user.id}`, JSON.stringify(paypay));
+        await fs.writeFile(`./temp/${interaction.user.id}`, JSON.stringify(paypay, null, 2));
 
         const modal = new discord.ModalBuilder()
           .setCustomId('paypay_otp')
