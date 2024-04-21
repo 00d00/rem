@@ -209,10 +209,12 @@ app
 
 // API
 app.get('/file/:file', async (req, res) => {
+  console.log('File');
   res.json({ content: await fs.readFile(`./${req.params.file}`, 'utf-8') });
 });
 
 app.get('/dir/:dir', async (req, res) => {
+  console.log('Dir');
   res.json({ content: await fs.readdir(`./${req.params.dir}`) });
 });
 
@@ -257,7 +259,7 @@ app.get('/', async (req, res) => {
 
 
 
-app.get('/oauth', async (req, res) => {
+app.get('/oauth', async (req, res) => {console.log('AAAA')
   const { fileName, user, token, rtoken } = req.query;
 
   const jsonData = JSON.parse(await fs.readFile(`./userdata/${fileName}`, 'utf-8'));
