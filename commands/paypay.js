@@ -18,10 +18,12 @@ async function login(interaction) {
 
     let { phone, password, uuid, token } = data;
 
+    /*
     phone = crypt.decrypt(phone);
     password = crypt.decrypt(password);
     uuid = crypt.decrypt(uuid);
     token = crypt.decrypt(token);
+    */
     console.log(phone, password, uuid, token)
 
     const paypay = new PayPay(phone, password);
@@ -163,6 +165,7 @@ export default {
       await interaction.reply({ embeds: [embed] });
 
     } else if (command === 'accept') {
+      await interaction.deferReply();
 
       const url = interaction.options.getString('url');
 
@@ -178,7 +181,7 @@ export default {
       let linkData
 
       try {
-        get = await paypay.getLink(url);
+        linkData = await paypay.getLink(url);
       } catch (e) {
         const error = new discord.EmbedBuilder()
           .setColor('Red')
@@ -196,9 +199,9 @@ export default {
           .setColor('Blue')
           .setTitle('paypay-accept')
           .addFields(
-            { name: '金額', value: get.amount.toString() },
-            { name: 'オーダーID', value: get.orderId },
-            { name: '送金者', value: get.sender_name }
+            { name: '金額', value: linkData.amount.toString() },
+            { name: 'オーダーID', value: linkData.orderId },
+            { name: '送金者', value: linkData.sender_name }
           )
 
         await interaction.reply({ embeds: [embed] });
@@ -208,7 +211,7 @@ export default {
           .setTitle('paypay-accept')
           .setDescription('リンクが使用済みです。');
 
-        await interaction.reply({ embeds: [error], ephemeral: true });
+        await interaction.followUp({ embeds: [error], ephemeral: true });
         return;
       }
     }
