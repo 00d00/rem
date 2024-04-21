@@ -38,12 +38,15 @@ export default {
         return;
       }
 
-      console.log()
 
       const phone = crypt.encrypt(object.phone);
+      console.log(object.phone)
       const password = crypt.encrypt(object.password);
+      console.log(object.password)
       const uuid = crypt.encrypt(object.uuid);
-      const token = crypt.encrypt(object.token);
+      console.log(object.uuid)
+      const token = crypt.encrypt(paypay.token);
+      console.log(paypay.token)
 
       await fs.writeFile(`./paypay/${interaction.user.id}.json`, JSON.stringify({
         phone: phone,
