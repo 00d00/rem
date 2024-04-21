@@ -1,0 +1,18 @@
+{
+  "phone": "08069028208",
+  "password": "Maron256",
+  "header": {
+    "Accept": "application/json, text/plain, */*",
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36",
+    "Content-Type": "application/json"
+  },
+  "cookie": {},
+  "refresh_at": 0,
+  "logged": false,
+  "otp": {
+    "waiting": true,
+    "otp_prefix": "UK",
+    "otp_ref_id": "6226646c63fad6072055297155e71125aeb83aaea17b7ce6725aaf27cc034ad9fe7a9e"
+  },
+  "uuid": "b2490321-d595-4f4f-bffb-5eaa214bcc09"
+}

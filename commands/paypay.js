@@ -166,40 +166,16 @@ export default {
 
       const url = interaction.options.getString('url');
 
-      let content
+      const loginResult = await login(interaction);
 
-      try {
-        content = await fs.readFile(`./paypay/${interaction.user.id}`, 'utf-8');
-      } catch (e) {
-        const error = new discord.EmbedBuilder()
-          .setColor('Red')
-          .setTitle('paypay-info')
-          .setDescription('まだログインされていません。\n/paypay loginでログインしてください。');
-
-        await interaction.reply({ embeds: [error], ephemeral: true });
+      if (!loginResult.status) {
+        const embed = ErrorEmbed(interaction, loginResult.data);
+        await interaction.reply({ embeds: [embed], ephemeral: true });
         return;
       }
 
-      let [phone, password, uuid] = content.split('.');
-
-      phone = crypt.decrypt(phone);
-      password = crypt.decrypt(password);
-      uuid = crypt.decrypt(uuid);
-
-      const paypay = new PayPay(phone, password);
-      const result = await paypay.login({ uuid: uuid });
- 
-      if (!result.status) {
-        const error = new discord.EmbedBuilder()
-          .setColor('Red')
-          .setTitle('paypay-info')
-          .setDescription('ログイン情報が変更されたためログインできませんでした。');
-
-        await interaction.reply({ embeds: [error], ephemeral: true });
-        return;
-      }
-
-      let get
+      const paypay = loginResult.data;
+      let linkData
 
       try {
         get = await paypay.getLink(url);
