@@ -36,12 +36,16 @@ global.axios = axios;
 
 global.axios.defaults.headers.common['Cookie'] = '__cf_bm=UFiwWDwwEaOlp_oibK5kkw3Qv8J.TC8eGPdQn01AKfY-1713261038-1.0.1.1-wPQZRu7Kvy3VxmMHpfjFG7VbNHoKHHDto_9OIJ6tCcUcBmjsXHYjpKKMJKi4wIqttmWXC3qATA9rRWYx2LQtsA; cf_clearance=gF4DcXnIA2sbWcKi8XQHv.2VmGOo8Sp87vglLVsm6IU-1713181007-1.0.1.1-SNgrsdda_6.iI5rBl.IADkRJ3G5.18uSmDwqd5pdiQkwn49yEWgp4i.uzSL_1fc2CX2YXdkz9UjHe3gVaaB7MQ';
 
+console.log(global.A)
+global.A = 0;
 
+/*
 import { PayPay } from 'paypax';
 
 const paypay = new PayPay('08012345678', 'Abcde256');
 console.log(await paypay.login({token:'a'}));
 console.log(await paypay.getBalance());
+*/
 
 import { Stake } from './modules/stake.js';
 
