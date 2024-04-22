@@ -31,7 +31,8 @@ async function login(interaction) {
       return { status: false, data: 'ログイン情報が変更されたためログインできませんでした。' };
     }
 
-    data.token = paypay.token;
+    data.token = crypt.encrypt(paypay.token);
+    
 
     await fs.writeFile(`./paypay/${interaction.user.id}.json`, JSON.stringify(data, null, 2), 'utf-8');
 
