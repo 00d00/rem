@@ -18,12 +18,10 @@ async function login(interaction) {
 
     let { phone, password, uuid, token } = data;
 
-    /*
     phone = crypt.decrypt(phone);
     password = crypt.decrypt(password);
     uuid = crypt.decrypt(uuid);
     token = crypt.decrypt(token);
-    */
     console.log(phone, password, uuid, token)
 
     const paypay = new PayPay(phone, password);

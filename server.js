@@ -12,6 +12,7 @@ const client = new discord.Client({ intents: Object.values(discord.GatewayIntent
 
 
 
+
 import os from 'os';
 
 // CPU使用率を取得
