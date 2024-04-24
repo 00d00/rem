@@ -11,6 +11,8 @@ function ErrorEmbed(interaction, message) {
     .setDescription(message)
 }
 
+const CreateError = message => ({ success: false, data: message });
+
 async function login(interaction, tokenLogin = true) {
   try {
     const content = await fs.readFile(`./paypay/${interaction.user.id}.json`, 'utf-8');
@@ -25,10 +27,10 @@ async function login(interaction, tokenLogin = true) {
     console.log(phone, password, uuid, token)
 
     const paypay = new PayPay(phone, password);
-    const result = await paypay.login({ uuid: uuid, token: token });
+    const result = await paypay.login({ uuid: uuid, token: tokenLogin ? token : void(0) });
 
     if (!result.status) {
-      return { status: false, data: 'ログイン情報が変更されたためログインできませんでした。' };
+      return CreateError('ログイン情報が変更されたためログインできませんでした。' );
     }
 
     data.token = crypt.encrypt(paypay.token);
@@ -39,8 +41,7 @@ async function login(interaction, tokenLogin = true) {
     return { status: true, data: paypay };
 
   } catch (error) {
-    console.log(error);
-    return { status: false, data: 'まだログインされていません。' };
+    return CreateError('まだログインされていません。');
   }
 }
 
