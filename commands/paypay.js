@@ -144,8 +144,12 @@ export default {
         return;
       }
 
+      console.log(loginResult);
+
       const paypay = loginResult.data;
       const balance = await paypay.getBalance();
+
+      console.log(balance);
 
       const walletSummary = balance.raw.payload.walletSummary;
       const transferableBalance = walletSummary.transferableBalanceInfo.balance;
