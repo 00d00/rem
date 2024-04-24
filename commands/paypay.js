@@ -34,7 +34,7 @@ async function login(interaction, tokenLogin = true) {
     }
 
     data.token = crypt.encrypt(paypay.token);
-    
+
 
     await fs.writeFile(`./paypay/${interaction.user.id}.json`, JSON.stringify(data, null, 2), 'utf-8');
 
