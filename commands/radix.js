@@ -29,6 +29,6 @@ export default {
     const to = interaction.options.getInteger('to_radix');
     const number = interaction.options.getInteger('number');
 
-    interaction.reply(`\`\`\`${parseInt(number, from).toString(to).toUpperCase()}\`\`\``);
+    await interaction.reply(`\`\`\`${parseInt(number, from).toString(to).toUpperCase()}\`\`\``);
   }
 };
