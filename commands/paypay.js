@@ -11,7 +11,7 @@ function ErrorEmbed(interaction, message) {
     .setDescription(message)
 }
 
-async function login(interaction) {
+async function login(interaction, tokenLogin = true) {
   try {
     const content = await fs.readFile(`./paypay/${interaction.user.id}.json`, 'utf-8');
     const data = JSON.parse(content);
@@ -150,6 +150,10 @@ export default {
       const balance = await paypay.getBalance();
 
       console.log(balance);
+
+      if (!balance.success) {
+        
+      }
 
       const walletSummary = balance.raw.payload.walletSummary;
       const transferableBalance = walletSummary.transferableBalanceInfo.balance;
