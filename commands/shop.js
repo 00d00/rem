@@ -22,7 +22,14 @@ export default {
 
 
     if (command === 'create') {
-      
+      let content;
+
+      try {
+        content = JSON.parse( await fs.readFile(`./shop/${interaction.guild.id}.json`, 'utf8') );
+      } catch (error) {
+        await fs.writeFile(`./shop/${interaction.guild.id}.json`, '{}', 'utf8');
+        content = {};
+      }
     }
 
     const id = interaction.options.getString('id');
