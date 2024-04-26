@@ -5,6 +5,12 @@ import fs from 'fs/promises';
 import express from 'express';
 const app = express();
 
+const GatewayIntentBits = discord.GatewayIntentBits;
+
+const intents = [
+  
+];
+
 
 const client = new discord.Client({ intents: Object.values(discord.GatewayIntentBits) });
 
