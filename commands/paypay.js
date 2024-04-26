@@ -24,7 +24,6 @@ async function login(interaction, tokenLogin = true) {
     password = crypt.decrypt(password);
     uuid = crypt.decrypt(uuid);
     token = crypt.decrypt(token);
-    console.log(phone, password, uuid, token)
 
     const paypay = new PayPay(phone, password);
     const result = await paypay.login({ uuid: uuid, token: tokenLogin ? token : undefined });
