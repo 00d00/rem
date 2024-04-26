@@ -27,7 +27,7 @@ async function login(interaction, tokenLogin = true) {
     console.log(phone, password, uuid, token)
 
     const paypay = new PayPay(phone, password);
-    const result = await paypay.login({ uuid: uuid, token: tokenLogin ? token : void(0) });
+    const result = await paypay.login({ uuid: uuid, token: tokenLogin ? token : undefined });
 
     if (!result.status) {
       return CreateError('ログイン情報が変更されたためログインできませんでした。' );
@@ -147,13 +147,18 @@ export default {
 
       console.log(loginResult);
 
-      const paypay = loginResult.data;
-      const balance = await paypay.getBalance();
+      let paypay
+      paypay = loginResult.data;
+
+      let balance;
+      balance = await paypay.getBalance();
 
       console.log(balance);
 
       if (!balance.success) {
-        
+        const loginResult = await login(interaction, false);
+
+        paypay = loginResult.data;
       }
 
       const walletSummary = balance.raw.payload.walletSummary;
