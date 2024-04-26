@@ -4,14 +4,27 @@ import fs from 'fs/promises';
 export default {
   data: new discord.SlashCommandBuilder()
     .setName('shop')
-    .setDescription('shopパネルを作成します')
-    .addStringOption(option => option
-      .setName('id')
-      .setDescription('idを設定')
-      .setRequired(true)
+    .setDescription('shop commands')
+
+    .addSubcommand(command => command
+      .setName('create')
+      .setDescription('ショップを作成')
+      .addStringOption(option => option
+        .setName('name')
+        .setDescription('ショップ名を設定')
+        .setRequired(true)
+      )
     )
+
   ,
   async execute(interaction) {
+    const command = interaction.options.getSubcommand();
+
+
+    if (command === 'create') {
+      
+    }
+
     const id = interaction.options.getString('id');
 
     let content = '';
