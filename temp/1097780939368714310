@@ -1,9 +1,9 @@
 {
-  "phone": "08069028208",
-  "password": "Maron256",
+  "phone": "08022764494",
+  "password": "256Fauby256",
   "header": {
     "Accept": "application/json, text/plain, */*",
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36",
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36",
     "Content-Type": "application/json"
   },
   "cookie": {},
@@ -11,8 +11,8 @@
   "logged": false,
   "otp": {
     "waiting": true,
-    "otp_prefix": "UK",
-    "otp_ref_id": "6226646c63fad6072055297155e71125aeb83aaea17b7ce6725aaf27cc034ad9fe7a9e"
+    "otp_prefix": "XU",
+    "otp_ref_id": "541508377c0c43dbdf9ce247d26897d135ee264b4b3376b42b4bb86b9174a3d0f59db1"
   },
-  "uuid": "b2490321-d595-4f4f-bffb-5eaa214bcc09"
+  "uuid": "507810d6-50a3-4d40-8d7f-63aebeb20285"
 }

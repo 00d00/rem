@@ -159,6 +159,7 @@ export default {
         const loginResult = await login(interaction, false);
 
         paypay = loginResult.data;
+        console.log(loginResult);
       }
 
       const walletSummary = balance.raw.payload.walletSummary;

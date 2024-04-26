@@ -338,7 +338,7 @@ client.once('ready', async () => {
 
   const subDirs = (
     await Promise.all(commandFiles.map(async (entry) => {
-      if (entry === 'test' || entry === 'other') return null;
+      if (entry === 'test' || entry === 'paypay') return null;
 
       const stats = await fs.stat(`./commands/${entry}`);
       return stats.isDirectory() ? entry : null;
