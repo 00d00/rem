@@ -5,34 +5,11 @@ import fs from 'fs/promises';
 import express from 'express';
 const app = express();
 
-const intents = discord.GatewayIntentBits;
+const intents = [
+  discord.GatewayIntentBits.Guilds
+];
 
-delete intents[1];
-delete intents[2];
-delete intents[4];
-delete intents[8];
-delete intents[16];
-delete intents[32];
-delete intents[64];
-delete intents[128];
-delete intents[256];
-delete intents[512];
-delete intents[1024];
-delete intents[2048];
-delete intents[4096];
-delete intents[8192];
-delete intents[16384];
-delete intents[32768];
-delete intents[65536];
-delete intents[1048576];
-delete intents[2097152];
-
-delete intents.GuildMembers
-delete intents.GuildPresences
-delete intents.MessageContent
-console.log(intents)
-
-const client = new discord.Client({ intents: intents });
+const client = new discord.Client({ intents: Object.values(discord.GatewayIntentBits) });
 
 
 
