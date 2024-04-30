@@ -186,7 +186,7 @@ export default {
 
       if (!loginResult.status) {
         const embed = ErrorEmbed(interaction, loginResult.data);
-        await interaction.reply({ embeds: [embed], ephemeral: true });
+        await interaction.followUp({ embeds: [embed], ephemeral: true });
         return;
       }
 
@@ -202,7 +202,7 @@ export default {
           .setTitle('paypay-accept')
           .setDescription('リンクが無効です。');
 
-        await interaction.reply({ embeds: [error], ephemeral: true });
+        await interaction.followUp({ embeds: [error], ephemeral: true });
         return;
       }
 
@@ -218,7 +218,7 @@ export default {
             { name: '送金者', value: linkData.sender_name }
           )
 
-        await interaction.reply({ embeds: [embed] });
+        await interaction.followUp({ embeds: [embed] });
       } catch (e) {
         console.log(e)
         const error = new discord.EmbedBuilder()
