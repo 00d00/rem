@@ -17,16 +17,11 @@ const client = new discord.Client({ intents: Object.values(discord.GatewayIntent
 
 import os from 'os';
 
-// CPU使用率を取得
 const cpuUsage = os.loadavg()[0];
-
-// メモリ使用率を取得
-const totalMemory = os.totalmem();
-const freeMemory = os.freemem();
-const memoryUsage = (1 - (freeMemory / totalMemory)) * 100;
+const memUsage = (1 - (os.freemem() / os.totalmem())) * 100;
 
 console.log('CPU使用率:', cpuUsage.toFixed(2), '%');
-console.log('メモリ使用率:', memoryUsage.toFixed(2), '%');
+console.log('メモリ使用率:', memUsage.toFixed(2), '%');
 
 
 
@@ -39,8 +34,6 @@ global.axios = axios;
 
 global.axios.defaults.headers.common['Cookie'] = '__cf_bm=UFiwWDwwEaOlp_oibK5kkw3Qv8J.TC8eGPdQn01AKfY-1713261038-1.0.1.1-wPQZRu7Kvy3VxmMHpfjFG7VbNHoKHHDto_9OIJ6tCcUcBmjsXHYjpKKMJKi4wIqttmWXC3qATA9rRWYx2LQtsA; cf_clearance=gF4DcXnIA2sbWcKi8XQHv.2VmGOo8Sp87vglLVsm6IU-1713181007-1.0.1.1-SNgrsdda_6.iI5rBl.IADkRJ3G5.18uSmDwqd5pdiQkwn49yEWgp4i.uzSL_1fc2CX2YXdkz9UjHe3gVaaB7MQ';
 
-console.log(global.A)
-global.A = 0;
 
 /*
 import { PayPay } from 'paypax';
@@ -53,7 +46,7 @@ console.log(await paypay.getBalance());
 import { Stake } from './modules/stake.js';
 
 
-const stake = new Stake('b0e1fee7f6faf621192e0f276d3563a12526e1db095ae327d1acc8be60ff09564bd240df4ceb660b2b43d9a5ec4320c0');
+const stake = new Stake('aec4e417bba157655275c13820e92300baf37206733731d34de8683975e55f0e747b629cca8bde91dfe3e71971d9e7ab');
 
 //console.log(await stake.user_balances());
 
