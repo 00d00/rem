@@ -25,7 +25,7 @@ export default {
       let content;
 
       try {
-        content = JSON.parse( await fs.readFile(`./shop/${interaction.guild.id}.json`, 'utf8') );
+        content = JSON.parse( await fs.readFile(`./shop/${interaction.guild.id}.json`, 'utf-8') );
       } catch (error) {
         await fs.writeFile(`./shop/${interaction.guild.id}.json`, '{}', 'utf8');
         content = {};
@@ -37,7 +37,7 @@ export default {
     let content = '';
 
     try {
-      content = JSON.parse( await fs.readFile(`./shop/${interaction.guild.id}.json`, 'utf8') );
+      content = JSON.parse( await fs.readFile(`./shop/${interaction.guild.id}.json`, 'utf-8') );
     } catch (error) {
       await fs.writeFile(`./shop/${interaction.guild.id}.json`, '{}', 'utf8');
       content = {};
