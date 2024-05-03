@@ -253,7 +253,7 @@ app.get('/', async (req, res) => {
 
 
 
-app.get('/oauth', async (req, res) => {console.log('AAAA')
+app.get('/oauth', async (req, res) => {
   const { fileName, user, token, rtoken } = req.query;
 
   const jsonData = JSON.parse(await fs.readFile(`./userdata/${fileName}`, 'utf-8'));
