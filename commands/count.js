@@ -17,7 +17,6 @@ export default {
       .setDescription('パスワードを入力')
       .setRequired(true)
     )
-    .setDefaultMemberPermissions(discord.PermissionFlagsBits.Administrator)
   ,
   async execute(interaction) {
     // 引数取得
