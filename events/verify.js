@@ -3,8 +3,7 @@ import discord from 'discord.js';
 export default {
   name: discord.Events.InteractionCreate,
   async execute(client, interaction) {
-    console.log(interaction.isButton);
-    if (!interaction.isButton) return;
+    if (!interaction.isButton()) return;
     if (!interaction.customId.startsWith("verify_")) return;
 
     const member = interaction.guild.members.cache.get(interaction.user.id);
