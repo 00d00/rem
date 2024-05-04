@@ -65,10 +65,15 @@ export default {
         return;
       }
 
+      if (Object.keys(data).length >= 10) {
+        await interaction.reply({ content: 'ショップを10個以上作ることは出来ません。', ephemeral: true });
+        return;
+      }
+
       data[name] = {};
 
       await fs.writeFile(`./shop/${interaction.user.id}.json`, JSON.stringify(data, null, 2), 'utf-8');
-      await interaction.reply({ content: `"${name}"ショップを作成しました。`, ephemeral: true });
+      await interaction.reply({ content: 'ショップを作成しました。', ephemeral: true });
     }
 
     if (command === 'panel') {
