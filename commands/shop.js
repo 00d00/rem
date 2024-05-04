@@ -41,7 +41,12 @@ export default {
     const command = interaction.options.getSubcommand();
 
     if (command === 'create') {
-      const name = interaction.options.getString('name');
+      const name = interaction.options.getString('name').toLowerCase();;
+
+      if ( !( /^[a-z0-9_]+$/.test(name) ) ) {
+        await interaction.reply({ content: "英数字、アンダーバー以外は使用できません。", ephemeral: true });
+        return;
+      }
 
       const fileExists = await exists(`./shop/${interaction.user.id}.json`);
       let content;
@@ -63,7 +68,7 @@ export default {
       data[name] = {};
 
       await fs.writeFile(`./shop/${interaction.user.id}.json`, JSON.stringify(data, null, 2), 'utf-8');
-      await interaction.reply({ content: 'ショップを作成しました。', ephemeral: true });
+      await interaction.reply({ content: `"${name}"ショップを作成しました。`, ephemeral: true });
     }
 
     if (command === 'panel') {
