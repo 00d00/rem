@@ -155,7 +155,7 @@ export default {
         paypay = loginResult.data;
         console.log(loginResult);
       }
-
+      console.log(balance)
       const walletSummary = balance.raw.payload.walletSummary;
       const transferableBalance = walletSummary.transferableBalanceInfo.balance;
       const payoutableBalance = walletSummary.payoutableBalanceInfo.balance;
