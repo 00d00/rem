@@ -146,15 +146,13 @@ export default {
           'タイムアウトしました。'
         );
 
-        await interaction.followUp({ embeds: [embed], ephemeral: true });
+        await res.reply({ embeds: [embed], ephemeral: true });
         return;
       }
 
-      const data = await fs.readFile(`./shop/${interaction.user.id}.json`, 'utf-8');
+      const data = JSON.parse(await fs.readFile(`./shop/${interaction.user.id}.json`, 'utf-8'));
 
       const shop = data[res.values[0]];
-      console.log(data)
-      console.log(data['test']);
 
       if (shop.length === 0) {
         const embed = createEmbed(
@@ -163,9 +161,11 @@ export default {
           '先に商品を1つ以上追加してください。'
         );
 
-        await interaction.followUp({ embeds: [embed], ephemeral: true });
+        await res.reply({ embeds: [embed], ephemeral: true });
         return;
       }
+
+      
     }
 
 
