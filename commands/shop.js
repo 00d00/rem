@@ -166,13 +166,17 @@ export default {
         return;
       }
 
+      let description = '';
 
       shop.forEach(item => {
-        
+        description += `\`\`\`${item.name} : ${item.price}円\`\`\`\n`;
       });
 
       const panel = new discord.EmbedBuilder()
-        .setTitle(title);
+        .setTitle(title)
+        .setDescription(description);
+
+      await res.reply({ embeds: [embed] });
     }
 
 
