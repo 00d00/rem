@@ -78,7 +78,7 @@ export default {
     if (command === 'create') {
       const name = interaction.options.getString('name').toLowerCase();;
 
-      if ( !( /^[a-z0-9_]+$/.test(name) ) ) {
+      if (!(/^[a-z0-9_]+$/.test(name))) {
         await interaction.reply({ content: "英数字、アンダーバー以外は使用できません。", ephemeral: true });
         return;
       }
@@ -137,9 +137,17 @@ export default {
       const message = await interaction.reply({ embeds: [embed], components: [row], ephemeral: true });
 
       try {
-        const confirmation = await message.awaitMessageComponent({ filter: i => i.user.id === interaction.user.id, time: 60000 });
-      } catch (e) {
-        await interaction.editReply({ content: 'Confirmation not received within 1 minute, cancelling', components: [] });
+        const res = await message.awaitMessageComponent({ filter: i => i.user.id === interaction.user.id, time: 60000 });
+
+        console.log(res);
+      } catch (error) {
+        const embed = createEmbed(
+          interaction,
+          'error',
+          'Timed out! Please try again.'
+        );
+
+        await interaction.editReply({ embeds: [embed], components: [] });
       }
     }
 
