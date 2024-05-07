@@ -150,11 +150,11 @@ export default {
         return;
       }
 
-      res.value[0];
-
       const data = await fs.readFile(`./shop/${interaction.user.id}.json`, 'utf-8');
 
-      const shop = data[res.value[0]];
+      const shop = data[res.values[0]];
+      console.log(data)
+      console.log(res.values[0])
 
       if (shop.length === 0) {
         const embed = createEmbed(
