@@ -11,6 +11,41 @@ async function exists(filePath) {
   }
 }
 
+function createEmbed(interaction, type, content) {
+  const types = {
+    error: 'Red',
+    normal: 'Blue',
+    success: 'Green'
+  }
+
+  return discord.EmbedBuilder()
+    .setColor(types[type])
+    .setTitle(`shop-${interaction.options.getSubcommand()}`)
+    .setDescription(content);
+}
+
+async function createPanel(userId) {
+  const data = JSON.parse(await fs.readFile(`./shop/${interaction.user.id}.json`, 'utf-8'));
+
+  const options = [];
+
+  Object.keys(data).forEach(key => {
+    options.push(
+      new StringSelectMenuOptionBuilder()
+        .setLabel(key)
+        .setValue(key)
+    );
+  });
+
+  const menu = new StringSelectMenuBuilder()
+    .setCustomId('shop_select')
+    .setPlaceholder('ショップを選択')
+    .addOptions(...options);
+
+  return new ActionRowBuilder()
+    .addComponents(menu);
+}
+
 export default {
   data: new discord.SlashCommandBuilder()
     .setName('shop')
@@ -70,15 +105,39 @@ export default {
         return;
       }
 
-      data[name] = {};
+      data[name] = [];
 
       await fs.writeFile(`./shop/${interaction.user.id}.json`, JSON.stringify(data, null, 2), 'utf-8');
       await interaction.reply({ content: 'ショップを作成しました。', ephemeral: true });
     }
 
+
+
     if (command === 'panel') {
-      // panel
+      const fileExists = await exists(`./shop/${interaction.user.id}.json`);
+
+      if (!fileExists) {
+        const embed = createEmbed(
+          interaction,
+          'error',
+          'ショップが存在しません。作成してからやり直してください。'
+        );
+
+        await interaction.reply({ embeds: [embed], ephemeral: true });
+        return;
+      }
+
+      const row = createPanel(interaction.user.id);
+
+      const embed = createEmbed(
+        interaction,
+        'normal',
+      );
+
+      await interaction.reply({ embeds: [embed], components: [row] });
     }
+
+
 
     if (command === 'settings') {
       // settings
