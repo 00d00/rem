@@ -18,9 +18,10 @@ function createEmbed(interaction, type, content) {
     success: 'Green'
   }
 
-  const embed = new discord.EmbedBuilder()
+  return new discord.EmbedBuilder()
     .setColor(types[type])
-    .setTitle(`shop-${interaction.options.getSubcommand()}`);
+    .setTitle(`shop-${interaction.options.getSubcommand()}`)
+    .setDescription(content || null);
 }
 
 async function createPanel(interaction, userId) {
@@ -126,14 +127,20 @@ export default {
         return;
       }
 
-      const row = createPanel(interaction, interaction.user.id);
+      const row = await createPanel(interaction, interaction.user.id);
 
       const embed = createEmbed(
         interaction,
         'normal',
       );
 
-      await interaction.reply({ embeds: [embed], components: [row], ephemeral: true });
+      const message = await interaction.reply({ embeds: [embed], components: [row], ephemeral: true });
+
+      try {
+        const confirmation = await message.awaitMessageComponent({ filter: i => i.user.id === interaction.user.id, time: 60000 });
+      } catch (e) {
+        await interaction.editReply({ content: 'Confirmation not received within 1 minute, cancelling', components: [] });
+      }
     }
 
 
