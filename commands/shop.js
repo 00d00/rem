@@ -154,7 +154,7 @@ export default {
 
       const shop = data[res.values[0]];
       console.log(data)
-      console.log(res.values[0])
+      console.log(data['test']);
 
       if (shop.length === 0) {
         const embed = createEmbed(
