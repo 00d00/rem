@@ -135,19 +135,36 @@ export default {
       );
 
       const message = await interaction.reply({ embeds: [embed], components: [row], ephemeral: true });
+      let res;
 
       try {
-        const res = await message.awaitMessageComponent({ filter: i => i.user.id === interaction.user.id, time: 60000 });
-
-        console.log(res);
+        res = await message.awaitMessageComponent({ filter: i => i.user.id === interaction.user.id, time: 60000 });
       } catch (error) {
         const embed = createEmbed(
           interaction,
           'error',
-          'Timed out! Please try again.'
+          'タイムアウトしました。'
         );
 
-        await interaction.editReply({ embeds: [embed], components: [] });
+        await interaction.followUp({ embeds: [embed], ephemeral: true });
+        return;
+      }
+
+      res.value[0];
+
+      const data = await fs.readFile(`./shop/${interaction.user.id}.json`, 'utf-8');
+
+      const shop = data[res.value[0]];
+
+      if (shop.length === 0) {
+        const embed = createEmbed(
+          interaction,
+          'error',
+          '先に商品を1つ以上追加してください。'
+        );
+
+        await interaction.followUp({ embeds: [embed], ephemeral: true });
+        return;
       }
     }
 
