@@ -32,8 +32,6 @@ import fetch from 'node-fetch';
 global.fetch = fetch;
 global.axios = axios;
 
-global.axios.defaults.headers.common['Cookie'] = '__cf_bm=UFiwWDwwEaOlp_oibK5kkw3Qv8J.TC8eGPdQn01AKfY-1713261038-1.0.1.1-wPQZRu7Kvy3VxmMHpfjFG7VbNHoKHHDto_9OIJ6tCcUcBmjsXHYjpKKMJKi4wIqttmWXC3qATA9rRWYx2LQtsA; cf_clearance=gF4DcXnIA2sbWcKi8XQHv.2VmGOo8Sp87vglLVsm6IU-1713181007-1.0.1.1-SNgrsdda_6.iI5rBl.IADkRJ3G5.18uSmDwqd5pdiQkwn49yEWgp4i.uzSL_1fc2CX2YXdkz9UjHe3gVaaB7MQ';
-
 
 /*
 import { PayPay } from 'paypax';
@@ -46,7 +44,10 @@ console.log(await paypay.getBalance());
 import { Stake } from './modules/stake.js';
 
 
-const stake = new Stake('aec4e417bba157655275c13820e92300baf37206733731d34de8683975e55f0e747b629cca8bde91dfe3e71971d9e7ab');
+const stake = new Stake(
+  '7234c6184d505a808a787d1c6f5dcbac04b344f2c1d8c2d8dc68a12de0523f12115826e480bb05975eaea8c20281c605',
+  'currency_hideZeroBalances=false; currency_currencyView=crypto; fiat_number_format=en; cookie_consent=false; leftSidebarView_v2=expanded; sidebarView=hidden; casinoSearch=["Monopoly","Crazy Time","Sweet Bonanza","Money Train","Reactoonz"]; sportsSearch=["Liverpool FC","Kansas City Chiefs","Los Angeles Lakers","FC Barcelona","FC Bayern Munich"]; sportMarketGroupMap={}; oddsFormat=decimal; locale=en; intercom-id-cx1ywgf2=b7790e61-1f4f-4e23-9105-510657953e35; intercom-device-id-cx1ywgf2=27a9f89e-c4c1-4561-bb2c-9453c5cefc07; session=7234c6184d505a808a787d1c6f5dcbac04b344f2c1d8c2d8dc68a12de0523f12115826e480bb05975eaea8c20281c605; session_info={"id":"f6492d0a-d98b-43e2-be47-6bacd0054de1","sessionName":"Chrome (Unknown)","ip":"106.167.232.160","country":"JP","city":"Shinjuku","active":true,"updatedAt":"Wed, 01 May 2024 11:48:11 GMT","__typename":"UserSession"}; intercom-session-cx1ywgf2=UWVlTmVJd3hTb2RBZWNBbzRoZlhSUE1FcERBUmdmSHFqbjBCZVRIaENoVHk3M3BBVVRSeEtVa0FZcTNjZkR4SS0tY0ozTkxKWFZycnY1RzRENm1mMThnQT09--8cc658edb8d4aedd0e04d253a22afa4f249637d8; currency_currency=ltc; __cf_bm=1F4zlnxOSH3wOJ7UTCuF0lrtHHYeYWV.gG.L_b1su5g-1715039029-1.0.1.1-PUqbX3KPNoqqk4CKAspeb4qUwlNMQm5s2sv4CAoiNULMApZktgmRu7eW4sMCrexEh1KXoP6xqeZLkybQrxumew; _dd_s=rum=0&expire=1715040225970; cf_clearance=0VHt_ldyI9wMpne_0vGBqhVJhSuJYEIflUNoE3LP8FI-1715039348-1.0.1.1-R5cdoDefIBUA9U_9Us7qp6Ju6rmAyoP1RQpe0XW02D9BBAAfWb7x1C1urs7XU5_kjdmEqQeYoDWQV2jEkjsz2w'
+);
 
 //console.log(await stake.user_balances());
 
