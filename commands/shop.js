@@ -18,31 +18,30 @@ function createEmbed(interaction, type, content) {
     success: 'Green'
   }
 
-  return discord.EmbedBuilder()
+  const embed = new discord.EmbedBuilder()
     .setColor(types[type])
-    .setTitle(`shop-${interaction.options.getSubcommand()}`)
-    .setDescription(content);
+    .setTitle(`shop-${interaction.options.getSubcommand()}`);
 }
 
-async function createPanel(userId) {
+async function createPanel(interaction, userId) {
   const data = JSON.parse(await fs.readFile(`./shop/${interaction.user.id}.json`, 'utf-8'));
 
   const options = [];
 
   Object.keys(data).forEach(key => {
     options.push(
-      new StringSelectMenuOptionBuilder()
+      new discord.StringSelectMenuOptionBuilder()
         .setLabel(key)
         .setValue(key)
     );
   });
 
-  const menu = new StringSelectMenuBuilder()
+  const menu = new discord.StringSelectMenuBuilder()
     .setCustomId('shop_select')
     .setPlaceholder('ショップを選択')
     .addOptions(...options);
 
-  return new ActionRowBuilder()
+  return new discord.ActionRowBuilder()
     .addComponents(menu);
 }
 
@@ -127,14 +126,14 @@ export default {
         return;
       }
 
-      const row = createPanel(interaction.user.id);
+      const row = createPanel(interaction, interaction.user.id);
 
       const embed = createEmbed(
         interaction,
         'normal',
       );
 
-      await interaction.reply({ embeds: [embed], components: [row] });
+      await interaction.reply({ embeds: [embed], components: [row], ephemeral: true });
     }
 
 
