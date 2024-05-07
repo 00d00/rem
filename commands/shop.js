@@ -152,7 +152,8 @@ export default {
 
       const data = JSON.parse(await fs.readFile(`./shop/${interaction.user.id}.json`, 'utf-8'));
 
-      const shop = data[res.values[0]];
+      const title = res.values[0];
+      const shop = data[title];
 
       if (shop.length === 0) {
         const embed = createEmbed(
@@ -165,7 +166,13 @@ export default {
         return;
       }
 
-      
+
+      shop.forEach(item => {
+        
+      });
+
+      const panel = new discord.EmbedBuilder()
+        .setTitle(title);
     }
 
 
