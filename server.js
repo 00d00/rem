@@ -12,7 +12,12 @@ const intents = [
 const client = new discord.Client({ intents: Object.values(discord.GatewayIntentBits) });
 
 
+client.on('messageCreate', async (msg) => {
+  const channel = client.channels.cache.get('1196030330046513163');
+  if (!channel) return;
 
+  await channel.send('A');
+});
 
 
 import os from 'os';
