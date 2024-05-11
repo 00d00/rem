@@ -226,7 +226,6 @@ export default {
 
         await interaction.followUp({ embeds: [embed] });
       } catch (e) {
-        console.log(e)
         const error = new discord.EmbedBuilder()
           .setColor('Red')
           .setTitle('paypay-accept')
