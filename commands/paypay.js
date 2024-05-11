@@ -83,6 +83,16 @@ export default {
         .setRequired(true)
       )
     )
+
+    .addSubcommand(command => command
+      .setName('send')
+      .setDescription('送金リンクを作成')
+      .addIntegerOption(option => option
+        .setName('amount')
+        .setDescription('金額')
+        .setRequired(true)
+      )
+    )
   ,
   async execute(interaction) {
     const command = interaction.options.getSubcommand();
@@ -225,16 +235,34 @@ export default {
           )
 
         await interaction.followUp({ embeds: [embed] });
-      } catch (e) {
-        const error = new discord.EmbedBuilder()
+      } catch (error) {
+        const embed = new discord.EmbedBuilder()
           .setColor('Red')
           .setTitle('paypay-accept')
           .setDescription('リンクが使用済みです。');
 
-        await interaction.followUp({ embeds: [error], ephemeral: true });
+        await interaction.followUp({ embeds: [embed], ephemeral: true });
         return;
       }
     }
+
+
+
+
+    if (command === 'send') {
+      await interaction.deferReply();
+
+      const loginResult = await login(interaction);
+
+      if (!loginResult.status) {
+        const embed = ErrorEmbed(interaction, loginResult.data);
+        await interaction.followUp({ embeds: [embed], ephemeral: true });
+        return;
+      }
+
+      const paypay = loginResult.data;
+    }
+
 
   }
 };
