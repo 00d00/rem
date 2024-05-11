@@ -37,16 +37,9 @@ async function login(interaction, tokenLogin = true) {
 
     await fs.writeFile(`./paypay/${interaction.user.id}.json`, JSON.stringify(data, null, 2), 'utf-8');
 
-    try {
-      const balance = await paypay.getBalance();
+    const balance = await paypay.getBalance();
+    if (!balance.success) return await login(interaction, false);
 
-      if (!balance.success) {
-        const loginResult = await login(interaction, false);
-
-        paypay = loginResult.data;
-        console.log(loginResult);
-      }
-    } catch (error) {}
     return { status: true, data: paypay };
 
   } catch (error) {
