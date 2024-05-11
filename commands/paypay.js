@@ -88,7 +88,6 @@ export default {
     const command = interaction.options.getSubcommand();
 
     if (command === 'login') {
-
       const paypay = new PayPay(interaction.options.getString('phone_number'), interaction.options.getString('password'));
       const result = await paypay.login();
 
@@ -131,9 +130,14 @@ export default {
         await interaction.reply({ embeds: [embed], ephemeral: true });
 
       }
+    }
 
-    } else if (command === 'balance') {
 
+
+
+
+
+    if (command === 'balance') {
       const loginResult = await login(interaction);
 
       if (!loginResult.status) {
@@ -172,8 +176,14 @@ export default {
         .setTimestamp()
 
       await interaction.reply({ embeds: [embed] });
+    }
 
-    } else if (command === 'accept') {
+
+
+
+
+
+    if (command === 'accept') {
       await interaction.deferReply();
 
       const url = interaction.options.getString('url');
@@ -226,5 +236,6 @@ export default {
         return;
       }
     }
+
   }
 };
