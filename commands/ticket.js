@@ -36,11 +36,13 @@ export default {
     const title = interaction.options.getString('title') ?? 'チケット発行パネル';
     const description = interaction.options.getString('description') ?? '下記ボタンからチケットを発行してください。';
     const label = interaction.options.getString('label') ?? '発行';
+
     const role = interaction.options.getString('role') ?? null;
     const category = interaction.options.getString('category') ?? (interaction.channel.parent ? interaction.channel.parent.id : null );
 
     const data = {
-      
+      role: role,
+      category: category
     };
 
     const embed = new discord.EmbedBuilder()
@@ -49,7 +51,7 @@ export default {
       .setDescription(description);
 
     const button = new discord.ButtonBuilder()
-      .setCustomId('ticket-')
+      .setCustomId(`ticket-${JSON.stringify(data)}`)
       .setLabel(label)
       .setStyle(discord.ButtonStyle.Success);
 
