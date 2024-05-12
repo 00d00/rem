@@ -1,6 +1,7 @@
 import discord from 'discord.js';
 import fs from 'fs/promises';
 
+
 const newModal = modalData => {
   const modal = new discord.ModalBuilder()
     .setCustomId(modalData.id)
@@ -16,14 +17,14 @@ const newModal = modalData => {
       .setCustomId(data.id)
       .setStyle(data.style)
       .setRequired(true)
-    array.push(TextInput);
+    const ActionRow = new discord.ActionRowBuilder().setComponents(TextInput);
+    array.push(ActionRow);
   }
 
-  const ActionRow = new discord.ActionRowBuilder().setComponents(array);
-  modal.setComponents(ActionRow);
-  console.log(JSON.stringify(modal, null, 2))
+  modal.setComponents(array);
   return modal;
 };
+
 
 export default {
   data: new discord.SlashCommandBuilder()
