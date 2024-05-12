@@ -19,6 +19,16 @@ export default {
       .setDescription('ボタンのラベルを設定')
       .setRequired(false)
     )
+    .addRoleOption(option => option
+      .setName('role')
+      .setDescription('対応ロールを設定')
+      .setRequired(false)
+    )
+    .addChannelOption(option => option
+      .setName('role')
+      .setDescription('対応ロールを設定')
+      .setRequired(false)
+    )
     .setDefaultMemberPermissions(discord.PermissionFlagsBits.Administrator)
   ,
   async execute(interaction) {
@@ -27,7 +37,7 @@ export default {
     const label = interaction.options.getString('ラベル') ?? '発行';
 
     const embed = new discord.EmbedBuilder()
-      .setColor(process.env.COLOR)
+      .setColor('Green')
       .setTitle(title)
       .setDescription(description);
 
