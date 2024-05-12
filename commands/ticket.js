@@ -37,12 +37,12 @@ export default {
     const description = interaction.options.getString('description') ?? '下記ボタンからチケットを発行してください。';
     const label = interaction.options.getString('label') ?? '発行';
 
-    const role = interaction.options.getString('role') ?? null;
-    const category = interaction.options.getString('category') ?? (interaction.channel.parent ? interaction.channel.parent.id : null );
+    const role = interaction.options.getRole('role') ?? null;
+    const category = interaction.options.getChannel('category') ?? (interaction.channel.parent ? interaction.channel.parent.id : null );
 
     const data = {
-      role: role,
-      category: category
+      role: role.id,
+      category: category.id
     };
 
     const embed = new discord.EmbedBuilder()
