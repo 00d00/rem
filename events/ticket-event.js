@@ -19,42 +19,38 @@ export default {
     }
 
     const permission = [
-  	  {
-  		  id: interaction.guild.id,
-	      deny: [
+      {
+        id: interaction.guild.id,
+        deny: [
           discord.PermissionsBitField.Flags.ViewChannel
         ]
-  	  },
-	  	{
+      },
+      {
         id: interaction.user.id,
         allow: [
           discord.PermissionsBitField.Flags.ViewChannel,
           discord.PermissionsBitField.Flags.SendMessages,
           discord.PermissionsBitField.Flags.AttachFiles
         ]
-  	  }
+      }
     ];
 
+    if (data.role) {
+      permission[2] = {
+        id: interaction.role.id,
+        allow: [
+          discord.PermissionsBitField.Flags.ViewChannel,
+          discord.PermissionsBitField.Flags.SendMessages,
+          discord.PermissionsBitField.Flags.AttachFiles
+        ]
+      }
+    }
+
     const channel = await interaction.guild.channels.create({
-	    name: '📜-' + interaction.user.tag,
-      parent: interaction.channel.parent,
+	    name: `📜-${interaction.user.tag}`,
+      parent: data.role ?? interaction.channel.parent,
 	    type: discord.ChannelType.GuildText,
-	    permissionOverwrites: [
-		    {
-			     id: interaction.guild.id,
-	        deny: [
-            discord.PermissionsBitField.Flags.ViewChannel
-          ]
-		    },
-	  	  {
-  			  id: interaction.user.id,
-          allow: [
-            discord.PermissionsBitField.Flags.ViewChannel,
-            discord.PermissionsBitField.Flags.SendMessages,
-            discord.PermissionsBitField.Flags.AttachFiles
-          ]
-		    }
-	    ]
+	    permissionOverwrites: permission
     });
 
       const embed = new discord.EmbedBuilder()
