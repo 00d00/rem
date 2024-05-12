@@ -40,10 +40,11 @@ export default {
     const role = interaction.options.getRole('role') ?? null;
     const category = interaction.options.getChannel('category') ?? (interaction.channel.parent ? interaction.channel.parent.id : null );
 
-    const data = {
-      role: role.id,
-      category: category.id
-    };
+    const data = {};
+
+    if (role) data.role = role.id;
+    if (category) data.category = category.id;
+  
 
     const embed = new discord.EmbedBuilder()
       .setColor('Green')

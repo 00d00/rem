@@ -3,35 +3,34 @@ import discord from 'discord.js';
 export default {
   name: discord.Events.InteractionCreate,
   async execute(client, interaction) {
-    if (!interaction.isButton) return;
+    if (!interaction.isButton()) return;
     if (!interaction.customId.startsWith('ticket-')) return;
 
     const args = interaction.customId.split('-');
     const command = args[0];
     const data = JSON.parse(args[1]);
 
-    if (interaction.customId === 'ticket') {
-      const channel = await interaction.guild.channels.create({
-	      name: '📜-' + interaction.user.tag,
-        parent: interaction.channel.parent,
-	      type: discord.ChannelType.GuildText,
-	      permissionOverwrites: [
-		      {
-			      id: interaction.guild.id,
-	          deny: [
-              discord.PermissionsBitField.Flags.ViewChannel
-            ]
-		      },
-	  	    {
-  			    id: interaction.user.id,
-            allow: [
-              discord.PermissionsBitField.Flags.ViewChannel,
-              discord.PermissionsBitField.Flags.SendMessages,
-              discord.PermissionsBitField.Flags.AttachFiles
-            ]
-		      }
-	      ]
-      });
+    const channel = await interaction.guild.channels.create({
+	    name: '📜-' + interaction.user.tag,
+      parent: interaction.channel.parent,
+	    type: discord.ChannelType.GuildText,
+	    permissionOverwrites: [
+		    {
+			     id: interaction.guild.id,
+	        deny: [
+            discord.PermissionsBitField.Flags.ViewChannel
+          ]
+		    },
+	  	  {
+  			   id: interaction.user.id,
+          allow: [
+            discord.PermissionsBitField.Flags.ViewChannel,
+            discord.PermissionsBitField.Flags.SendMessages,
+            discord.PermissionsBitField.Flags.AttachFiles
+          ]
+		    }
+	    ]
+    });
 
       const embed = new discord.EmbedBuilder()
         .setColor(process.env.COLOR)
@@ -58,5 +57,5 @@ export default {
 
       const msg = await channel.send('@everyone');
       await msg.delete();
-    }
+  }
 };
