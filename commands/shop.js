@@ -24,7 +24,7 @@ function createEmbed(interaction, type, content) {
     .setDescription(content || null);
 }
 
-async function createPanel(interaction, userId) {
+async function createPanel(interaction) {
   const data = JSON.parse(await fs.readFile(`./shop/${interaction.user.id}.json`, 'utf-8'));
 
   const options = [];
@@ -45,6 +45,27 @@ async function createPanel(interaction, userId) {
   return new discord.ActionRowBuilder()
     .addComponents(menu);
 }
+
+const newButton = (buttonData) => {
+  const components = buttonData.map(data => 
+    new discord.ButtonBuilder()
+      .setCustomId(data.id)
+      .setLabel(data.label)
+      .setStyle(data.style || discord.ButtonStyle.Primary)
+      .setURL(data.url)
+      .setEmoji(data.emoji)
+      .setDisabled(data.disabled)
+  );
+
+  return new discord.ActionRowBuilder()
+    .addComponents(components);
+};
+
+
+
+
+
+
 
 export default {
   data: new discord.SlashCommandBuilder()
@@ -132,6 +153,7 @@ export default {
       const embed = createEmbed(
         interaction,
         'normal',
+        'ショップを選択してください。'
       );
 
       const message = await interaction.reply({ embeds: [embed], components: [row], ephemeral: true });
@@ -155,7 +177,7 @@ export default {
       const title = res.values[0];
       const shop = data[title];
 
-      if (shop.length === 0) {
+      if (shop.item.length === 0) {
         const embed = createEmbed(
           interaction,
           'error',
@@ -168,7 +190,7 @@ export default {
 
       let description = '';
 
-      shop.forEach(item => {
+      shop.item.forEach(item => {
         description += `\`\`\`${item.name} : ${item.price}円\`\`\`\n`;
       });
 
@@ -176,13 +198,87 @@ export default {
         .setTitle(title)
         .setDescription(description);
 
-      await res.reply({ embeds: [embed] });
+      await res.reply({ embeds: [panel] });
     }
 
 
 
     if (command === 'settings') {
-      // settings
+      const fileExists = await exists(`./shop/${interaction.user.id}.json`);
+
+      if (!fileExists) {
+        const embed = createEmbed(
+          interaction,
+          'error',
+          'ショップが存在しません。作成してからやり直してください。'
+        );
+
+        await interaction.reply({ embeds: [embed], ephemeral: true });
+        return;
+      }
+
+      const row = await createPanel(interaction, interaction.user.id);
+
+      const selectEmbed = createEmbed(
+        interaction,
+        'normal',
+        'ショップを選択してください。'
+      );
+
+      const message = await interaction.reply({ embeds: [selectEmbed], components: [row], ephemeral: true });
+      let res;
+
+      try {
+        res = await message.awaitMessageComponent({ filter: i => i.user.id === interaction.user.id, time: 60000 });
+      } catch (error) {
+        const embed = createEmbed(
+          interaction,
+          'error',
+          'タイムアウトしました。'
+        );
+
+        await res.reply({ embeds: [embed], ephemeral: true });
+        return;
+      }
+
+      const data = JSON.parse(await fs.readFile(`./shop/${interaction.user.id}.json`, 'utf-8'));
+
+      const title = res.values[0];
+      const shop = data[title];
+
+      const embed = new discord.EmbedBuilder()
+        .setTitle(`${title}`)
+        .setDescription("設定を行うには下の各種ボタンを押して設定を行ってください。")
+        .setFields(
+          { name: "Shopの実績送信チャンネル", value: shop.achieve_ch === null ? "なし" : `<#${shop.achieve_ch}>` },
+          { name: "Shopの購入者ロール", value: shop.buyer_role === null ? "なし" : `<@&${shop.buyer_role}>` },
+          { name: "商品数", value: `${shop.item.length}` }
+        );
+
+      await res.reply({
+        embeds: [embed],
+        components: [
+          newButton([
+            { id: `add_item-${title}`, label: "商品追加", style: discord.ButtonStyle.Success },
+            { id: `edit_item-${title}`, label: "商品編集", style: discord.ButtonStyle.Primary },
+            { id: `delete_item-${title}`, label: "商品削除", style: discord.ButtonStyle.Danger }
+          ]),
+          newButton([
+            { id: `restock-${title}`, label: "商品補充", style: discord.ButtonStyle.Primary },
+            { id: `takeout-${title}`, label: "商品取り出し", style: discord.ButtonStyle.Secondary },
+            { id: `confirm-${title}`, label: "在庫確認", style: discord.ButtonStyle.Primary }
+          ]),
+          newButton([
+            { id: `achieve_ch-${title}`, label: "実績チャンネルの設定", style: discord.ButtonStyle.Success },
+            { id: `buyer_role-${title}`, label: "購入者用ロールの設定", style: discord.ButtonStyle.Success }
+          ]),
+          newButton([
+            { id: `edit_shop-${title}`, label: "半自動機編集", style: discord.ButtonStyle.Primary },
+            { id: `delete_shop-${title}`, label: "半自動機削除", style: discord.ButtonStyle.Danger }
+          ])
+        ],
+        ephemeral: true
+      });
     }
 
   }
