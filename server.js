@@ -28,14 +28,21 @@ const memUsage = (1 - (os.freemem() / os.totalmem())) * 100;
 console.log('CPU使用率:', cpuUsage.toFixed(2), '%');
 console.log('メモリ使用率:', memUsage.toFixed(2), '%');
 
+function formatBytes(bytes) {
+    if (bytes === 0) return '0 Bytes';
+    const k = 1024;
+    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+}
 
 function displayDebugInfo() {
     console.log('---- System Information ----');
     console.log('Platform:', os.platform());
     console.log('Architecture:', os.arch());
     console.log('CPU Cores:', os.cpus().length);
-    console.log('Total Memory (bytes):', os.totalmem());
-    console.log('Free Memory (bytes):', os.freemem());
+    console.log('Total Memory:', formatBytes(os.totalmem()));
+    console.log('Free Memory:', formatBytes(os.freemem()));
     console.log('---- Network Interfaces ----');
     const networkInterfaces = os.networkInterfaces();
     Object.keys(networkInterfaces).forEach(iface => {
