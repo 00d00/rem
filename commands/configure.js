@@ -59,20 +59,19 @@ export default {
         ]
       });
 
-      const res = await interaction.showModal(modal);
+      await interaction.showModal(modal);
       let response;
 
       try {
-        response = await res.awaitMessageComponent({ time: 180000 });
+        response = await interaction.awaitModalSubmit({ time: 180000 });
       } catch (error) {
         console.log(error)
         await interaction.followUp({ content: `入力遅えよ！！ばーか！！`, ephemeral: true }); // 天才！！
         return;
       }
 
-
-      const inputName = interaction.fields.getTextInputValue("name");
-      const inputPrice = interaction.fields.getTextInputValue("price");
+      const inputName = response.fields.getTextInputValue("name");
+      const inputPrice = response.fields.getTextInputValue("price");
       // let inputInfinityStock = interaction.fields.getTextInputValue("infinity");
 
       /*
@@ -94,6 +93,7 @@ export default {
         .setDescription(`商品名:${inputName}\n値段:${inputPrice}`)
         .setColor("Green")
 
-      await interaction.reply({ embeds: [embed], ephemeral: true });
+      await interaction.followUp({ embeds: [embed], ephemeral: true });
+      await response.reply({ embeds: [embed], ephemeral: true });
   }
 };
