@@ -16,6 +16,7 @@ export default {
       //console.log(data.role)
     }
 
+    console.log(data.category)
     if (data.category) {
       data.category = await interaction.guild.channels.fetch(data.category);
     }
