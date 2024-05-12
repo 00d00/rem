@@ -29,7 +29,25 @@ console.log('CPU使用率:', cpuUsage.toFixed(2), '%');
 console.log('メモリ使用率:', memUsage.toFixed(2), '%');
 
 
+function displayDebugInfo() {
+    console.log('---- System Information ----');
+    console.log('Platform:', os.platform());
+    console.log('Architecture:', os.arch());
+    console.log('CPU Cores:', os.cpus().length);
+    console.log('Total Memory (bytes):', os.totalmem());
+    console.log('Free Memory (bytes):', os.freemem());
+    console.log('---- Network Interfaces ----');
+    const networkInterfaces = os.networkInterfaces();
+    Object.keys(networkInterfaces).forEach(iface => {
+        console.log(`Interface: ${iface}`);
+        networkInterfaces[iface].forEach(addr => {
+            console.log(`  Address: ${addr.address}`);
+        });
+    });
+}
 
+// デバッグ情報を表示するコマンドを実行
+displayDebugInfo();
 
 
 

@@ -5,17 +5,17 @@ export default {
     .setName('ticket')
     .setDescription('チケット発行パネルを設置')
     .addStringOption(option => option
-      .setName('タイトル')
+      .setName('title')
       .setDescription('タイトルを設定')
       .setRequired(false)
     )
     .addStringOption(option => option
-      .setName('説明')
+      .setName('description')
       .setDescription('説明を設定')
       .setRequired(false)
     )
     .addStringOption(option => option
-      .setName('ラベル')
+      .setName('label')
       .setDescription('ボタンのラベルを設定')
       .setRequired(false)
     )
@@ -25,16 +25,23 @@ export default {
       .setRequired(false)
     )
     .addChannelOption(option => option
-      .setName('role')
-      .setDescription('対応ロールを設定')
+      .setName('category')
+      .setDescription('カテゴリを設定')
+      .addChannelTypes(discord.ChannelType.GuildCategory)
       .setRequired(false)
     )
     .setDefaultMemberPermissions(discord.PermissionFlagsBits.Administrator)
   ,
   async execute(interaction) {
-    const title = interaction.options.getString('タイトル') ?? 'チケット発行パネル';
-    const description = interaction.options.getString('説明') ?? '下記ボタンからチケットを発行してください。';
-    const label = interaction.options.getString('ラベル') ?? '発行';
+    const title = interaction.options.getString('title') ?? 'チケット発行パネル';
+    const description = interaction.options.getString('description') ?? '下記ボタンからチケットを発行してください。';
+    const label = interaction.options.getString('label') ?? '発行';
+    const role = interaction.options.getString('role') ?? null;
+    const category = interaction.options.getString('category') ?? (interaction.channel.parent ? interaction.channel.parent.id : null );
+
+    const data = {
+      
+    };
 
     const embed = new discord.EmbedBuilder()
       .setColor('Green')
@@ -42,7 +49,7 @@ export default {
       .setDescription(description);
 
     const button = new discord.ButtonBuilder()
-      .setCustomId('ticket')
+      .setCustomId('ticket-')
       .setLabel(label)
       .setStyle(discord.ButtonStyle.Success);
 
