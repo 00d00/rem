@@ -45,6 +45,7 @@ export default {
     if (role) data.role = role.id;
     if (category) data.category = category.id;
   
+    console.log(`ticket-${JSON.stringify(data)}`)
 
     const embed = new discord.EmbedBuilder()
       .setColor('Green')

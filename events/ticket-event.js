@@ -10,6 +10,31 @@ export default {
     const command = args[0];
     const data = JSON.parse(args[1]);
 
+    if (data.role) {
+      data.role = await interaction.guild.roles.fetch(data.role);
+    }
+
+    if (data.category) {
+      data.category = await interaction.guild.channels.fetch(data.category);
+    }
+
+    const permission = [
+  	  {
+  		  id: interaction.guild.id,
+	      deny: [
+          discord.PermissionsBitField.Flags.ViewChannel
+        ]
+  	  },
+	  	{
+        id: interaction.user.id,
+        allow: [
+          discord.PermissionsBitField.Flags.ViewChannel,
+          discord.PermissionsBitField.Flags.SendMessages,
+          discord.PermissionsBitField.Flags.AttachFiles
+        ]
+  	  }
+    ];
+
     const channel = await interaction.guild.channels.create({
 	    name: '📜-' + interaction.user.tag,
       parent: interaction.channel.parent,
@@ -22,7 +47,7 @@ export default {
           ]
 		    },
 	  	  {
-  			   id: interaction.user.id,
+  			  id: interaction.user.id,
           allow: [
             discord.PermissionsBitField.Flags.ViewChannel,
             discord.PermissionsBitField.Flags.SendMessages,
