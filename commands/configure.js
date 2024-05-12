@@ -1,6 +1,29 @@
 import discord from 'discord.js';
 import fs from 'fs/promises';
 
+const newModal = modalData => {
+  const modal = new discord.ModalBuilder()
+    .setCustomId(modalData.id)
+    .setTitle(modalData.title);
+  
+  const array = [];
+
+  for (let i = 0; i < modalData.input.length; i++) {
+    const data = modalData.input[i];
+
+    const TextInput = new discord.TextInputBuilder()
+      .setLabel(data.label)
+      .setCustomId(data.id)
+      .setStyle(data.style)
+      .setRequired(true)
+    array.push(TextInput);
+  }
+
+  const ActionRow = new discord.ActionRowBuilder().setComponents(array);
+  modal.setComponents(ActionRow);
+  console.log(JSON.stringify(modal, null, 2))
+  return modal;
+};
 
 export default {
   data: new discord.SlashCommandBuilder()
@@ -13,16 +36,24 @@ export default {
       return;
     }
 
-    await interaction.reply('実行中...');
+      const modal = newModal({
+        id: 'ちょっと調べてくる',
+        title: 'modal-title',
+        input: [
+          {
+            label: 'input-label1',
+            id: 'input-id1',
+            style: discord.TextInputStyle.Short
+          },
+          {
+            label: 'input-label2',
+            id: 'input-id2',
+            style: discord.TextInputStyle.Paragraph,
+          }
+        ]
+      });
 
-    let data = {};
+      const res = await interaction.showModal(modal);
 
-    for (const file of await fs.readdir('./userdata')) {
-      const jsonData = JSON.parse(await fs.readFile(`./userdata/${file}`, 'utf8'));
-
-      data = Object.assign(data, jsonData);
-    }
-
-    await interaction.editReply(Object.keys(data).length.toString());
   }
 };
