@@ -11,7 +11,9 @@ export default {
     const data = JSON.parse(args[1]);
 
     if (data.role) {
-      data.role = await interaction.guild.roles.fetch(data.role);
+      //console.log(data.role)
+      //data.role = await interaction.guild.roles.fetch(data.role);
+      //console.log(data.role)
     }
 
     if (data.category) {
@@ -37,7 +39,7 @@ export default {
 
     if (data.role) {
       permission[2] = {
-        id: interaction.role.id,
+        id: data.role,
         allow: [
           discord.PermissionsBitField.Flags.ViewChannel,
           discord.PermissionsBitField.Flags.SendMessages,
@@ -48,7 +50,7 @@ export default {
 
     const channel = await interaction.guild.channels.create({
 	    name: `📜-${interaction.user.tag}`,
-      parent: data.role ?? interaction.channel.parent,
+      parent: data.category ?? interaction.channel.parent,
 	    type: discord.ChannelType.GuildText,
 	    permissionOverwrites: permission
     });
@@ -76,7 +78,7 @@ export default {
 
       await channel.send({ embeds: [ticketEmbed], components: [ticketRow] });
 
-      const msg = await channel.send('@everyone');
-      await msg.delete();
+      //const msg = await channel.send('@everyone');
+      //await msg.delete();
   }
 };
