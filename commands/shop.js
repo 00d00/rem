@@ -251,8 +251,8 @@ export default {
         .setTitle(`${title}`)
         .setDescription("設定を行うには下の各種ボタンを押して設定を行ってください。")
         .setFields(
-          { name: "Shopの実績送信チャンネル", value: shop.vouch ? `<#${shop.achieve_ch}>` : 'なし' },
-          { name: "Shopの購入者ロール", value: shop.buyer ? `<@&${shop.buyer_role}>` : 'なし' },
+          { name: "実績送信チャンネル", value: shop.vouch ? `<#${shop.vouch}>` : 'なし' },
+          { name: "購入者ロール", value: shop.buyer ? `<@&${shop.buyer}>` : 'なし' },
           { name: "商品数", value: `${shop.item.length}` }
         );
 
