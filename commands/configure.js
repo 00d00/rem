@@ -38,23 +38,62 @@ export default {
     }
 
       const modal = newModal({
-        id: 'ちょっと調べてくる',
-        title: 'modal-title',
+        id: 'modal',
+        title: '商品の追加',
         input: [
           {
-            label: 'input-label1',
-            id: 'input-id1',
+            label: '商品名',
+            id: 'name',
             style: discord.TextInputStyle.Short
           },
           {
-            label: 'input-label2',
-            id: 'input-id2',
-            style: discord.TextInputStyle.Paragraph,
-          }
+            label: '値段',
+            id: 'price',
+            style: discord.TextInputStyle.Short
+          },
+          //{
+          //  label: '無限在庫(y=yes, n=no)',
+          //  id: 'infinity', // 面白い・天才
+          //  style: discord.TextInputStyle.Short
+          //}
         ]
       });
 
       const res = await interaction.showModal(modal);
+      let response;
 
+      try {
+        response = await res.awaitMessageComponent({ time: 180000 });
+      } catch (error) {
+        console.log(error)
+        await interaction.followUp({ content: `入力遅えよ！！ばーか！！`, ephemeral: true }); // 天才！！
+        return;
+      }
+
+
+      const inputName = interaction.fields.getTextInputValue("name");
+      const inputPrice = interaction.fields.getTextInputValue("price");
+      // let inputInfinityStock = interaction.fields.getTextInputValue("infinity");
+
+      /*
+      if (inputInfinityStock === 'y') {
+        inputInfinityStock = true;
+      } else if (inputInfinityStock === 'n') {
+        inputInfinityStock = false;
+      } else {
+        await interaction.reply({ content: `${inputInfinityStock}ってなんだよ！！ばーか！！`, ephemeral: true }); // 天才！！
+        return;
+      }
+      */
+
+
+//在庫を無限にするか:${inputInfinityStock ? "YES" : "NO"}
+      // 埋め込み
+      const embed = new discord.EmbedBuilder()
+        .setTitle('商品追加完了|complete')
+        .setDescription(`商品名:${inputName}\n値段:${inputPrice}`)
+        .setColor("Green")
+
+      await interaction.reply({ embeds: [embed], ephemeral: true });
   }
 };
