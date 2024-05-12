@@ -51,10 +51,7 @@ const newButton = (buttonData) => {
     new discord.ButtonBuilder()
       .setCustomId(data.id)
       .setLabel(data.label)
-      .setStyle(data.style || discord.ButtonStyle.Primary)
-      .setURL(data.url)
-      .setEmoji(data.emoji)
-      .setDisabled(data.disabled)
+      .setStyle(data.style)
   );
 
   return new discord.ActionRowBuilder()
@@ -126,7 +123,11 @@ export default {
         return;
       }
 
-      data[name] = [];
+      data[name] = {
+        vouch: null,
+        buyer: null,
+        item: []
+      };
 
       await fs.writeFile(`./shop/${interaction.user.id}.json`, JSON.stringify(data, null, 2), 'utf-8');
       await interaction.reply({ content: 'ショップを作成しました。', ephemeral: true });
@@ -250,8 +251,8 @@ export default {
         .setTitle(`${title}`)
         .setDescription("設定を行うには下の各種ボタンを押して設定を行ってください。")
         .setFields(
-          { name: "Shopの実績送信チャンネル", value: shop.achieve_ch === null ? "なし" : `<#${shop.achieve_ch}>` },
-          { name: "Shopの購入者ロール", value: shop.buyer_role === null ? "なし" : `<@&${shop.buyer_role}>` },
+          { name: "Shopの実績送信チャンネル", value: shop.vouch ? `<#${shop.achieve_ch}>` : 'なし' },
+          { name: "Shopの購入者ロール", value: shop.buyer ? `<@&${shop.buyer_role}>` : 'なし' },
           { name: "商品数", value: `${shop.item.length}` }
         );
 

@@ -1,4 +1,7 @@
 {
-  "test": [],
-  "test_2": []
+  "ultimate_shop": {
+    "vouch": null,
+    "buyer": null,
+    "item": []
+  }
 }
