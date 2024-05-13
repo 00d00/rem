@@ -2,7 +2,7 @@ import discord from 'discord.js';
 import fs from 'fs/promises';
 
 
-const newModal = modalData => {
+function newModal(modalData) {
   const modal = new discord.ModalBuilder()
     .setCustomId(modalData.id)
     .setTitle(modalData.title);
@@ -45,7 +45,7 @@ export default {
     if (button === 'add_item') {
       const modal = newModal({
         id: 'modal',
-        title: '商品の追加',
+        title: '商品追加',
         input: [
           {
             label: '商品名',
@@ -66,7 +66,7 @@ export default {
       try {
         response = await interaction.awaitModalSubmit({ time: 180000 });
       } catch (error) {
-        await interaction.followUp({ content: `入力遅えよ！！ばーか！！`, ephemeral: true });
+        await interaction.followUp({ content: 'タイムアウトしました。', ephemeral: true });
         return;
       }
 
@@ -79,11 +79,10 @@ export default {
       });
 
       const embed = new discord.EmbedBuilder()
-        .setTitle('商品追加完了')
-        .setDescription(`商品名:${inputName}\n値段:${inputPrice}`)
-        .setColor('Green');
+        .setColor('Green')
+        .setTitle('商品追加')
+        .setDescription(`商品名:${inputName}\n値段:${inputPrice}`);
 
-      await interaction.followUp({ embeds: [embed], ephemeral: true });
       await response.reply({ embeds: [embed], ephemeral: true });
     }
 
