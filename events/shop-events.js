@@ -12,13 +12,15 @@ function newModal(modalData) {
   for (let i = 0; i < modalData.input.length; i++) {
     const data = modalData.input[i];
 
-    const TextInput = new discord.TextInputBuilder()
+    const textInput = new discord.TextInputBuilder()
       .setLabel(data.label)
       .setCustomId(data.id)
       .setStyle(data.style)
-      .setRequired(true)
-    const ActionRow = new discord.ActionRowBuilder().setComponents(TextInput);
-    array.push(ActionRow);
+      .setRequired(true);
+
+    array.push(
+      new discord.ActionRowBuilder().setComponents(textInput)
+    );
   }
 
   modal.setComponents(array);
@@ -29,7 +31,7 @@ function newModal(modalData) {
 
 export default {
   name: discord.Events.InteractionCreate,
-  async execute(interaction) {
+  async execute(client, interaction) {
     if (!interaction.isButton()) return;
 
     const data = interaction.customId.split('-');
@@ -115,6 +117,6 @@ export default {
     }
 
     json[name] = shop;
-    await fs.writeFile(`./shop/${interaction.user.id}.json`, 'utf-8');
+    await fs.writeFile(`./shop/${interaction.user.id}.json`, JSON.stringify(json, null, 2), 'utf-8');
   }
 }

@@ -10,13 +10,6 @@ export default {
     const command = args[0];
     const data = JSON.parse(args[1]);
 
-    if (data.role) {
-      //console.log(data.role)
-      //data.role = await interaction.guild.roles.fetch(data.role);
-      //console.log(data.role)
-    }
-
-    console.log(data.category)
     if (data.category) {
       data.category = await interaction.guild.channels.fetch(data.category);
     }
