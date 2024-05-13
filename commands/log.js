@@ -1,10 +1,6 @@
 import discord from 'discord.js';
 import fs from 'fs/promises';
 
-
-
-
-
 export default {
   data: new discord.SlashCommandBuilder()
     .setName('log')
@@ -13,18 +9,15 @@ export default {
     .addStringOption(command => command
       .setName('項目')
       .setDescription('編集する項目')
-      .addStringOption(option => option
-        .setName('name')
-        .setDescription('ショップ名を設定')
-        .setRequired(true)
-      )
+      .setRequired(true)
+			.addChoices(
+				{ name: '入退出', value: 'log_join' },
+				{ name: 'モデレーション', value: 'log_mod' },
+				{ name: 'Movie', value: 'log_' },
+			)
     )
 
   ,
   async execute(interaction) {
-    const command = interaction.options.getSubcommand();
-
-    if (command === 'create') {
-    }
   }
 };
