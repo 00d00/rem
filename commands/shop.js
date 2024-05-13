@@ -89,6 +89,7 @@ export default {
       .setDescription('ショップを編集')
     )
 
+    .setDefaultMemberPermissions(discord.PermissionFlagsBits.Administrator)
   ,
   async execute(interaction) {
     const command = interaction.options.getSubcommand();
