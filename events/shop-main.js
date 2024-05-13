@@ -21,7 +21,8 @@ export default {
     const json = JSON.parse(await fs.readFile(`./shop/${interaction.user.id}.json`, 'utf-8'));
     const shop = json[name];
 
-    if (button === 'add_item') add_item(interaction, shop);
+    if (button === 'add_item') await add_item(interaction, shop);
+
 
 
     if (button === 'edit_item') {

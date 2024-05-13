@@ -38,6 +38,8 @@ export async function add_item(interaction, shop) {
     price: inputPrice
   });
 
+  console.log(shop);
+
   const embed = new discord.EmbedBuilder()
     .setColor('Green')
     .setTitle('商品追加')
