@@ -44,4 +44,4 @@ export async function add_item(interaction, shop) {
     .setDescription(`商品名:${inputName}\n値段:${inputPrice}`);
 
   await response.reply({ embeds: [embed], ephemeral: true });
-}
+};

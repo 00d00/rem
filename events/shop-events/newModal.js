@@ -1,6 +1,6 @@
 import discord from 'discord.js';
 
-export default function newModal(modalData) {
+export default function(modalData) {
   const modal = new discord.ModalBuilder()
     .setCustomId(modalData.id)
     .setTitle(modalData.title);
