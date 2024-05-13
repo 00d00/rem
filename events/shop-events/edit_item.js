@@ -9,10 +9,11 @@ export async function edit_item(interaction, shop) {
   let res;
 
   try {
+    console.log('Start')
     res = await message.awaitMessageComponent({ filter: i => i.user.id === interaction.user.id, time: 180000 });
-    console.log(res)
+    console.log('end')
   } catch (error) {
-    await res.reply({ content: 'タイムアウトしました。', ephemeral: true });
+    await interaction.editReply({ content: 'タイムアウトしました。', ephemeral: true });
     return;
   }
 
