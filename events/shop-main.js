@@ -1,6 +1,7 @@
 import discord from 'discord.js';
 import fs from 'fs/promises';
 
+import {} from './shop-events/index.js';
 
 function newModal(modalData) {
   const modal = new discord.ModalBuilder()
