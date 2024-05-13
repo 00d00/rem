@@ -161,7 +161,7 @@ export default {
       let res;
 
       try {
-        res = await message.awaitMessageComponent({ filter: i => i.user.id === interaction.user.id, time: 60000 });
+        res = await message.awaitMessageComponent({ filter: i => i.user.id === interaction.user.id, time: 180000 });
       } catch (error) {
         const embed = createEmbed(
           interaction,
@@ -230,7 +230,7 @@ export default {
       let res;
 
       try {
-        res = await message.awaitMessageComponent({ filter: i => i.user.id === interaction.user.id, time: 60000 });
+        res = await message.awaitMessageComponent({ filter: i => i.user.id === interaction.user.id, time: 180000 });
       } catch (error) {
         const embed = createEmbed(
           interaction,
