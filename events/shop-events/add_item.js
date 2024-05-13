@@ -1,4 +1,6 @@
 import discord from 'discord.js';
+import newModal from './newModal.js';
+
 
 export async function add_item(interaction, shop) {
   const modal = newModal({
