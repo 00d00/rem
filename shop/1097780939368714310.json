@@ -2,6 +2,11 @@
   "ultimate_shop": {
     "vouch": null,
     "buyer": null,
-    "item": []
+    "item": [
+      {
+        "name": "すごい商品",
+        "price": "500"
+      }
+    ]
   }
 }
