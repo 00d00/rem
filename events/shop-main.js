@@ -1,7 +1,7 @@
 import discord from 'discord.js';
 import fs from 'fs/promises';
 
-import { add_item } from './shop-events/index.js';
+import { add_item, edit_item } from './shop-events/index.js';
 
 
 
@@ -25,8 +25,7 @@ export default {
 
 
 
-    if (button === 'edit_item') {
-    }
+    if (button === 'edit_item') await edit_item(interaction, shop);
 
     if (button === 'delete_item') {
     }
