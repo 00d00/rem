@@ -13,8 +13,14 @@ export default {
 			.addChoices(
 				{ name: '入退出', value: 'log_join' },
 				{ name: 'モデレーション', value: 'log_mod' },
-				{ name: 'Movie', value: 'log_' },
+				{ name: 'メッセージ', value: 'log_message' },
 			)
+    )
+
+    .addStringOption(command => command
+      .setName('チャンネル')
+      .setDescription('送信するチャンネル')
+      .setRequired(false)
     )
 
   ,
