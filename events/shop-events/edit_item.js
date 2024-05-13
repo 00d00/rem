@@ -10,7 +10,7 @@ export async function edit_item(interaction, shop) {
 
   try {
     res = await message.awaitMessageComponent({ filter: i => i.user.id === interaction.user.id, time: 180000 });
-    console.log('まじ')
+    console.log('aaa')
   } catch (error) {
     await interaction.editReply({ content: 'タイムアウトしました。', ephemeral: true });
     return;
