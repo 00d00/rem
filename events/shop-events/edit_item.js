@@ -9,7 +9,7 @@ export async function edit_item(interaction, shop) {
   let res;
 
   try {
-    res = await message.awaitMessageComponent({ filter: i => i.user.id === interaction.user.id && i.id === "item_select", componentType: discord.ComponentType.StringSelect, time: 180000 });
+    res = await message.awaitMessageComponent({ filter: i => i.user.id === interaction.user.id, time: 180000 });
   } catch (error) {
     await interaction.editReply({ content: 'タイムアウトしました。', ephemeral: true });
     return;
