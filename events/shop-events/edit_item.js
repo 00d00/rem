@@ -1,31 +1,10 @@
 import discord from 'discord.js';
 import newModal from './newModal.js';
-
-
-async function createSelect(interaction, shop) {
-  const options = [];
-
-  shop.item.forEach(data => {
-    options.push(
-      new discord.StringSelectMenuOptionBuilder()
-        .setLabel(data.name)
-        .setValue(data.name)
-    );
-  });
-
-  const menu = new discord.StringSelectMenuBuilder()
-    .setCustomId('item_select')
-    .setPlaceholder('商品を選択')
-    .addOptions(...options);
-
-  return new discord.ActionRowBuilder()
-    .addComponents(menu);
-}
-
+import newItemSelect from './newItemSelect.js';
 
 
 export async function edit_item(interaction, shop) {
-  const row = await createSelect(interaction);
+  const row = await newItemSelect(interaction);
   const message = await interaction.reply({ content: '編集する商品を選択', components: [row], ephemeral: true });
   let res;
 
