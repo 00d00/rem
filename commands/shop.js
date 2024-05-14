@@ -250,7 +250,6 @@ export default {
 
       const embed = new discord.EmbedBuilder()
         .setTitle(`${title}`)
-        .setDescription("設定を行うには下の各種ボタンを押して設定を行ってください。")
         .setFields(
           { name: "実績送信チャンネル", value: shop.vouch ? `<#${shop.vouch}>` : 'なし' },
           { name: "購入者ロール", value: shop.buyer ? `<@&${shop.buyer}>` : 'なし' },
