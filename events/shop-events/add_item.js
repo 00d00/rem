@@ -38,7 +38,7 @@ export async function add_item(interaction, shop) {
     return;
   }
 
-  if (shop.item.findIndex(element => element.name === inputName)) {
+  if (shop.item.findIndex(element => element.name === inputName) !== -1) {
     await response.reply({ content: '既に同じ名前の商品があります。', ephemeral: true });
     return;
   }

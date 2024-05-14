@@ -8,6 +8,7 @@ export async function edit_item(interaction, shop) {
   const message = await interaction.reply({ content: 'Components', components: [row], ephemeral: true });
 
 const callback = async (i) => {
+  if (i.user.id === interaction.user.id) return;
   interaction.client.removeListener(discord.Events.InteractionCreate, callback);
   if (i.customId !== 'item_select') return;
 
@@ -45,12 +46,13 @@ const callback = async (i) => {
 
   const index = shop.item.findIndex(element => element.name === itemName);
 
-  if (index === -1) {
-    const embed = new discord.EmbedBuilder()
-      .setColor('Red')
-      .setTitle(`${inputName} は存在しません。`);
+  if (isNaN(parseInt(inputPrice)) || 999999 < parseInt(inputPrice)) {
+    await response.reply({ content: '無効な値段です。', ephemeral: true });
+    return;
+  }
 
-    await response.followUp({ embeds: [embed], ephemeral: true });
+  if ( shop.item.findIndex(element => element.name === inputName) ) {
+    await response.reply({ content: '既に同じ名前の商品があります。', ephemeral: true });
     return;
   }
 
