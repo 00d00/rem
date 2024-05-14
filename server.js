@@ -352,7 +352,7 @@ client.once('ready', async () => {
   });
   const guildsCount = client.guilds.cache.size;
   const membersCount = client.users.cache.size;
-    
+
   client.user.setActivity(`${format(guildsCount)} Servers, ${format(membersCount)} Members`, { type: discord.ActivityType.Custom });
 
   // Load Commands
