@@ -8,7 +8,7 @@ const row = newItemSelect(interaction, shop);
 const message = await interaction.reply({ content: 'Components', components: [row], ephemeral: true });
 
 try {
-    let stringInteraction = await message.awaitMessageComponent({ filter: i => i.user.id === interaction.user.id, time: 180000 });
+    let stringInteraction = await message.awaitMessageComponent({ componentType: discord.ComponentType.StringSelect, filter: i => i.user.id === interaction.user.id, time: 180000 });
     const value = stringInteraction.values[0];
     stringInteraction.reply({
         content: `${value} wo sentaku shi te yattaze!`,
