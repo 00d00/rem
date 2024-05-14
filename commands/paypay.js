@@ -212,7 +212,6 @@ export default {
       try {
         linkData = await paypay.getLink(url);
       } catch (e) {
-        console.log(e)
         const error = new discord.EmbedBuilder()
           .setColor('Red')
           .setTitle('paypay-accept')
