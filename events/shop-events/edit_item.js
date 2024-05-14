@@ -7,15 +7,14 @@ export async function edit_item(interaction, shop) {
   const row = newItemSelect(interaction, shop);
   const message = await interaction.reply({ content: 'Components', components: [row], ephemeral: true });
 
-interaction.client.on("interactionCreate", async (i) => {
-  console.log(interaction.customId);
-  if (interaction.customId !== 'item_select') return;
+const callback = async (i) => {
+  if (i.customId !== 'item_select') return;
 
   const itemName = i.values[0];
 
   const modal = newModal({
     id: 'modal',
-    title: '商品追加',
+    title: '商品編集',
     input: [
       {
         label: '商品名',
@@ -43,14 +42,14 @@ interaction.client.on("interactionCreate", async (i) => {
   const inputName = response.fields.getTextInputValue('name');
   const inputPrice = response.fields.getTextInputValue('price');
 
-  const index = shop.item.findIndex(element => element.name === inputName);
+  const index = shop.item.findIndex(element => element.name === itemName);
 
   if (index === -1) {
     const embed = new discord.EmbedBuilder()
       .setColor('Red')
       .setTitle(`${inputName} は存在しません。`);
 
-    await i.reply({ embeds: [embed], ephemeral: true });
+    await i.followUp({ embeds: [embed], ephemeral: true });
     return;
   }
 
@@ -61,7 +60,9 @@ interaction.client.on("interactionCreate", async (i) => {
     .setColor('Green')
     .setTitle('商品追加')
     .setDescription(`商品名:${inputName}\n値段:${inputPrice}`);
-  
-  await i.reply({ embeds: [embed], ephemeral: true });
-});
+
+  await i.followUp({ embeds: [embed], ephemeral: true });
+};
+
+  interaction.client.on("interactionCreate", callback);
 };

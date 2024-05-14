@@ -423,5 +423,10 @@ client.on("interactionCreate", async (interaction) => {
 
 
 
+
+
+
+
+
 // Start Bot
 client.login(process.env.CLIENT_TOKEN);
