@@ -4,7 +4,7 @@ import newItemSelect from './newItemSelect.js';
 
 
 export async function edit_item(interaction, shop) {
-  const row = await newItemSelect(interaction, shop);
+  const row = newItemSelect(interaction, shop);
   const message = await interaction.reply({ content: '編集する商品を選択', components: [row], ephemeral: true });
   let res;
 
