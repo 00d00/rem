@@ -8,13 +8,10 @@ export async function edit_item(interaction, shop) {
   const message = await interaction.reply({ content: '編集する商品を選択', components: [row], ephemeral: true });
   let res;
 
-  try {
-    res = await message.awaitMessageComponent({ filter: i => i.user.id === interaction.user.id, time: 180000 });
-  } catch (error) {
-    await interaction.editReply({ content: 'タイムアウトしました。', ephemeral: true });
-    return;
-  }
+  const collector = message.createMessageComponentCollector({ time: 180000 });
 
+  collector.on('collect', async interaction => {
+  console.log(`Collected ${interaction.customId} from ${interaction.user.tag}`);
   const itemName = res.values[0];
 
   const modal = newModal({
@@ -67,4 +64,9 @@ export async function edit_item(interaction, shop) {
     .setDescription(`商品名:${inputName}\n値段:${inputPrice}`);
   
   await interaction.reply({ embeds: [embed], ephemeral: true });
+  });
+
+  collector.on('end', collected => {
+    console.log(`Collected ${collected.size} interactions.`);
+  });
 };

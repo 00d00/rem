@@ -20,6 +20,31 @@ client.on('messageCreate', async (msg) => {
 });
 
 
+client.on('messageCreate', async message => {
+  if (message.content === '!button') {
+    const row = new discord.ActionRowBuilder()
+      .addComponents(
+        new discord.ButtonBuilder()
+          .setCustomId('primary')
+          .setLabel('Primary')
+          .setStyle(discord.ButtonStyle.Primary),
+      );
+
+    const msg = await message.channel.send({ content: 'Press the button!', components: [row] });
+
+    const collector = msg.createMessageComponentCollector({ time: 15000 });
+
+    collector.on('collect', interaction => {
+      console.log(`Collected ${interaction.customId} from ${interaction.user.tag}`);
+    });
+
+    collector.on('end', collected => {
+      console.log(`Collected ${collected.size} interactions.`);
+    });
+  }
+});
+
+
 import os from 'os';
 
 console.log('CPU使用率:', os.loadavg()[0].toFixed(2), '%');
