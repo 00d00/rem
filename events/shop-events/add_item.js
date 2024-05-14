@@ -33,12 +33,17 @@ export async function add_item(interaction, shop) {
   const inputName = response.fields.getTextInputValue("name");
   const inputPrice = response.fields.getTextInputValue("price");
 
-  shop.item.push({
-    name: inputName,
-    price: inputPrice
-  });
+  if (isNaN(parseInt(inputPrice)) || 999999 < parseInt(inputPrice)) {
+    await response.reply({ content: '無効な値段です。', ephemeral: true });
+    return;
+  }
 
-  console.log(shop);
+  if (shop.item.findIndex(element => element.name === inputName)) {
+    await response.reply({ content: '既に同じ名前の商品があります。', ephemeral: true });
+    return;
+  }
+
+  shop.item.push({ name: inputName, price: inputPrice });
 
   const embed = new discord.EmbedBuilder()
     .setColor('Green')

@@ -8,6 +8,7 @@ export async function edit_item(interaction, shop) {
   const message = await interaction.reply({ content: 'Components', components: [row], ephemeral: true });
 
 const callback = async (i) => {
+  interaction.client.removeListener(discord.Events.InteractionCreate, callback);
   if (i.customId !== 'item_select') return;
 
   const itemName = i.values[0];
@@ -49,7 +50,7 @@ const callback = async (i) => {
       .setColor('Red')
       .setTitle(`${inputName} は存在しません。`);
 
-    await i.followUp({ embeds: [embed], ephemeral: true });
+    await response.followUp({ embeds: [embed], ephemeral: true });
     return;
   }
 
@@ -58,11 +59,11 @@ const callback = async (i) => {
 
   const embed = new discord.EmbedBuilder()
     .setColor('Green')
-    .setTitle('商品追加')
+    .setTitle('商品編集')
     .setDescription(`商品名:${inputName}\n値段:${inputPrice}`);
 
-  await i.followUp({ embeds: [embed], ephemeral: true });
+  await response.followUp({ embeds: [embed], ephemeral: true });
 };
 
-  interaction.client.on("interactionCreate", callback);
+  interaction.client.on(discord.Events.InteractionCreate, callback);
 };
