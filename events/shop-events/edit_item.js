@@ -51,7 +51,9 @@ const callback = async (i) => {
     return;
   }
 
-  if ( shop.item.findIndex(element => element.name === inputName) ) {
+  const validRanges = inputName === itemName ? 1 : 0;
+
+  if (shop.item.filter(element => element.name === inputName) > validRanges) {
     await response.reply({ content: '既に同じ名前の商品があります。', ephemeral: true });
     return;
   }
