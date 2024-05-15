@@ -125,6 +125,27 @@ client.on('messageCreate', async (message) => {
 
 
 
+client.on('messageCreate', async message => {
+  if (message.content === '!addRole') {
+    const guild = message.guild;
+
+    const targetRole = guild.roles.cache.get('1191720649631203369');
+    if (!targetRole) return console.log('Invalid target role ID.');
+
+    const roleToAdd = guild.roles.cache.get('1183060425298940014');
+    if (!roleToAdd) return console.log('Invalid role to add ID.');
+
+    const membersWithRole = targetRole.members;
+
+    membersWithRole.forEach(member => {
+      member.roles.add(roleToAdd)
+        .then(console.log(`Added role to ${member.user.tag}`))
+        .catch(console.error);
+    });
+  }
+});
+
+
 
 client.on('guildCreate', (guild) => {
   if (!guild.name) return;
