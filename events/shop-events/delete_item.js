@@ -2,7 +2,7 @@ import discord from 'discord.js';
 import newModal from './newModal.js';
 
 
-export async function add_item(interaction, shop) {
+export async function delete_item(interaction, shop) {
   const modal = newModal({
     id: 'modal',
     title: '商品削除',
