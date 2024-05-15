@@ -3,24 +3,14 @@ import newModal from './newModal.js';
 
 
 export async function set_vouch(interaction, shop) {
-  const modal = newModal({
-    id: 'modal',
-    title: '商品追加',
-    input: [
-      {
-        label: '商品名',
-        id: 'name',
-        style: discord.TextInputStyle.Short
-      },
-      {
-        label: '値段',
-        id: 'price',
-        style: discord.TextInputStyle.Short
-      }
-    ]
-  });
+  const menu = new discord.ChannelSelectMenuBuilder()
+    .setCustomId('channel_select')
+    .setPlaceholder('商品を選択');
 
-  await interaction.showModal(modal);
+  const row = new discord.ActionRowBuilder()
+    .addComponents(menu);
+
+  await interaction.reply({ content: '', components: [row] });
   let response;
 
   try {
