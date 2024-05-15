@@ -9,7 +9,30 @@ const intents = [
   discord.GatewayIntentBits.Guilds
 ];
 
-const client = new discord.Client({ intents: Object.values(discord.GatewayIntentBits) });
+
+const client = new discord.Client({
+  intents: [
+    discord.GatewayIntentBits.AutoModerationConfiguration,
+    discord.GatewayIntentBits.AutoModerationExecution,
+    discord.GatewayIntentBits.DirectMessageReactions,
+    discord.GatewayIntentBits.DirectMessageTyping,
+    discord.GatewayIntentBits.DirectMessages,
+    discord.GatewayIntentBits.GuildEmojisAndStickers,
+    discord.GatewayIntentBits.GuildIntegrations,
+    discord.GatewayIntentBits.GuildInvites,
+    // discord.GatewayIntentBits.GuildMembers,
+    discord.GatewayIntentBits.GuildMessageReactions,
+    discord.GatewayIntentBits.GuildMessageTyping,
+    discord.GatewayIntentBits.GuildMessages,
+    discord.GatewayIntentBits.GuildModeration,
+    // discord.GatewayIntentBits.GuildPresences,
+    discord.GatewayIntentBits.GuildScheduledEvents,
+    discord.GatewayIntentBits.GuildVoiceStates,
+    discord.GatewayIntentBits.GuildWebhooks,
+    discord.GatewayIntentBits.Guilds,
+    // discord.GatewayIntentBits.MessageContent,
+  ]
+});
 
 
 client.on('messageCreate', async (msg) => {
@@ -19,30 +42,6 @@ client.on('messageCreate', async (msg) => {
   await channel.send('A');
 });
 
-
-client.on('messageCreate', async message => {
-  if (message.content === '!button') {
-    const row = new discord.ActionRowBuilder()
-      .addComponents(
-        new discord.ButtonBuilder()
-          .setCustomId('primary')
-          .setLabel('Primary')
-          .setStyle(discord.ButtonStyle.Primary),
-      );
-
-    const msg = await message.channel.send({ content: 'Press the button!', components: [row] });
-
-    const collector = msg.createMessageComponentCollector({ time: 15000 });
-
-    collector.on('collect', interaction => {
-      console.log(`Collected ${interaction.customId} from ${interaction.user.tag}`);
-    });
-
-    collector.on('end', collected => {
-      console.log(`Collected ${collected.size} interactions.`);
-    });
-  }
-});
 
 
 import os from 'os';
@@ -103,24 +102,8 @@ const stake = new Stake(
 
 //console.log(await stake.user_balances());
 
-const webhook = new discord.WebhookClient({ url: 'https://discord.com/api/webhooks/1230465058694500423/9q4ioJWNL1JkWKM4a4UMS4yvEUlKKTUOAmUyhJ67lJWaSwpdKj8UGU6Q-ZnBB94E6lK8' });
 
-client.on('messageCreate', async (message) => {
-  if (message.webhookId) return;
-  if (message.channel.id !== '1230464873364979783') return;
 
-  const url = message.author.avatar
-    ? message.author.displayAvatarURL()
-    : 'https://cdn.discordapp.com/embed/avatars/0.png';
-
-  await webhook.edit({
-    name: message.author.tag,
-    avatar: url
-  });
-
-  await message.delete();
-  await webhook.send({ content: message.content, embeds: message.embed });
-});
 
 
 
@@ -151,102 +134,6 @@ client.on('guildDelete', (guild) => {
 
 
 
-
-
-client.on('messageCreate', async (message) => {
-  const prefix = '!';
-
-  if (message.channel.id !== '1212180101114892330' || !message.content.startsWith(prefix)) return;
-
-  const args = message.content.slice(prefix.length).trim().split(/ +/);
-  const command = args.shift().toLowerCase();
-
-  if (command === 'join') {
-    const content = JSON.parse(await fs.readFile('./userdata/1-b646862a86cf71499cc9d1c588f8697a.json', 'utf8'));
-
-    const data = {
-      client_id: process.env.CLIENT_ID,
-      client_secret: process.env.CLIENT_SECRET,
-      grant_type: 'refresh_token',
-      refresh_token: content[message.author.id].refreshToken,
-      redirect_uri: 'https://0x1.glitch.me/oauth',
-    };
-
-    const response = await axios.post('https://discord.com/api/v10/oauth2/token', new URLSearchParams(data), {
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-    });
-
-    content[message.author.id].accessToken = response.data.access_token;
-    content[message.author.id].refreshToken = response.data.refresh_token;
-
-    await fs.writeFile('./userdata/1-b646862a86cf71499cc9d1c588f8697a.json', JSON.stringify(content));
-
-    await axios.put(`https://discord.com/api/guilds/${args[0]}/members/${message.author.id}`, {
-      access_token: content[message.author.id].accessToken
-    }, {
-      headers: { 'Authorization': `Bot ${process.env.CLIENT_TOKEN}`, 'Content-Type': 'application/json' }
-    });
-
-    await message.reply('成功！');
-  }
-});
-
-
-
-
-
-client.on('guildMemberAdd', (member) => {
-  if (member.guild.id !== '1097785712495054918') return;
-
-  const channel = member.guild.channels.cache.get('1211973702842064977');
-
-  channel.edit({ name: `members: ${member.guild.memberCount}` })
-});
-
-
-client.on('guildMemberRemove', (member) => {
-  if (member.guild.id !== '1097785712495054918') return;
-
-  const channel = member.guild.channels.cache.get('1211973702842064977');
-
-  channel.edit({ name: `members: ${member.guild.memberCount}` })
-});
-
-
-
-client.on('messageCreate', async (message) => {
-  if (message.content === 'ggrks') {
-    const embed = new discord.EmbedBuilder()
-      .setDescription('自分で調べることはとても大切です。人に聞く前に自分で調べましょう。');
-
-    message.channel.send({ content: '[hτtps://ggrks.world](<https://google.com>)', embeds: [embed] });
-  }
-});
-
-
-
-
-client.on('messageCreate', async(message) => {
-  if (message.mentions.users.size >= 5) {
-    const alertMsg = await message.reply('メンション数が多すぎます。4回以内にしてください。');
-    await message.delete();
-    setTimeout(async() => {
-      await alertMsg.delete();
-    }, 3000)
-  }
-});
-
-
-
-client.on('messageCreate', async(message) => {
-  if (message.content.match(/[A-Za-z\d]{24}\.[A-Za-z\d-_]{6}\.[A-Za-z\d-_]{27}/)) {
-    const alertMsg = await message.reply('Discordトークンが含まれているためメッセージを削除しました。');
-    await message.delete();
-    setTimeout(() => {
-      alertMsg.delete();
-    }, 3000);
-  }
-});
 
 
 
@@ -282,15 +169,7 @@ app.get('/', async (req, res) => {
   total = total.filter((value, index, self) => self.indexOf(value) === index);
 
 
-  const guilds = client.guilds.cache;
 
-  guilds.sort((a, b) => b.memberCount - a.memberCount);
-
-  let guild = '';
-
-  guilds.forEach((guild) => {
-    guild += `NAME: ${guild.name}, ID: ${guild.id} USERS: ${guild.memberCount}\n`;
-  });
 
   res.render('index', {
     guilds: client.guilds.cache.size,
