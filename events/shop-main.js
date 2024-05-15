@@ -8,6 +8,16 @@ import {
 
 import * as shopEvents from './shop-events/index.js';
 
+// add_item
+// edit_item
+// delete_item
+// restock
+// takeout
+// confirm
+//
+//
+//
+//
 
 export default {
   name: discord.Events.InteractionCreate,
