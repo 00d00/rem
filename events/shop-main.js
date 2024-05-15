@@ -1,11 +1,6 @@
 import discord from 'discord.js';
 import fs from 'fs/promises';
 
-import {
-  add_item,
-  edit_item
-} from './shop-events/index.js';
-
 import * as shopEvents from './shop-events/index.js';
 
 // add_item
