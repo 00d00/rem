@@ -344,7 +344,7 @@ function format(value) {
 
 
 
-client.commands =  new discord.Collection();
+client.commands =  []
 
 client.once('ready', async () => {
   client.guilds.cache.forEach(guild => {
@@ -407,6 +407,19 @@ client.once('ready', async () => {
       client.on(data.name, (...args) => data.execute(client, ...args));
     }
   }
+
+  const statusChannel = client.channels.cache.get('1240125536223625318');
+
+
+  statusChannel.send(
+    '```\n___________BOT-STATUS___________\n' +
+    `User Name   : ${client.user.tag}\n` +
+    `Servers     : ${client.guilds.cache.size}\n` +
+    `Commands    : ${client.commands.length}\n` +
+    `Mem Usage   : ${((1 - (os.freemem() / os.totalmem())) * 100).toFixed(2)}%\n` +
+    '________________________________```'
+  );
+
 });
 
 // Execution Command
