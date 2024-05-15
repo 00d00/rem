@@ -9,7 +9,6 @@ export async function edit_item(interaction, shop) {
 
 const callback = async (i) => {
   if (i.user.id !== interaction.user.id) return;
-  interaction.client.removeListener(discord.Events.InteractionCreate, callback);
   if (i.customId !== 'item_select') return;
 
   const itemName = i.values[0];
@@ -58,8 +57,10 @@ const callback = async (i) => {
     return;
   }
 
+  console.log(shop)
   shop.item[index].name = inputName;
   shop.item[index].price = inputPrice;
+  console.log(shop)
 
   const embed = new discord.EmbedBuilder()
     .setColor('Green')
@@ -70,4 +71,9 @@ const callback = async (i) => {
 };
 
   interaction.client.on(discord.Events.InteractionCreate, callback);
+
+  setTimeout(
+    () => interaction.client.removeListener(discord.Events.InteractionCreate, callback),
+    3 * 6 * 1000
+  );
 };
