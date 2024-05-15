@@ -6,32 +6,30 @@ import express from 'express';
 const app = express();
 
 const intents = [
-  discord.GatewayIntentBits.Guilds
+  discord.GatewayIntentBits.AutoModerationConfiguration,
+  discord.GatewayIntentBits.AutoModerationExecution,
+  discord.GatewayIntentBits.DirectMessageReactions,
+  discord.GatewayIntentBits.DirectMessageTyping,
+  discord.GatewayIntentBits.DirectMessages,
+  discord.GatewayIntentBits.GuildEmojisAndStickers,
+  discord.GatewayIntentBits.GuildIntegrations,
+  discord.GatewayIntentBits.GuildInvites,
+  // discord.GatewayIntentBits.GuildMembers,
+  discord.GatewayIntentBits.GuildMessageReactions,
+  discord.GatewayIntentBits.GuildMessageTyping,
+  discord.GatewayIntentBits.GuildMessages,
+  discord.GatewayIntentBits.GuildModeration,
+  // discord.GatewayIntentBits.GuildPresences,
+  discord.GatewayIntentBits.GuildScheduledEvents,
+  discord.GatewayIntentBits.GuildVoiceStates,
+  discord.GatewayIntentBits.GuildWebhooks,
+  discord.GatewayIntentBits.Guilds,
+  // discord.GatewayIntentBits.MessageContent,
 ];
 
 
 const client = new discord.Client({
-  intents: [
-    discord.GatewayIntentBits.AutoModerationConfiguration,
-    discord.GatewayIntentBits.AutoModerationExecution,
-    discord.GatewayIntentBits.DirectMessageReactions,
-    discord.GatewayIntentBits.DirectMessageTyping,
-    discord.GatewayIntentBits.DirectMessages,
-    discord.GatewayIntentBits.GuildEmojisAndStickers,
-    discord.GatewayIntentBits.GuildIntegrations,
-    discord.GatewayIntentBits.GuildInvites,
-    // discord.GatewayIntentBits.GuildMembers,
-    discord.GatewayIntentBits.GuildMessageReactions,
-    discord.GatewayIntentBits.GuildMessageTyping,
-    discord.GatewayIntentBits.GuildMessages,
-    discord.GatewayIntentBits.GuildModeration,
-    // discord.GatewayIntentBits.GuildPresences,
-    discord.GatewayIntentBits.GuildScheduledEvents,
-    discord.GatewayIntentBits.GuildVoiceStates,
-    discord.GatewayIntentBits.GuildWebhooks,
-    discord.GatewayIntentBits.Guilds,
-    // discord.GatewayIntentBits.MessageContent,
-  ]
+  intents: intents
 });
 
 

@@ -6,8 +6,8 @@ export default {
   async execute(client, readiedClient) {
     const guildsCount = client.guilds.cache.size;
     const membersCount = client.guilds.cache.reduce((acc, guild) => acc + guild.memberCount, 0);
-    
-    client.user.setActivity(`**${guildsCount}**Servers, **${membersCount}**Members`, { type: discord.ActivityType.Custom });
+
+    client.user.setActivity(`**${guildsCount}**Servers`, { type: discord.ActivityType.Watching });
 
   const statusChannel = client.channels.cache.get('1240125536223625318');
 
