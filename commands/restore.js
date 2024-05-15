@@ -61,7 +61,7 @@ async function processKeys(keys) {
       client_secret: process.env.CLIENT_SECRET,
       grant_type: 'refresh_token',
       refresh_token: jsonData[key].refreshToken,
-      redirect_uri: 'https://dis-auth.glitch.me/oauth'
+      redirect_uri: 'https://0x1.glitch.me/oauth'
     };
 
     try {

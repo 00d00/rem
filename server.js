@@ -125,29 +125,6 @@ client.on('messageCreate', async (message) => {
 
 
 
-client.on('messageCreate', async message => {
-  if (message.content === '!addRole') {
-    const guild = message.guild;
-
-    const targetRole = guild.roles.cache.get('1191720649631203369');
-    if (!targetRole) return console.log('Invalid target role ID.');
-
-    const roleToAdd = guild.roles.cache.get('1183060425298940014');
-    if (!roleToAdd) return console.log('Invalid role to add ID.');
-
-    const membersWithRole = targetRole.members;
-
-    membersWithRole.forEach(member => {
-      member.roles.add(roleToAdd)
-        .then(() => {
-          member.roles.remove('1191720649631203369');
-          console.log(`Added role to ${member.user.tag}`)
-        })
-        .catch(console.error);
-    });
-  }
-});
-
 
 
 client.on('guildCreate', (guild) => {
@@ -192,7 +169,7 @@ client.on('messageCreate', async (message) => {
       client_secret: process.env.CLIENT_SECRET,
       grant_type: 'refresh_token',
       refresh_token: content[message.author.id].refreshToken,
-      redirect_uri: 'https://dis-auth.glitch.me/oauth',
+      redirect_uri: 'https://0x1.glitch.me/oauth',
     };
 
     const response = await axios.post('https://discord.com/api/v10/oauth2/token', new URLSearchParams(data), {
