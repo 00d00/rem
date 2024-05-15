@@ -12,12 +12,12 @@ import * as shopEvents from './shop-events/index.js';
 // edit_item
 // delete_item
 // restock
-// takeout
-// confirm
-//
-//
-//
-//
+// deplete
+// stock_check
+// set_vouch
+// set_buyer
+// edit_shop
+// delete_shop
 
 export default {
   name: discord.Events.InteractionCreate,
@@ -34,33 +34,9 @@ export default {
     const json = JSON.parse(await fs.readFile(`./shop/${interaction.user.id}.json`, 'utf-8'));
     const shop = json[name];
 
-    if (button === 'add_item') await add_item(interaction, shop);
-
-    if (button === 'edit_item') await edit_item(interaction, shop);
-
-    if (button === 'delete_item') {
-    }
-
-    if (button === 'restock') {
-    }
-
-    if (button === 'takeout') {
-    }
-
-    if (button === 'confirm') {
-    }
-
-    if (button === 'vouch') {
-    }
-
-    if (button === 'buyer') {
-    }
-
-    if (button === 'edit_shop') {
-    }
-
-    if (button === 'delete_shop') {
-    }
+    shopEvents[button]
+      ? await shopEvents[button](interaction, shop)
+      : await interaction.reply({ content: '作成中!', ephemeral: true });
 
     json[name] = shop;
     await fs.writeFile(`./shop/${interaction.user.id}.json`, JSON.stringify(json, null, 2), 'utf-8');

@@ -266,16 +266,16 @@ export default {
           ]),
           newButton([
             { id: `restock-${title}`, label: "商品補充", style: discord.ButtonStyle.Primary },
-            { id: `takeout-${title}`, label: "商品取り出し", style: discord.ButtonStyle.Secondary },
-            { id: `confirm-${title}`, label: "在庫確認", style: discord.ButtonStyle.Primary }
+            { id: `deplete-${title}`, label: "商品取り出し", style: discord.ButtonStyle.Secondary },
+            { id: `stock_check-${title}`, label: "在庫確認", style: discord.ButtonStyle.Primary }
           ]),
           newButton([
-            { id: `achieve_ch-${title}`, label: "実績チャンネルの設定", style: discord.ButtonStyle.Success },
-            { id: `buyer_role-${title}`, label: "購入者用ロールの設定", style: discord.ButtonStyle.Success }
+            { id: `set_vouch-${title}`, label: "実績チャンネルの設定", style: discord.ButtonStyle.Success },
+            { id: `set_buyer-${title}`, label: "購入者用ロールの設定", style: discord.ButtonStyle.Success }
           ]),
           newButton([
-            { id: `edit_shop-${title}`, label: "半自動機編集", style: discord.ButtonStyle.Primary },
-            { id: `delete_shop-${title}`, label: "半自動機削除", style: discord.ButtonStyle.Danger }
+            { id: `edit_shop-${title}`, label: "shop編集", style: discord.ButtonStyle.Primary },
+            { id: `delete_shop-${title}`, label: "shop削除", style: discord.ButtonStyle.Danger }
           ])
         ],
         ephemeral: true
