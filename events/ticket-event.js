@@ -60,7 +60,7 @@ export default {
       const ticketEmbed = new discord.EmbedBuilder()
         .setColor(process.env.COLOR)
         .setTitle(interaction.message.embeds[0].title)
-        .setDescription('スタッフが来るまでお待ち下さい');
+        .setDescription('要件を入力してお待ち下さい。');
 
       const button = new discord.ButtonBuilder()
         .setCustomId('close')
