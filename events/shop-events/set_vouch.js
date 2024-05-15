@@ -24,22 +24,12 @@ export async function set_vouch(interaction, shop) {
 
   const channel = response.fields.getTextInputValue("channel_select");
 
-  if (isNaN(parseInt(inputPrice)) || 999999 < parseInt(inputPrice)) {
-    await response.reply({ content: '無効な値段です。', ephemeral: true });
-    return;
-  }
-
-  if (shop.item.findIndex(element => element.name === inputName) !== -1) {
-    await response.reply({ content: '既に同じ名前の商品があります。', ephemeral: true });
-    return;
-  }
-
-  shop.item.push({ name: inputName, price: inputPrice });
+  shop.vouch = channel.id;
 
   const embed = new discord.EmbedBuilder()
     .setColor('Green')
-    .setTitle('商品追加')
-    .setDescription(`商品名:${inputName}\n値段:${inputPrice}`);
+    .setTitle('実績チャンネル変更')
+    .setDescription(`実績チャンネルを<#`);
 
   await response.reply({ embeds: [embed], ephemeral: true });
 };
