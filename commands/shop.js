@@ -170,7 +170,7 @@ export default {
           'タイムアウトしました。'
         );
 
-        await res.reply({ embeds: [embed], ephemeral: true });
+        await interaction.followUp({ embeds: [embed], ephemeral: true });
         return;
       }
 
@@ -239,7 +239,7 @@ export default {
           'タイムアウトしました。'
         );
 
-        await res.reply({ embeds: [embed], ephemeral: true });
+        await interaction.followUp({ embeds: [embed], ephemeral: true });
         return;
       }
 

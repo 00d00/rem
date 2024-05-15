@@ -5,23 +5,22 @@ import newModal from './newModal.js';
 export async function set_vouch(interaction, shop) {
   const menu = new discord.ChannelSelectMenuBuilder()
     .setCustomId('channel_select')
-    .setPlaceholder('商品を選択');
+    .setPlaceholder('チャンネルを選択');
 
   const row = new discord.ActionRowBuilder()
     .addComponents(menu);
 
-  await interaction.reply({ content: '', components: [row] });
+  await interaction.reply({ content: 'チャンネルを選択してください。', components: [row], ephemeral: true });
   let response;
 
   try {
-    response = await interaction.awaitModalSubmit({ time: 180000 });
+    response = await interaction.awaitMessageComponent({ time: 180000 });
   } catch (error) {
     await interaction.followUp({ content: 'タイムアウトしました。', ephemeral: true });
     return;
   }
 
-  const inputName = response.fields.getTextInputValue("name");
-  const inputPrice = response.fields.getTextInputValue("price");
+  const channel = response.fields.getTextInputValue("channel_select");
 
   if (isNaN(parseInt(inputPrice)) || 999999 < parseInt(inputPrice)) {
     await response.reply({ content: '無効な値段です。', ephemeral: true });
