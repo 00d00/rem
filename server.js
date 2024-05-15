@@ -139,7 +139,10 @@ client.on('messageCreate', async message => {
 
     membersWithRole.forEach(member => {
       member.roles.add(roleToAdd)
-        .then(console.log(`Added role to ${member.user.tag}`))
+        .then(() => {
+          member.roles.remove('1191720649631203369');
+          console.log(`Added role to ${member.user.tag}`)
+        })
         .catch(console.error);
     });
   }
