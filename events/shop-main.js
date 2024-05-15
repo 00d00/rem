@@ -38,7 +38,7 @@ export default {
     shopEvents[button]
       ? await shopEvents[button](interaction, shop)
       : await interaction.reply({ content: '作成中!', ephemeral: true });
-    console.log(shop)
+
 
     json[name] = shop;
     await fs.writeFile(`./shop/${interaction.user.id}.json`, JSON.stringify(json, null, 2), 'utf-8');

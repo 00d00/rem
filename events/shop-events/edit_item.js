@@ -57,10 +57,8 @@ const callback = async (i) => {
     return;
   }
 
-  console.log(shop)
   shop.item[index].name = inputName;
   shop.item[index].price = inputPrice;
-  console.log(shop)
 
   const embed = new discord.EmbedBuilder()
     .setColor('Green')
