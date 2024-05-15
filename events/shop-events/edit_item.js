@@ -37,37 +37,36 @@ export async function edit_item(interaction, shop) {
     return;
   }
 
-  const inputName = response.fields.getTextInputValue('name');
-  const inputPrice = response.fields.getTextInputValue('price');
+  const itemName = response.fields.getTextInputValue('name');
+  const newName = response.fields.getTextInputValue('new_name');
+  const newPrice = response.fields.getTextInputValue('new_price');
 
   const index = shop.item.findIndex(element => element.name === itemName);
 
-  if (isNaN(parseInt(inputPrice)) || 999999 < parseInt(inputPrice)) {
+  if (index === -1) {
+    await response.reply({ content: '商品が見つかりませんでした。', ephemeral: true });
+    return;
+  }
+
+  if (isNaN(parseInt(newPrice)) || 999999 < parseInt(newPrice)) {
     await response.reply({ content: '無効な値段です。', ephemeral: true });
     return;
   }
 
-  const validRanges = inputName === itemName ? 1 : 0;
+  const validRanges = newName === itemName ? 1 : 0;
 
-  if (shop.item.filter(element => element.name === inputName) > validRanges) {
+  if (shop.item.filter(element => element.name === newName) > validRanges) {
     await response.reply({ content: '既に同じ名前の商品があります。', ephemeral: true });
     return;
   }
 
-  shop.item[index].name = inputName;
-  shop.item[index].price = inputPrice;
+  shop.item[index].name = newName;
+  shop.item[index].price = newPrice;
 
   const embed = new discord.EmbedBuilder()
     .setColor('Green')
     .setTitle('商品編集')
-    .setDescription(`商品名:${inputName}\n値段:${inputPrice}`);
+    .setDescription(`商品名:${newName}\n値段:${newPrice}`);
 
   await response.reply({ embeds: [embed], ephemeral: true });
-
-  interaction.client.on(discord.Events.InteractionCreate, callback);
-
-  setTimeout(
-    () => interaction.client.removeListener(discord.Events.InteractionCreate, callback),
-    3 * 6 * 1000
-  );
 };
