@@ -344,7 +344,7 @@ function format(value) {
 
 
 
-const commands = new discord.Collection();
+client.commands =  new discord.Collection();
 
 client.once('ready', async () => {
   client.guilds.cache.forEach(guild => {
@@ -365,10 +365,10 @@ client.once('ready', async () => {
   for (const file of jsFiles) {
     const command = (await import(`./commands/${file}`)).default;
 
-    commands[command.data.name] = command;
+    client.commands[command.data.name] = command;
   }
 
-  console.log('___________BOT-STATUS___________');
+  console.log('_________BOT-HAS-STARTED________');
   console.log(`User Name   : ${client.user.tag}`);
   console.log(`Servers     : ${client.guilds.cache.size}`);
   console.log(`Users       : ${client.users.cache.size}`);
@@ -387,11 +387,11 @@ client.once('ready', async () => {
 
   for (const subDir of subDirs) {
     const command = (await import(`./commands/${subDir}/index.js`)).default;
-    commands[command.data.name] = command;
+    client.commands[command.data.name] = command;
   }
 
-  for (const commandName in commands) {
-    data.push(commands[commandName].data);
+  for (const commandName in client.commands) {
+    data.push(client.commands[commandName].data);
   }
 
 
@@ -414,7 +414,7 @@ client.on("interactionCreate", async (interaction) => {
   if (!interaction.isCommand()) return;
 
   try {
-    await commands[interaction.commandName].execute(interaction);
+    await client.commands[interaction.commandName].execute(interaction);
   } catch (error) {
     console.error(error);
     await interaction.reply({ content: `\`\`\`${error}\`\`\``, ephemeral: true });
