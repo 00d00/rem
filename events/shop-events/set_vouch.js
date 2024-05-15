@@ -3,6 +3,8 @@ import newModal from './newModal.js';
 
 
 export async function set_vouch(interaction, shop) {
+  
+
   const menu = new discord.ChannelSelectMenuBuilder()
     .setCustomId('channel_select')
     .setPlaceholder('チャンネルを選択');
