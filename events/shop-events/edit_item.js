@@ -8,7 +8,7 @@ export async function edit_item(interaction, shop) {
   const message = await interaction.reply({ content: 'Components', components: [row], ephemeral: true });
 
 const callback = async (i) => {
-  if (i.user.id === interaction.user.id) return;
+  if (i.user.id !== interaction.user.id) return;
   interaction.client.removeListener(discord.Events.InteractionCreate, callback);
   if (i.customId !== 'item_select') return;
 
@@ -66,7 +66,7 @@ const callback = async (i) => {
     .setTitle('商品編集')
     .setDescription(`商品名:${inputName}\n値段:${inputPrice}`);
 
-  await response.followUp({ embeds: [embed], ephemeral: true });
+  await response.reply({ embeds: [embed], ephemeral: true });
 };
 
   interaction.client.on(discord.Events.InteractionCreate, callback);
