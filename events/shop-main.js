@@ -6,7 +6,7 @@ import {
   edit_item
 } from './shop-events/index.js';
 
-
+import * as shopEvents from './shop-events/index.js';
 
 
 export default {
