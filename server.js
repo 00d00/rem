@@ -82,14 +82,6 @@ global.fetch = fetch;
 global.axios = axios;
 
 
-/*
-import { PayPay } from 'paypax';
-
-const paypay = new PayPay('08012345678', 'Abcde256');
-console.log(await paypay.login({token:'a'}));
-console.log(await paypay.getBalance());
-*/
-
 import { Stake } from './modules/stake.js';
 
 
@@ -231,8 +223,8 @@ client.once('ready', async () => {
   const guildsCount = client.guilds.cache.size;
   const membersCount = client.users.cache.size;
 
-  client.user.setActivity(`${format(guildsCount)} Servers, ${format(membersCount)} Members`, { type: discord.ActivityType.Custom });
-
+  // client.user.setActivity(`${format(guildsCount)} Servers, ${format(membersCount)} Members`, { type: discord.ActivityType.Custom });
+  client.user.setActivity(`${guildsCount} Servers`, { type: discord.ActivityType.Watching });
   // Load Commands
   const data = [];
 
