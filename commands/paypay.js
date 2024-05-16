@@ -164,13 +164,6 @@ export default {
       let balance;
       balance = await paypay.getBalance();
 
-      if (!balance.success) {
-        const loginResult = await login(interaction, false);
-
-        paypay = loginResult.data;
-        console.log(loginResult);
-      }
-
       const walletSummary = balance.raw.payload.walletSummary;
       const transferableBalance = walletSummary.transferableBalanceInfo.balance;
       const payoutableBalance = walletSummary.payoutableBalanceInfo.balance;
