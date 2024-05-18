@@ -260,6 +260,11 @@ export default {
       const paypay = loginResult.data;
     }
 
+
+
+
+
+
     if (command === 'history') {
       await interaction.deferReply();
 
@@ -272,6 +277,11 @@ export default {
       }
 
       const paypay = loginResult.data;
+
+      const result = await paypay.request('getPay2BalanceHistory');
+      console.log(result.raw);
+
+      await interaction.reply('OK')
     }
 
   }
