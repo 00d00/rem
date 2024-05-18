@@ -93,6 +93,11 @@ export default {
         .setRequired(true)
       )
     )
+
+    .addSubcommand(command => command
+      .setName('history')
+      .setDescription('取引履歴を取得')
+    )
   ,
   async execute(interaction) {
     const command = interaction.options.getSubcommand();
@@ -255,6 +260,19 @@ export default {
       const paypay = loginResult.data;
     }
 
+    if (command === 'history') {
+      await interaction.deferReply();
+
+      const loginResult = await login(interaction);
+
+      if (!loginResult.status) {
+        const embed = ErrorEmbed(interaction, loginResult.data);
+        await interaction.followUp({ embeds: [embed], ephemeral: true });
+        return;
+      }
+
+      const paypay = loginResult.data;
+    }
 
   }
 };
