@@ -5,7 +5,8 @@ class Stake {
     this.headers = {
       'authority': 'stake.com',
       'accept': '*/*',
-      'accept-language': 'ja,en-US;q=0.9,en;q=0.8,ja-JP;q=0.7,zh-CN;q=0.6,zh;q=0.5,ru;q=0.4',
+      'accept-encoding': 'gzip, deflate, br, zstd',
+      'accept-language': 'ja;q=0.8',
       'content-type': 'application/json',
       'origin': 'https://stake.com',
       'referer': 'https://stake.com/ja',
@@ -17,7 +18,8 @@ class Stake {
       'sec-fetch-site': 'same-origin',
       'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36',
       'x-access-token': access_token,
-      'Cookie': cookie
+      'x-language': 'ja',
+      'cookie': cookie
     };
   }
 
