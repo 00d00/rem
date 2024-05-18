@@ -247,26 +247,7 @@ export default {
 
 
     if (command === 'send') {
-      await interaction.deferReply();
-
-      const loginResult = await login(interaction);
-
-      if (!loginResult.status) {
-        const embed = ErrorEmbed(interaction, loginResult.data);
-        await interaction.followUp({ embeds: [embed], ephemeral: true });
-        return;
-      }
-
-      const paypay = loginResult.data;
-    }
-
-
-
-
-
-
-    if (command === 'history') {
-      await interaction.deferReply();
+      const amount = interaction.options.getInteger('amount');
 
       const loginResult = await login(interaction);
 
@@ -278,10 +259,9 @@ export default {
 
       const paypay = loginResult.data;
 
-      const result = await paypay.request('getPay2BalanceHistory');
-      console.log(result.raw);
+      const result = await paypay.createLink(amount);
 
-      await interaction.reply('OK')
+      console.log(result);
     }
 
   }
