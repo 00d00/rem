@@ -34,7 +34,7 @@ export default {
   async execute(interaction) {
 		await interaction.deferReply();
 		setTimeout(async () => {
-      		await interaction.editReply('Pong!');
+      		await interaction.followUp('Pong!');
     }, 5000);
   }
 };
