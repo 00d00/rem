@@ -276,7 +276,7 @@ client.once('ready', async () => {
     } else {
       client.on(data.name, (...args) => data.execute(client, ...args));
     }
-  }
+  }5
 
   const statusChannel = client.channels.cache.get('1240125536223625318');
 
