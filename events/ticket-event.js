@@ -52,7 +52,7 @@ export default {
       const embed = new discord.EmbedBuilder()
         .setColor(process.env.COLOR)
         .setTitle('チケット作成')
-        .setDescription('チケットを作成しました！\n<#' + channel.id + '>');
+        .setDescription(`チケットを作成しました！\n<#${channel.id}>`);
 
       await interaction.reply({ embeds: [embed], ephemeral: true });
 
