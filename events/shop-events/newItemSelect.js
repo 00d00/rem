@@ -21,15 +21,11 @@ export default async function(interaction, shop) {
 
   const message = await interaction.reply({ components: [row], ephemeral: true });
 
-  interaction.client.once('interactionCreate', (i) => {});
+  interaction.client.once('interactionCreate', async i => {
+    if (i.customId !== 'item_select') return;
+    await i.reply('せいこう');
+    console.log(i);
+  });
 
-    const collector = message.createMessageComponentCollector({
-      componentType: discord.ComponentType.StringSelect,
-      time: 3600000,
-    });
-
-    collector.on("collect", async (i) => {
-      await i.reply('せいこう');
-    });
 
 }
