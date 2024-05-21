@@ -4,6 +4,8 @@ import newItemSelect from './newItemSelect.js';
 
 
 export async function edit_item(interaction, shop) {
+  await newItemSelect(interaction, shop);
+  return;
   const row = newItemSelect(interaction, shop);
   const modal = newModal({
     id: 'modal',
