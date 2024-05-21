@@ -1,6 +1,6 @@
 import discord from 'discord.js';
 
-export default function(interaction, shop) {
+export default async function(interaction, shop) {
   const options = [];
 
   shop.item.forEach(data => {
@@ -16,6 +16,8 @@ export default function(interaction, shop) {
     .setPlaceholder('商品を選択')
     .addOptions(...options);
 
-  return new discord.ActionRowBuilder()
+  const row = new discord.ActionRowBuilder()
     .addComponents(menu);
+
+  await interaction.reply({ components: [row] });
 }

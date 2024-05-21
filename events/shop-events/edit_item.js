@@ -5,66 +5,68 @@ import newItemSelect from './newItemSelect.js';
 
 export async function edit_item(interaction, shop) {
   const row = newItemSelect(interaction, shop);
-  const message = await interaction.reply({ content: '編集する商品を選択', components: [row], ephemeral: true });
-
-  const collector = message.createMessageComponentCollector({
-    componentType: discord.ComponentType.StringSelect,
-    time: 180000,
+  const modal = newModal({
+    id: 'modal',
+    title: '商品編集',
+    input: [
+      {
+        label: '変更する商品名',
+        id: 'name',
+        style: discord.TextInputStyle.Short
+      },
+      {
+        label: '新しい商品名',
+        id: 'new_name',
+        style: discord.TextInputStyle.Short
+      },
+      {
+        label: '新しい値段',
+        id: 'new_price',
+        style: discord.TextInputStyle.Short
+      }
+    ]
   });
 
-  collector.on("collect", async i => {
+  await interaction.showModal(modal);
+  let response;
 
-    const itemName = i.values[0];
+  try {
+    response = await interaction.awaitModalSubmit({ time: 180000 });
+  } catch (error) {
+    await interaction.followUp({ content: 'タイムアウトしました。', ephemeral: true });
+    return;
+  }
 
-    const modal = newModal({
-      id: 'modal',
-      title: '商品追加',
-      input: [
-        {
-          label: '商品名',
-          id: 'name',
-          style: discord.TextInputStyle.Short
-        },
-        {
-          label: '値段',
-          id: 'price',
-          style: discord.TextInputStyle.Short
-        }
-      ]
-    });
+  const itemName = response.fields.getTextInputValue('name');
+  const newName = response.fields.getTextInputValue('new_name');
+  const newPrice = response.fields.getTextInputValue('new_price');
 
-    await i.showModal(modal);
+  const index = shop.item.findIndex(element => element.name === itemName);
 
-    const response = await i.awaitModalSubmit({
-      time: 180000,
-      filter: i => i.user.id === interaction.user.id,
-    }).then(async int => {
-      const inputName = int.fields.getTextInputValue('name');
-      const inputPrice = int.fields.getTextInputValue('price');
+  if (index === -1) {
+    await response.reply({ content: '商品が見つかりませんでした。', ephemeral: true });
+    return;
+  }
 
-      const index = shop.item.findIndex(element => element.name === inputName);
+  if (isNaN(parseInt(newPrice)) || 999999 < parseInt(newPrice)) {
+    await response.reply({ content: '無効な値段です。', ephemeral: true });
+    return;
+  }
 
-      if (index === -1) {
-        const embed = new discord.EmbedBuilder()
-          .setColor('Red')
-          .setTitle(`${inputName} は存在しません。`);
+  const validRanges = newName === itemName ? 1 : 0;
 
-        await int.reply({ embeds: [embed], ephemeral: true });
-        return;
-      }
+  if (shop.item.filter(element => element.name === newName) > validRanges) {
+    await response.reply({ content: '既に同じ名前の商品があります。', ephemeral: true });
+    return;
+  }
 
-      shop.item[index].name = inputName;
-      shop.item[index].price = inputPrice;
+  shop.item[index].name = newName;
+  shop.item[index].price = newPrice;
 
-      const embed = new discord.EmbedBuilder()
-        .setColor('Green')
-        .setTitle('商品追加')
-        .setDescription(`商品名:${inputName}\n値段:${inputPrice}`);
-  
-      await int.reply({ embeds: [embed], ephemeral: true });
-    }).catch(error => {
-      console.error(error)
-      return null
-    })
-  })
+  const embed = new discord.EmbedBuilder()
+    .setColor('Green')
+    .setTitle('商品編集')
+    .setDescription(`商品名:${newName}\n値段:${newPrice}`);
+
+  await response.reply({ embeds: [embed], ephemeral: true });
 };
