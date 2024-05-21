@@ -42,6 +42,7 @@ client.on('messageCreate', async (msg) => {
 
 
 
+
 import os from 'os';
 
 console.log('CPU使用率:', os.loadavg()[0].toFixed(2), '%');

@@ -21,9 +21,10 @@ export default async function(interaction, shop) {
 
   const message = await interaction.reply({ components: [row], ephemeral: true });
 
+  interaction.client.once('interactionCreate', (i) => {});
 
     const collector = message.createMessageComponentCollector({
-      componentType: discord.ComponentType.Button,
+      componentType: discord.ComponentType.StringSelect,
       time: 3600000,
     });
 
