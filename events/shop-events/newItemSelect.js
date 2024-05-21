@@ -21,6 +21,8 @@ export default async function(interaction, shop) {
 
   const message = await interaction.reply({ components: [row], ephemeral: true });
 
+  function onFunc(i) {
+  }
   interaction.client.once('interactionCreate', async i => {
     if (i.customId !== 'item_select') return;
     await i.reply('せいこう');
