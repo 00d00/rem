@@ -30,6 +30,7 @@ export default {
     const shop = json[name];
 
 
+
     shopEvents[button]
       ? await shopEvents[button](interaction, shop)
       : await interaction.reply({ content: '作成中!', ephemeral: true });
