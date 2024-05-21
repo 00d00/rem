@@ -19,19 +19,16 @@ export default async function(interaction, shop) {
   const row = new discord.ActionRowBuilder()
     .addComponents(menu);
 
-  const message = await interaction.reply({ components: [row] });
-  let res;
+  const message = await interaction.reply({ components: [row], ephemeral: true });
 
-  try {
-    res = await message.awaitMessageComponent({
-      filter: i => i.user.id === interaction.user.id,
-      time: 180000
+
+    const collector = message.createMessageComponentCollector({
+      componentType: discord.ComponentType.Button,
+      time: 3600000,
     });
-  } catch (error) {
-    await interaction.followUp({ content: 'タイムアウトしました。', ephemeral: true });
-    return;
-  }
 
-  res.reply('せいこー')
-  console.log(res)
+    collector.on("collect", async (i) => {
+      await i.reply('せいこう');
+    });
+
 }
