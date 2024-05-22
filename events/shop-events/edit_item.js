@@ -4,7 +4,16 @@ import newItemSelect from './newItemSelect.js';
 
 
 export async function edit_item(interaction, shop) {
-  const i = await newItemSelect(interaction, shop);
+  let i;
+
+  try {
+    i = await newItemSelect(interaction, shop);
+  } catch (error) {
+    const embed = new discord.EmbedBuilder()
+      .setColor('Red')
+      .setTitle('失敗');
+  }
+
   const itemName = i.values[0]
 
 

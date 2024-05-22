@@ -22,8 +22,14 @@ export default async function(interaction, shop) {
   const message = await interaction.reply({ components: [row], ephemeral: true });
 
   return new Promise((resolve, reject) => {
+    const timeout = setTimeout(() => {
+      interaction.client.off('interactionCreate', onFunc);
+      reject(new Error('タイムアウトしました'));
+    }, 60000);
+
     async function onFunc(i) {
       if (i.customId !== 'item_select') return;
+      clearTimeout(timeout);
       interaction.client.off('interactionCreate', onFunc);
       resolve(i);
     }

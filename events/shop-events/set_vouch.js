@@ -2,6 +2,7 @@ import discord from 'discord.js';
 import newModal from './newModal.js';
 import newCustomMenu from './newCustomMenu.js';
 
+
 export async function set_vouch(interaction, shop) {
   const i = await newCustomMenu(interaction, shop, 'Channel');
 
@@ -14,6 +15,7 @@ export async function set_vouch(interaction, shop) {
       .setDescription('チャンネルを選択してください。');
 
     await i.reply({ embeds: [embed], ephemeral: true });
+    return;
   }
 
   shop.vouch = channel.id;
