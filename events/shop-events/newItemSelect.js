@@ -21,13 +21,13 @@ export default async function(interaction, shop) {
 
   const message = await interaction.reply({ components: [row], ephemeral: true });
 
-  function onFunc(i) {
-  }
-  interaction.client.once('interactionCreate', async i => {
-    if (i.customId !== 'item_select') return;
-    await i.reply('せいこう');
-    console.log(i);
+  return new Promise((resolve, reject) => {
+    async function onFunc(i) {
+      if (i.customId !== 'item_select') return;
+      interaction.client.off('interactionCreate', onFunc);
+      resolve(i);
+    }
+
+    interaction.client.on('interactionCreate', onFunc);
   });
-
-
-}
+};

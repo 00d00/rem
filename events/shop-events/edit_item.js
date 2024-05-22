@@ -4,44 +4,39 @@ import newItemSelect from './newItemSelect.js';
 
 
 export async function edit_item(interaction, shop) {
-  await newItemSelect(interaction, shop);
-  return;
-  const row = newItemSelect(interaction, shop);
+  const i = await newItemSelect(interaction, shop);
+  const itemName = i.values[0]
+
+
   const modal = newModal({
     id: 'modal',
-    title: '商品編集',
+    title: '商品追加',
     input: [
       {
-        label: '変更する商品名',
+        label: '商品名',
         id: 'name',
         style: discord.TextInputStyle.Short
       },
       {
-        label: '新しい商品名',
-        id: 'new_name',
-        style: discord.TextInputStyle.Short
-      },
-      {
-        label: '新しい値段',
-        id: 'new_price',
+        label: '値段',
+        id: 'price',
         style: discord.TextInputStyle.Short
       }
     ]
   });
 
-  await interaction.showModal(modal);
+  await i.showModal(modal);
   let response;
 
   try {
-    response = await interaction.awaitModalSubmit({ time: 180000 });
+    response = await i.awaitModalSubmit({ time: 180000 });
   } catch (error) {
     await interaction.followUp({ content: 'タイムアウトしました。', ephemeral: true });
     return;
   }
 
-  const itemName = response.fields.getTextInputValue('name');
-  const newName = response.fields.getTextInputValue('new_name');
-  const newPrice = response.fields.getTextInputValue('new_price');
+  const inputName = response.fields.getTextInputValue('name');
+  const inputPrice = response.fields.getTextInputValue('price');
 
   const index = shop.item.findIndex(element => element.name === itemName);
 
@@ -50,25 +45,25 @@ export async function edit_item(interaction, shop) {
     return;
   }
 
-  if (isNaN(parseInt(newPrice)) || 999999 < parseInt(newPrice)) {
+  if (isNaN(parseInt(inputPrice)) || 999999 < parseInt(inputPrice)) {
     await response.reply({ content: '無効な値段です。', ephemeral: true });
     return;
   }
 
-  const validRanges = newName === itemName ? 1 : 0;
+  const validRanges = inputName === itemName ? 1 : 0;
 
-  if (shop.item.filter(element => element.name === newName) > validRanges) {
+  if (shop.item.filter(element => element.name === inputName) > validRanges) {
     await response.reply({ content: '既に同じ名前の商品があります。', ephemeral: true });
     return;
   }
 
-  shop.item[index].name = newName;
-  shop.item[index].price = newPrice;
+  shop.item[index].name = inputName;
+  shop.item[index].price = inputPrice;
 
   const embed = new discord.EmbedBuilder()
     .setColor('Green')
     .setTitle('商品編集')
-    .setDescription(`商品名:${newName}\n値段:${newPrice}`);
-
-  await response.reply({ embeds: [embed], ephemeral: true });
+    .setDescription(`商品名:${inputName}\n値段:${inputPrice}`);
+  
+  await interaction.reply({ embeds: [embed], ephemeral: true });
 };
