@@ -65,5 +65,5 @@ export async function edit_item(interaction, shop) {
     .setTitle('商品編集')
     .setDescription(`商品名:${inputName}\n値段:${inputPrice}`);
   
-  await interaction.reply({ embeds: [embed], ephemeral: true });
+  await response.reply({ embeds: [embed], ephemeral: true });
 };
