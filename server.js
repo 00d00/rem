@@ -212,13 +212,12 @@ app.get('/check_account/:start', async (req, res) => {
 
     try {
         while (true) {
-          //const accountName = generateAccountName(i);
-            const response = await fetch(`https://fiicen.jp/signup/check_account_name/?account_name=${accountName}`);
+            const response = await fetch(`https://fiicen.jp/signup/check_account_name/?account_name=${i}`);
             const data = await response.json();
 
             if (!data.is_taken) {
-              accounts.push(accountName)
-              console.log(accountName);
+              accounts.push(i)
+              console.log(i);
             }
 
             i++;
