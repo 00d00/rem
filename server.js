@@ -212,7 +212,7 @@ app.get('/check_account/:start', async (req, res) => {
 
     try {
         while (true) {
-          const accountName = generateAccountName(i);
+          //const accountName = generateAccountName(i);
             const response = await fetch(`https://fiicen.jp/signup/check_account_name/?account_name=${accountName}`);
             const data = await response.json();
 
