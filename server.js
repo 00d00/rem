@@ -349,7 +349,31 @@ client.on("interactionCreate", async (interaction) => {
 
 
 
+// Cookie
+const cookies = "csrftoken=hqogHsQw77dt3eAx8DcOCOsPokXk28ar; sessionid=85vd8ah0l8phcil0xfcvz04ycyngz7vs";
 
+// リクエストの設定
+const config = {
+  headers: {
+    'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundaryXB0k5Wbb4RD3cNyr',
+    'Cookie': cookies,
+    'Sec-Fetch-Dest': 'empty',
+    'Sec-Fetch-Mode': 'cors',
+    'Sec-Fetch-Site': 'same-origin',
+    'Sec-Gpc': '1',
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36',
+    'X-Csrftoken': 'hqogHsQw77dt3eAx8DcOCOsPokXk28ar'
+  }
+};
+
+// POSTリクエスト
+axios.post('https://fiicen.jp/circle/create', config)
+  .then(response => {
+    console.log(response.data);
+  })
+  .catch(error => {
+    console.error(error);
+  });
 
 
 // Start Bot
