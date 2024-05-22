@@ -1,27 +1,20 @@
 import discord from 'discord.js';
 import newModal from './newModal.js';
-
+import newCustomMenu from './newCustomMenu.js';
 
 export async function set_vouch(interaction, shop) {
-  const menu = new discord.ChannelSelectMenuBuilder()
-    .setCustomId('channel_select')
-    .setPlaceholder('チャンネルを選択');
+  const i = await newCustomMenu(interaction, shop, 'Channel');
 
-  const row = new discord.ActionRowBuilder()
-    .addComponents(menu);
+  const channel = i.channels.get(i.values[0]);
 
-  const message = await interaction.reply({ content: 'チャンネルを選択してください。', components: [row], ephemeral: true });
-  let res;
+  if (channel.type !== discord.ChannelType.GuildText) {
+    const embed = new discord.EmbedBuilder()
+      .setColor('Red')
+      .setTitle('失敗')
+      .setDescription('チャンネルを選択してください。');
 
-  try {
-    res = await message.awaitMessageComponent({ time: 180000 });
-  } catch (error) {
-    console.log(error)
-    await interaction.followUp({ content: 'タイムアウトしました。', ephemeral: true });
-    return;
+    await i.reply({ embeds: [embed], ephemeral: true });
   }
-
-  const channel = res.fields.getTextInputValue("channel_select");
 
   shop.vouch = channel.id;
 
@@ -30,5 +23,5 @@ export async function set_vouch(interaction, shop) {
     .setTitle('実績チャンネル変更')
     .setDescription(`実績チャンネルを<#${channel.id}>に変更しました。`);
 
-  await res.reply({ embeds: [embed], ephemeral: true });
+  await i.reply({ embeds: [embed], ephemeral: true });
 };
