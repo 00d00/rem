@@ -31,7 +31,7 @@ export async function delete_item(interaction, shop) {
   const embed = new discord.EmbedBuilder()
     .setColor('Green')
     .setTitle('商品削除')
-    .setDescription(`商品名:${itemName}`);
+    .setDescription(`商品名: ${itemName}`);
   
   await i.reply({ embeds: [embed], ephemeral: true });
 };

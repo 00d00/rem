@@ -48,7 +48,7 @@ export async function add_item(interaction, shop) {
   const embed = new discord.EmbedBuilder()
     .setColor('Green')
     .setTitle('商品追加')
-    .setDescription(`商品名:${inputName}\n値段:${inputPrice}`);
+    .setDescription(`商品名: ${inputName}\n値段: ${inputPrice}円`);
 
   await response.reply({ embeds: [embed], ephemeral: true });
 };

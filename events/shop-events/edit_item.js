@@ -22,7 +22,7 @@ export async function edit_item(interaction, shop) {
 
   const modal = newModal({
     id: 'modal',
-    title: '商品追加',
+    title: '商品編集',
     input: [
       {
         label: '商品名',
@@ -75,7 +75,7 @@ export async function edit_item(interaction, shop) {
   const embed = new discord.EmbedBuilder()
     .setColor('Green')
     .setTitle('商品編集')
-    .setDescription(`商品名:${inputName}\n値段:${inputPrice}`);
+    .setDescription(`商品名: ${inputName}\n値段: ${inputPrice}円`);
   
   await response.reply({ embeds: [embed], ephemeral: true });
 };
