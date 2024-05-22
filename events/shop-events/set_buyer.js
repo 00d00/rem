@@ -4,26 +4,16 @@ import newCustomMenu from './newCustomMenu.js';
 
 
 export async function set_buyer(interaction, shop) {
-  const i = await newCustomMenu(interaction, shop, 'Channel');
+  const i = await newCustomMenu(interaction, shop, 'Role');
 
-  const channel = i.channels.get(i.values[0]);
+  const role = i.roles.get(i.values[0]);
 
-  if (channel.type !== discord.ChannelType.GuildText) {
-    const embed = new discord.EmbedBuilder()
-      .setColor('Red')
-      .setTitle('失敗')
-      .setDescription('チャンネルを選択してください。');
-
-    await i.reply({ embeds: [embed], ephemeral: true });
-    return;
-  }
-
-  shop.vouch = channel.id;
+  shop.buyer = role.id;
 
   const embed = new discord.EmbedBuilder()
     .setColor('Green')
     .setTitle('購入者ロール変更')
-    .setDescription(`購入者ロールを<#${channel.id}>に変更しました。`);
+    .setDescription(`購入者ロールを<@&${role.id}>に変更しました。`);
 
   await i.reply({ embeds: [embed], ephemeral: true });
 };
