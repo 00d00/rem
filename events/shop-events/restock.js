@@ -19,20 +19,21 @@ export async function restock(interaction, shop) {
 
   const itemName = i.values[0]
 
+  const index = shop.item.findIndex(element => element.name === itemName);
+
+  if (index === -1) {
+    await response.reply({ content: '商品が見つかりませんでした。', ephemeral: true });
+    return;
+  }
 
   const modal = newModal({
     id: 'modal',
-    title: '商品編集',
+    title: '在庫追加',
     input: [
       {
-        label: '商品名',
-        id: 'name',
-        style: discord.TextInputStyle.Short
-      },
-      {
-        label: '値段',
-        id: 'price',
-        style: discord.TextInputStyle.Short
+        label: '在庫(改行区切り)',
+        id: 'stock',
+        style: discord.TextInputStyle.Paragraph
       }
     ]
   });
@@ -43,19 +44,14 @@ export async function restock(interaction, shop) {
   try {
     response = await i.awaitModalSubmit({ time: 180000 });
   } catch (error) {
-    await interaction.followUp({ content: 'タイムアウトしました。', ephemeral: true });
+    await interaction.editReply({ content: 'タイムアウトしました。', components: [] });
     return;
   }
 
   const inputName = response.fields.getTextInputValue('name');
   const inputPrice = response.fields.getTextInputValue('price');
 
-  const index = shop.item.findIndex(element => element.name === itemName);
 
-  if (index === -1) {
-    await response.reply({ content: '商品が見つかりませんでした。', ephemeral: true });
-    return;
-  }
 
   if (isNaN(parseInt(inputPrice)) || 999999 < parseInt(inputPrice)) {
     await response.reply({ content: '無効な値段です。', ephemeral: true });
