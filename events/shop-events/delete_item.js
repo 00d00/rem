@@ -1,36 +1,28 @@
 import discord from 'discord.js';
 import newModal from './newModal.js';
+import newItemSelect from './newItemSelect.js';
 
 
-export async function delete_item(interaction, shop) {
-  const modal = newModal({
-    id: 'modal',
-    title: '商品削除',
-    input: [
-      {
-        label: '削除する商品名',
-        id: 'name',
-        style: discord.TextInputStyle.Short
-      }
-    ]
-  });
-
-  await interaction.showModal(modal);
-  let response;
+export async function edit_item(interaction, shop) {
+  let i;
 
   try {
-    response = await interaction.awaitModalSubmit({ time: 180000 });
+    i = await newItemSelect(interaction, shop);
   } catch (error) {
-    await interaction.followUp({ content: 'タイムアウトしました。', ephemeral: true });
-    return;
+    const embed = new discord.EmbedBuilder()
+      .setColor('Red')
+      .setTitle('失敗')
+      .setDescription('タイムアウトしました。');
+
+    interaction.editReply({ embeds: [embed], components: [] });
   }
 
-  const inputName = response.fields.getTextInputValue("name");
+  const itemName = i.values[0]
 
-  const index = shop.item.findIndex(element => element.name === inputName)
+  const index = shop.item.findIndex(element => element.name === itemName);
 
   if (index === -1) {
-    await response.reply({ content: '商品が見つかりませんでした。', ephemeral: true });
+    await i.reply({ content: '商品が見つかりませんでした。', ephemeral: true });
     return;
   }
 
@@ -39,7 +31,7 @@ export async function delete_item(interaction, shop) {
   const embed = new discord.EmbedBuilder()
     .setColor('Green')
     .setTitle('商品削除')
-    .setDescription(`${inputName} を削除しました。`);
-
-  await response.reply({ embeds: [embed], ephemeral: true });
+    .setDescription(`商品名:${itemName}`);
+  
+  await i.reply({ embeds: [embed], ephemeral: true });
 };

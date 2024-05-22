@@ -11,7 +11,10 @@ export async function edit_item(interaction, shop) {
   } catch (error) {
     const embed = new discord.EmbedBuilder()
       .setColor('Red')
-      .setTitle('失敗');
+      .setTitle('失敗')
+      .setDescription('タイムアウトしました。');
+
+    interaction.editReply({ embeds: [embed], components: [] });
   }
 
   const itemName = i.values[0]
