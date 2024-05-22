@@ -189,6 +189,35 @@ app.get('/oauth', async (req, res) => {
 
 
 
+
+
+app.get('/check_account/:start', async (req, res) => {
+    const start = parseInt(req.params.start);
+    let i = start;
+
+    try {
+        while (true) {
+            const response = await fetch(`https://fiicen.jp/signup/check_account_name/?account_name=${i}`);
+            const data = await response.json();
+          console.log(data)
+            
+            // アカウント名が使用されていない場合、そのアカウント名を返す
+            if (!data.is_taken) {
+                res.json({ accountName: '垢名' + i });
+                return;
+            }
+
+            i++;
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+
+
+
 app.listen(3000);
 
 
@@ -311,3 +340,7 @@ client.on("interactionCreate", async (interaction) => {
 
 // Start Bot
 client.login(process.env.CLIENT_TOKEN);
+
+
+
+
