@@ -2,7 +2,7 @@ import discord from 'discord.js';
 import fs from 'fs/promises';
 
 import * as shopEvents from './shop-events/index.js';
-
+console.log(shopEvents)
 // add_item
 // edit_item
 // delete_item
