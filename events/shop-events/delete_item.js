@@ -3,7 +3,7 @@ import newModal from './newModal.js';
 import newItemSelect from './newItemSelect.js';
 
 
-export async function edit_item(interaction, shop) {
+export async function delete_item(interaction, shop) {
   let i;
 
   try {
