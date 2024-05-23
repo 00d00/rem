@@ -48,30 +48,14 @@ export async function restock(interaction, shop) {
     return;
   }
 
-  const inputName = response.fields.getTextInputValue('name');
-  const inputPrice = response.fields.getTextInputValue('price');
+  const stock = response.fields.getTextInputValue('stock');
+  shop.item[index].push(...stock.split('\n'));
 
-
-
-  if (isNaN(parseInt(inputPrice)) || 999999 < parseInt(inputPrice)) {
-    await response.reply({ content: '無効な値段です。', ephemeral: true });
-    return;
-  }
-
-  const validRanges = inputName === itemName ? 1 : 0;
-
-  if (shop.item.filter(element => element.name === inputName) > validRanges) {
-    await response.reply({ content: '既に同じ名前の商品があります。', ephemeral: true });
-    return;
-  }
-
-  shop.item[index].name = inputName;
-  shop.item[index].price = inputPrice;
+  const file = new discord.AttachmentBuilder('path/to/example.txt');
 
   const embed = new discord.EmbedBuilder()
     .setColor('Green')
-    .setTitle('商品編集')
-    .setDescription(`商品名: ${inputName}\n値段: ${inputPrice}円`);
+    .setTitle('在庫追加')
   
   await response.reply({ embeds: [embed], ephemeral: true });
 };
