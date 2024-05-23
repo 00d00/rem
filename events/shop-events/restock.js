@@ -51,8 +51,7 @@ export async function restock(interaction, shop) {
   const stock = response.fields.getTextInputValue('stock');
   shop.item[index].stock.push(...stock.split('\n'));
 
-  const data = shop.item[index].join('\n');
-
+  const data = shop.item[index].stock.join('\n');
   const buffer = Buffer.from(data, 'utf-8');
   const file = new discord.AttachmentBuilder(buffer, { name: 'stock.txt' });
 
@@ -60,5 +59,5 @@ export async function restock(interaction, shop) {
     .setColor('Green')
     .setTitle('在庫追加')
 
-  await response.reply({ embeds: [embed], ephemeral: true });
+  await response.reply({ embeds: [embed], files: [file], phemeral: true });
 };
