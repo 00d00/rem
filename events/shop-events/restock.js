@@ -59,5 +59,5 @@ export async function restock(interaction, shop) {
     .setColor('Green')
     .setTitle('在庫追加')
 
-  await response.reply({ embeds: [embed], files: [file], phemeral: true });
+  await response.reply({ embeds: [embed], files: [file], ephemeral: true });
 };
