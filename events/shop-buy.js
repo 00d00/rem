@@ -44,7 +44,7 @@ async function login(user, tokenLogin = true) {
 export default {
   name: discord.Events.InteractionCreate,
   async execute(client, interaction) {
-    if (!interaction.isButton) return;
+    if (!interaction.isButton()) return;
     if (!interaction.customId.startsWith('shop_buy-')) return;
 
     const args = interaction.customId.split('-');
@@ -65,6 +65,7 @@ export default {
 
     const paypay = result.data;
 
-    await interaction.reply(interaction.fetch)
+    console.log(await interaction.fetchReply())
+    await interaction.reply('Hello');
   }
 };

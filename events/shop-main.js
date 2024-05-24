@@ -2,23 +2,12 @@ import discord from 'discord.js';
 import fs from 'fs/promises';
 
 import * as shopEvents from './shop-events/index.js';
-console.log(shopEvents)
-// add_item
-// edit_item
-// delete_item
-// restock
-// deplete
-// stock_check
-// set_vouch
-// set_buyer
-// edit_shop
-// delete_shop
 
 export default {
   name: discord.Events.InteractionCreate,
   async execute(client, interaction) {
     if (!interaction.isButton()) return;
-
+    if (!interaction.customId.startsWith('shop_buy-')) return;
     const data = interaction.customId.split('-');
 
     if (data.length !== 2) return;
@@ -31,12 +20,14 @@ export default {
 
 
 
-    shopEvents[button]
+    const executed = shopEvents[button]
       ? await shopEvents[button](interaction, shop)
-      : await interaction.reply({ content: '作成中!', ephemeral: true });
+      : void(0);
 
 
-    json[name] = shop;
-    await fs.writeFile(`./shop/${interaction.user.id}.json`, JSON.stringify(json, null, 2), 'utf-8');
+    if (executed) {
+      json[name] = shop;
+      await fs.writeFile(`./shop/${interaction.user.id}.json`, JSON.stringify(json, null, 2), 'utf-8');
+    }
   }
 }
