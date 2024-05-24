@@ -1,67 +1,64 @@
 import discord from 'discord.js';
+import { PayPay, PayPayStatus } from 'paypax';
+import fs from 'fs/promises';
+import crypt from '../modules/crypt.js';
+
+
+const CreateError = message => ({ success: false, data: message });
+
+async function login(user, tokenLogin = true) {
+  try {
+    const content = await fs.readFile(`./paypay/${user}.json`, 'utf-8');
+    const data = JSON.parse(content);
+
+    let { phone, password, uuid, token } = data;
+
+    phone = crypt.decrypt(phone);
+    password = crypt.decrypt(password);
+    uuid = crypt.decrypt(uuid);
+    token = crypt.decrypt(token);
+
+    const paypay = new PayPay(phone, password);
+    const result = await paypay.login({ uuid: uuid, token: tokenLogin ? token : undefined });
+
+    if (!result.status) {
+      return CreateError('ログイン情報が変更されたためログインできませんでした。' );
+    }
+
+    data.token = crypt.encrypt(paypay.token);
+
+
+    await fs.writeFile(`./paypay/${user}.json`, JSON.stringify(data, null, 2), 'utf-8');
+
+    const balance = await paypay.getBalance();
+    if (!balance.success) return await login(user, false);
+
+    return { status: true, data: paypay };
+
+  } catch (error) {
+    return CreateError('まだログインされていません。');
+  }
+}
 
 export default {
   name: discord.Events.InteractionCreate,
   async execute(client, interaction) {
     if (!interaction.isButton) return;
-    if (interaction.customId === 'shop_buy') {
-      const channel = await interaction.guild.channels.create({
-	      name: '📜-' + interaction.user.tag,
-        parent: interaction.channel.parent,
-	      type: discord.ChannelType.GuildText,
-	      permissionOverwrites: [
-		      {
-			      id: interaction.guild.id,
-	          deny: [
-              discord.PermissionsBitField.Flags.ViewChannel
-            ]
-		      },
-	  	    {
-  			    id: interaction.user.id,
-            allow: [
-              discord.PermissionsBitField.Flags.ViewChannel,
-              discord.PermissionsBitField.Flags.SendMessages,
-              discord.PermissionsBitField.Flags.AttachFiles
-            ]
-		      }
-	      ]
-      });
+    if (!interaction.customId.startsWith('shop_buy-')) return;
 
+    const args = interaction.customId.split('-');
+    const command = args[0];
+    const user = args[1];
+
+    const result = await login(user);
+
+    if (!result.status) {
       const embed = new discord.EmbedBuilder()
-        .setColor(process.env.COLOR)
-        .setTitle('チケット作成')
-        .setDescription('チケットを作成しました！\n<#' + channel.id + '>');
+        .setColor('Red')
+        .setTitle('失敗')
+        .setDescription('PayPay連携が行われていません。管理者にお問い合わせください。');
 
-      await interaction.reply({ embeds: [embed], ephemeral: true });
-
-
-      const ticketEmbed = new discord.EmbedBuilder()
-        .setColor(process.env.COLOR)
-        .setTitle(interaction.message.embeds[0].title)
-        .setDescription('スタッフが来るまでお待ち下さい');
-
-      const button = new discord.ButtonBuilder()
-        .setCustomId('close')
-        .setLabel('閉じる🔒')
-    	  .setStyle(discord.ButtonStyle.Primary);
-
-      const ticketRow = new discord.ActionRowBuilder()
-		    .addComponents(button);
-
-      await channel.send({ embeds: [ticketEmbed], components: [ticketRow] });
-
-      const msg = await channel.send('@everyone');
-      await msg.delete();
-    } else if (interaction.customId === 'close') {
-      const embed = new discord.EmbedBuilder()
-        .setColor(process.env.COLOR)
-        .setTitle('チケット削除')
-        .setDescription('チケットを削除します。');
-
-      await interaction.reply({ embeds: [embed] });
-      setTimeout(() => {
-        interaction.channel.delete();
-      }, 1000);
     }
+
   }
 };

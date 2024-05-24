@@ -201,7 +201,7 @@ export default {
         .setDescription(description);
 
       const button = new discord.ButtonBuilder()
-        .setCustomId('shop_buy')
+        .setCustomId(`shop_buy-${interaction.user.id}`)
         .setLabel('購入')
         .setStyle(discord.ButtonStyle.Primary);
 
