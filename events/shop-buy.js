@@ -2,6 +2,7 @@ import discord from 'discord.js';
 import { PayPay, PayPayStatus } from 'paypax';
 import fs from 'fs/promises';
 import crypt from '../modules/crypt.js';
+import newItemSelect from '../modules/newItemSelect.js';
 
 
 const CreateError = message => ({ success: false, data: message });
@@ -58,7 +59,12 @@ export default {
         .setTitle('失敗')
         .setDescription('PayPay連携が行われていません。管理者にお問い合わせください。');
 
+      await interaction.reply({ embeds: [embed] });
+      return;
     }
 
+    const paypay = result.data;
+
+    await interaction.reply(interaction.fetch)
   }
 };
