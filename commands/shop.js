@@ -200,7 +200,15 @@ export default {
         .setTitle(title)
         .setDescription(description);
 
-      await res.reply({ embeds: [panel] });
+      const button = new discord.ButtonBuilder()
+        .setCustomId('shop_buy')
+        .setLabel('購入')
+        .setStyle(discord.ButtonStyle.Primary);
+
+      const buyRow = new discord.ActionRowBuilder()
+        .addComponents(button);
+
+      await res.reply({ embeds: [panel], components: [buyRow] });
     }
 
 
