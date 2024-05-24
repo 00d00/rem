@@ -49,9 +49,10 @@ export default {
 
     const args = interaction.customId.split('-');
     const command = args[0];
-    const user = args[1];
+    const data = JSON.parse(args[1]);
+    const { user, title } = data;
 
-    const result = await login(user);
+    const result = await login(data.user);
 
     if (!result.status) {
       const embed = new discord.EmbedBuilder()
@@ -65,7 +66,13 @@ export default {
 
     const paypay = result.data;
 
-    console.log(await interaction.fetchReply())
+    let shop;
+
+    try {
+      const json = JSON.parse(await fs.readFile(`./shop/${user}.json`));
+      const shop = json[title];
+    } catch (error) {
+    }
     await interaction.reply('Hello');
   }
 };
