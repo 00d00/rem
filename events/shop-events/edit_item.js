@@ -17,7 +17,7 @@ export async function edit_item(interaction, shop) {
     interaction.editReply({ embeds: [embed], components: [] });
   }
 
-  const itemName = i.values[0]
+  const itemName = i.values[0];
 
 
   const modal = newModal({

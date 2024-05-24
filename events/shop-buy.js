@@ -72,7 +72,28 @@ export default {
       const json = JSON.parse(await fs.readFile(`./shop/${user}.json`));
       const shop = json[title];
     } catch (error) {
+      const embed = new discord.EmbedBuilder()
+        .setColor('Red')
+        .setTitle('失敗')
+        .setDescription('不明なshopです。管理者にお問い合わせください。');
+
+      await interaction.reply({ embeds: [embed] });
+      return;
     }
-    await interaction.reply('Hello');
+
+    let i;
+
+    try {
+      i = await newItemSelect(interaction, shop);
+    } catch (error) {
+      const embed = new discord.EmbedBuilder()
+        .setColor('Red')
+        .setTitle('失敗')
+        .setDescription('タイムアウトしました。');
+
+      interaction.editReply({ embeds: [embed], components: [] });
+    }
+
+    const itemName = i.values[0];
   }
 };
