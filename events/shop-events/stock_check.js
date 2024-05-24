@@ -3,7 +3,7 @@ import newModal from './newModal.js';
 import newItemSelect from './newItemSelect.js';
 
 
-export async function restock(interaction, shop) {
+export async function stock_check(interaction, shop) {
   let i;
 
   try {
@@ -26,38 +26,13 @@ export async function restock(interaction, shop) {
     return;
   }
 
-  const modal = newModal({
-    id: 'modal',
-    title: '在庫追加',
-    input: [
-      {
-        label: '在庫(改行区切り)',
-        id: 'stock',
-        style: discord.TextInputStyle.Paragraph
-      }
-    ]
-  });
-
-  await i.showModal(modal);
-  let response;
-
-  try {
-    response = await i.awaitModalSubmit({ time: 180000 });
-  } catch (error) {
-    await interaction.editReply({ content: 'タイムアウトしました。', components: [] });
-    return;
-  }
-
-  const stock = response.fields.getTextInputValue('stock');
-  shop.item[index].stock.push(...stock.split('\n'));
-
   const data = shop.item[index].stock.join('\n');
   const buffer = Buffer.from(data, 'utf-8');
   const file = new discord.AttachmentBuilder(buffer, { name: 'stock.txt' });
 
   const embed = new discord.EmbedBuilder()
     .setColor('Green')
-    .setTitle('在庫追加')
+    .setTitle('在庫確認')
 
-  await response.reply({ embeds: [embed], files: [file], ephemeral: true });
+  await i.reply({ embeds: [embed], files: [file], ephemeral: true });
 };

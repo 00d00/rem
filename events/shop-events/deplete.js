@@ -22,7 +22,7 @@ export async function deplete(interaction, shop) {
   const index = shop.item.findIndex(element => element.name === itemName);
 
   if (index === -1) {
-    await response.reply({ content: '商品が見つかりませんでした。', ephemeral: true });
+    await i.reply({ content: '商品が見つかりませんでした。', ephemeral: true });
     return;
   }
 
@@ -48,7 +48,12 @@ export async function deplete(interaction, shop) {
     return;
   }
 
-  const count = response.fields.getTextInputValue('count');
+  const count = parseInt(response.fields.getTextInputValue('count'));
+
+  if (!count) {
+    await response.reply({ content: '数値が不正です。' });
+    return;
+  }
 
   shop.item[index].stock.splice(-count, count);
 
@@ -58,7 +63,7 @@ export async function deplete(interaction, shop) {
 
   const embed = new discord.EmbedBuilder()
     .setColor('Green')
-    .setTitle('在庫追加')
+    .setTitle('在庫取り出し')
 
   await response.reply({ embeds: [embed], files: [file], ephemeral: true });
 };
