@@ -95,5 +95,9 @@ export default {
     }
 
     const itemName = i.values[0];
+    const index = shop.item.findIndex(element => element.name === itemName);
+    const item = shop.item[index];
+
+    
   }
 };

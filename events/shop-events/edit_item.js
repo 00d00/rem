@@ -52,11 +52,6 @@ export async function edit_item(interaction, shop) {
 
   const index = shop.item.findIndex(element => element.name === itemName);
 
-  if (index === -1) {
-    await response.reply({ content: '商品が見つかりませんでした。', ephemeral: true });
-    return;
-  }
-
   if (isNaN(parseInt(inputPrice)) || 999999 < parseInt(inputPrice)) {
     await response.reply({ content: '無効な値段です。', ephemeral: true });
     return;
