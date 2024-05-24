@@ -3,7 +3,7 @@ import { PayPay, PayPayStatus } from 'paypax';
 import fs from 'fs/promises';
 import crypt from '../modules/crypt.js';
 import newItemSelect from '../modules/newItemSelect.js';
-
+import newModal from '../modules/newModal.js';
 
 const CreateError = message => ({ success: false, data: message });
 
@@ -98,6 +98,34 @@ export default {
     const index = shop.item.findIndex(element => element.name === itemName);
     const item = shop.item[index];
 
-    
+    const modal = newModal({
+      id: 'modal',
+      title: '商品購入',
+      input: [
+        {
+          label: '購入する個数',
+          id: 'count',
+          style: discord.TextInputStyle.Short
+        },
+        {
+          label: 'PayPayリンク',
+          id: 'url',
+          style: discord.TextInputStyle.Short
+        }
+      ]
+    });
+
+    await interaction.showModal(modal);
+    let response;
+
+    try {
+      response = await interaction.awaitModalSubmit({ time: 180000 });
+    } catch (error) {
+      await interaction.followUp({ content: 'タイムアウトしました。', ephemeral: true });
+      return;
+    }
+
+    const count = response.fields.getTextInputValue('count');
+    const url = response.fields.getTextInputValue('url');
   }
 };
