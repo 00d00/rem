@@ -243,26 +243,5 @@ export default {
       }
     }
 
-
-
-
-    if (command === 'send') {
-      const amount = interaction.options.getInteger('amount');
-
-      const loginResult = await login(interaction);
-
-      if (!loginResult.status) {
-        const embed = ErrorEmbed(interaction, loginResult.data);
-        await interaction.followUp({ embeds: [embed], ephemeral: true });
-        return;
-      }
-
-      const paypay = loginResult.data;
-
-      const result = await paypay.createLink(amount);
-
-      console.log(result);
-    }
-
   }
 };
