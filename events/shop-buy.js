@@ -127,6 +127,7 @@ export default {
 
     const count = response.fields.getTextInputValue('count');
     const url = response.fields.getTextInputValue('url');
+    const price = item.price * count;
 
     let linkData
 
@@ -138,17 +139,17 @@ export default {
         .setTitle('shop')
         .setDescription('リンクが無効です。');
 
-      await interaction.followUp({ embeds: [embed], ephemeral: true });
+      await response.reply({ embeds: [embed], ephemeral: true });
       return;
     }
 
-    if (linkData.amount < item.price) {
+    if (linkData.amount < price) {
       const embed = new discord.EmbedBuilder()
         .setColor('Red')
         .setTitle('shop')
-        .setDescription('金額が足りません!!');
+        .setDescription('金額が足りません。');
 
-      await interaction.followUp({ embeds: [embed], ephemeral: true });
+      await response.reply({ embeds: [embed], ephemeral: true });
       return;
     }
 
@@ -160,7 +161,7 @@ export default {
         .setTitle('paypay-accept')
         .setDescription('リンクが使用済みです。');
 
-      await interaction.followUp({ embeds: [embed], ephemeral: true });
+      await response.reply({ embeds: [embed], ephemeral: true });
       return;
     }
 
