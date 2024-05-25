@@ -21,12 +21,15 @@ export default {
 
     const executed = shopEvents[button]
       ? await shopEvents[button](interaction, shop)
-      : void(0);
+      : 0;
 
+    console.log(executed);
 
-    if (executed) {
+    if (executed !== 0) {
+      console.log('Writing')
       json[name] = shop;
       await fs.writeFile(`./shop/${interaction.user.id}.json`, JSON.stringify(json, null, 2), 'utf-8');
+      console.log('Wrote')
     }
   }
 }

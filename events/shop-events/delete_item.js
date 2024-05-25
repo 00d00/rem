@@ -26,7 +26,6 @@ export async function delete_item(interaction, shop) {
     return;
   }
 
-  console.log(shop.item.splice(index, 1));
 
   const embed = new discord.EmbedBuilder()
     .setColor('Green')
