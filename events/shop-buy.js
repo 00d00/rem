@@ -144,7 +144,7 @@ export default {
 
     // linkData.amount
 
-    if (linkData.amount < item.dfd) {
+    if (linkData.amount < item.price) {
       const embed = new discord.EmbedBuilder()
         .setColor('Red')
         .setTitle('paypay-accept')
