@@ -135,20 +135,18 @@ export default {
     } catch (error) {
       const embed = new discord.EmbedBuilder()
         .setColor('Red')
-        .setTitle('paypay-accept')
+        .setTitle('shop')
         .setDescription('リンクが無効です。');
 
       await interaction.followUp({ embeds: [embed], ephemeral: true });
       return;
     }
 
-    // linkData.amount
-
     if (linkData.amount < item.price) {
       const embed = new discord.EmbedBuilder()
         .setColor('Red')
-        .setTitle('paypay-accept')
-        .setDescription('リンクが使用済みです。');
+        .setTitle('shop')
+        .setDescription('金額が足りません!!');
 
       await interaction.followUp({ embeds: [embed], ephemeral: true });
       return;
