@@ -219,20 +219,9 @@ export default {
         return;
       }
 
-      try {
-        await paypay.receiveLink(url);
-
-        const embed = new discord.EmbedBuilder()
-          .setColor('Blue')
-          .setTitle('paypay-accept')
-          .addFields(
-            { name: '金額', value: linkData.amount.toString() },
-            { name: 'オーダーID', value: linkData.orderId },
-            { name: '送金者', value: linkData.sender_name }
-          )
-
-        await interaction.followUp({ embeds: [embed] });
-      } catch (error) {
+      const res = await paypay.receiveLink(url);
+  
+      if (!res.success) {
         const embed = new discord.EmbedBuilder()
           .setColor('Red')
           .setTitle('paypay-accept')
@@ -241,6 +230,17 @@ export default {
         await interaction.followUp({ embeds: [embed], ephemeral: true });
         return;
       }
+
+      const embed = new discord.EmbedBuilder()
+        .setColor('Blue')
+        .setTitle('paypay-accept')
+        .addFields(
+          { name: '金額', value: linkData.amount.toString() },
+          { name: 'オーダーID', value: linkData.orderId },
+          { name: '送金者', value: linkData.sender_name }
+        );
+
+      await interaction.followUp({ embeds: [embed] });
     }
 
   }

@@ -127,5 +127,34 @@ export default {
 
     const count = response.fields.getTextInputValue('count');
     const url = response.fields.getTextInputValue('url');
+
+    let linkData
+
+    try {
+      linkData = await paypay.getLink(url);
+    } catch (error) {
+      const embed = new discord.EmbedBuilder()
+        .setColor('Red')
+        .setTitle('paypay-accept')
+        .setDescription('リンクが無効です。');
+
+      await interaction.followUp({ embeds: [embed], ephemeral: true });
+      return;
+    }
+
+    // linkData.amount
+
+    const res = await paypay.receiveLink(url);
+  
+    if (!res.success) {
+      const embed = new discord.EmbedBuilder()
+        .setColor('Red')
+        .setTitle('paypay-accept')
+        .setDescription('リンクが使用済みです。');
+
+      await interaction.followUp({ embeds: [embed], ephemeral: true });
+      return;
+    }
+
   }
 };
