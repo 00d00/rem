@@ -65,7 +65,7 @@ export async function edit_item(interaction, shop) {
   }
 
   shop.item[index].name = inputName;
-  shop.item[index].price = inputPrice;
+  shop.item[index].price = parseInt(inputPrice);
 
   const embed = new discord.EmbedBuilder()
     .setColor('Green')

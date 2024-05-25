@@ -144,6 +144,16 @@ export default {
 
     // linkData.amount
 
+    if (linkData.amount < item.dfd) {
+      const embed = new discord.EmbedBuilder()
+        .setColor('Red')
+        .setTitle('paypay-accept')
+        .setDescription('リンクが使用済みです。');
+
+      await interaction.followUp({ embeds: [embed], ephemeral: true });
+      return;
+    }
+
     const res = await paypay.receiveLink(url);
   
     if (!res.success) {

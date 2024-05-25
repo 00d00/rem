@@ -43,7 +43,7 @@ export async function add_item(interaction, shop) {
     return;
   }
 
-  shop.item.push({ name: inputName, price: inputPrice, stock: [] });
+  shop.item.push({ name: inputName, price: parseInt(inputPrice), stock: [] });
 
   const embed = new discord.EmbedBuilder()
     .setColor('Green')

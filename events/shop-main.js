@@ -7,7 +7,6 @@ export default {
   name: discord.Events.InteractionCreate,
   async execute(client, interaction) {
     if (!interaction.isButton()) return;
-    if (!interaction.customId.startsWith('shop_buy-')) return;
     const data = interaction.customId.split('-');
 
     if (data.length !== 2) return;
