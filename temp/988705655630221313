@@ -1,0 +1,18 @@
+{
+  "phone": "08068534556",
+  "password": "Kuretubo1014",
+  "header": {
+    "Accept": "application/json, text/plain, */*",
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36",
+    "Content-Type": "application/json"
+  },
+  "cookie": {},
+  "refresh_at": 0,
+  "logged": false,
+  "otp": {
+    "waiting": true,
+    "otp_prefix": "II",
+    "otp_ref_id": "2675036b2416c82c2efc7d6d447a6cb3a8a1f4513f8391433bd563cbdee7c5aa69238a"
+  },
+  "uuid": "ea2944b9-0108-4254-a517-07fe9563f0c4"
+}
