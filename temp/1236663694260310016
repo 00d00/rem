@@ -1,0 +1,18 @@
+{
+  "phone": "08051110203",
+  "password": "Riyuuya1213",
+  "header": {
+    "Accept": "application/json, text/plain, */*",
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36",
+    "Content-Type": "application/json"
+  },
+  "cookie": {},
+  "refresh_at": 0,
+  "logged": false,
+  "otp": {
+    "waiting": true,
+    "otp_prefix": "KF",
+    "otp_ref_id": "800356a4fce8ce2ad841b603a792604336c54ce5be2777e48fdfaa58b5f40af15233f7"
+  },
+  "uuid": "14398999-6ff7-4e90-92c0-4f9b166982da"
+}
