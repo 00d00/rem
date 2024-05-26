@@ -167,7 +167,7 @@ export default {
       return;
     }
 
-    const buffer = Buffer.from(shop.item[index].stock.splice(0, count), 'utf-8');
+    const buffer = Buffer.from(item[index].stock.splice(0, count), 'utf-8');
     const file = new discord.AttachmentBuilder(buffer, { name: 'stock.txt' });
 
     const embed = new discord.EmbedBuilder()
