@@ -70,7 +70,7 @@ export default {
 
     try {
       const json = JSON.parse(await fs.readFile(`./shop/${user}.json`));
-      const shop = json[title];
+      shop = json[title];
     } catch (error) {
       const embed = new discord.EmbedBuilder()
         .setColor('Red')
@@ -86,12 +86,14 @@ export default {
     try {
       i = await newItemSelect(interaction, shop);
     } catch (error) {
+      console.error(error)
       const embed = new discord.EmbedBuilder()
         .setColor('Red')
         .setTitle('失敗')
         .setDescription('タイムアウトしました。');
 
       interaction.editReply({ embeds: [embed], components: [] });
+      return;
     }
 
     const itemName = i.values[0];
@@ -115,7 +117,7 @@ export default {
       ]
     });
 
-    await interaction.showModal(modal);
+    await i.showModal(modal);
     let response;
 
     try {
