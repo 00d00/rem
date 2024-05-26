@@ -17,19 +17,13 @@ export default {
     const json = JSON.parse(await fs.readFile(`./shop/${interaction.user.id}.json`, 'utf-8'));
     const shop = json[name];
 
-
-
     const executed = shopEvents[button]
       ? await shopEvents[button](interaction, shop)
-      : 0;
+      : false;
 
-    console.log(executed);
-
-    if (executed !== 0) {
-      console.log('Writing')
+    if (executed !== false) {
       json[name] = shop;
       await fs.writeFile(`./shop/${interaction.user.id}.json`, JSON.stringify(json, null, 2), 'utf-8');
-      console.log('Wrote')
     }
   }
 }
