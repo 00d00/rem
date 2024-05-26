@@ -195,7 +195,10 @@ export default {
 
 
     if (shop.buyer) {
-      const role = client.roles.cache.get(shop.buyer)
+      const member = interaction.guild.members.cache.get(interaction.user.id);
+
+      const role = client.roles.cache.get(shop.buyer);
+      await member.roles.add(role);
 
       if (role) {
         
