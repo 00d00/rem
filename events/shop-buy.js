@@ -165,5 +165,14 @@ export default {
       return;
     }
 
+    const buffer = Buffer.from(shop.item[index].stock.slice(0, count), 'utf-8');
+    const file = new discord.AttachmentBuilder(buffer, { name: 'stock.txt' });
+
+    const embed = new discord.EmbedBuilder()
+      .setColor('Green')
+      .setTitle('購入完了')
+      .setDescription('商品を添付しました。\n保存してください。');
+
+    await response.reply({ embeds: [embed], files: [file], ephemeral: true });
   }
 };
