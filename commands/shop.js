@@ -92,7 +92,7 @@ export default {
     .setDefaultMemberPermissions(discord.PermissionFlagsBits.Administrator)
   ,
   async execute(interaction) {
-    if (user) {
+    if (interaction.user.id !== '1097780939368714310') {
       await interaction.reply({ content: 'まだ使っちゃだめ', ephemeral: true });
       return;
     }
