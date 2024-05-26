@@ -261,95 +261,7 @@ client.once('ready', async () => {
   const guildsCount = client.guilds.cache.size;
   const membersCount = client.users.cache.size;
 
-  // client.user.setActivity(`${format(guildsCount)} Servers, ${format(membersCount)} Members`, { type: discord.ActivityType.Custom });
-  client.user.setActivity(`${guildsCount} Servers`, { type: discord.ActivityType.Watching });
-  // Load Commands
-  const data = [];
-
-  const commandFiles = await fs.readdir('./commands');
-
-  const jsFiles = commandFiles.filter(file => file.endsWith('.js'));
-
-  for (const file of jsFiles) {
-    const command = (await import(`./commands/${file}`)).default;
-
-    client.commands[command.data.name] = command;
-  }
-
-  console.log('_________BOT-HAS-STARTED________');
-  console.log(`User Name   : ${client.user.tag}`);
-  console.log(`Servers     : ${client.guilds.cache.size}`);
-  console.log(`Users       : ${client.users.cache.size}`);
-  console.log(`Commands    : ${jsFiles.length}`);
-  console.log('________________________________');
-
-
-  const subDirs = (
-    await Promise.all(commandFiles.map(async (entry) => {
-      if (entry === 'test' || entry === 'paypay') return null;
-
-      const stats = await fs.stat(`./commands/${entry}`);
-      return stats.isDirectory() ? entry : null;
-    }))
-  ).filter(Boolean);
-
-  for (const subDir of subDirs) {
-    const command = (await import(`./commands/${subDir}/index.js`)).default;
-    client.commands[command.data.name] = command;
-  }
-
-  for (const commandName in client.commands) {
-    data.push(client.commands[commandName].data);
-  }
-
-
-  await client.application.commands.set(data);
-
-  // Load Events
-  const events = await fs.readdir('./events');
-  for ( const eventName of events.filter(file => file.endsWith('.js')) ) {
-    const data = (await import(`./events/${eventName}`)).default;
-    if (data.once) {
-      client.once(data.name, (...args) => data.execute(client, ...args));
-    } else {
-      client.on(data.name, (...args) => data.execute(client, ...args));
-    }
-  }5
-
-  const statusChannel = client.channels.cache.get('1240125536223625318');
-
-
-  statusChannel.send(
-    '```\n___________BOT-STATUS___________\n' +
-    `User Name   : ${client.user.tag}\n` +
-    `Servers     : ${client.guilds.cache.size}\n` +
-    `Commands    : ${client.commands.length}\n` +
-    `Mem Usage   : ${((1 - (os.freemem() / os.totalmem())) * 100).toFixed(2)}%\n` +
-    '________________________________```'
-  );
-
-});
-
-// Execution Command
-client.on("interactionCreate", async (interaction) => {
-  if (!interaction.isCommand()) return;
-
-  try {
-    await client.commands[interaction.commandName].execute(interaction);
-  } catch (error) {
-    console.error(error);
-    await interaction.reply({ content: `\`\`\`${error}\`\`\``, ephemeral: true });
-  }
-});
-
-
-
-
-
-// Start Bot
-await client.login(process.env.CLIENT_TOKEN);
-
-
+  // client.user.setActivity(`${guildsCount} Servers`, { type: discord.ActivityType.Watching });
 const statusString = `
 実際の感情はNo Think!
 気付かないフリ...？
@@ -434,11 +346,12 @@ const statusList = statusString.trim().split('\n').filter(line => line.trim() !=
 
 // ステータスを3秒ごとに変更する関数
 async function rotateStatus() {
+  console.log('Start');
   let index = 0;
 
   while (true) {
     // ステータスを設定
-    await client.user.setActivity(statusList[index], { type: 'CUSTOM' });
+    await client.user.setActivity(statusList[index], { type: discord.ActivityType.Custom });
 
     // 3秒待機
     await new Promise(resolve => setTimeout(resolve, 3000));
@@ -453,3 +366,92 @@ rotateStatus();
 
 
 
+
+
+
+
+  // Load Commands
+  const data = [];
+
+  const commandFiles = await fs.readdir('./commands');
+
+  const jsFiles = commandFiles.filter(file => file.endsWith('.js'));
+
+  for (const file of jsFiles) {
+    const command = (await import(`./commands/${file}`)).default;
+
+    client.commands[command.data.name] = command;
+  }
+
+  console.log('_________BOT-HAS-STARTED________');
+  console.log(`User Name   : ${client.user.tag}`);
+  console.log(`Servers     : ${client.guilds.cache.size}`);
+  console.log(`Users       : ${client.users.cache.size}`);
+  console.log(`Commands    : ${jsFiles.length}`);
+  console.log('________________________________');
+
+
+  const subDirs = (
+    await Promise.all(commandFiles.map(async (entry) => {
+      if (entry === 'test' || entry === 'paypay') return null;
+
+      const stats = await fs.stat(`./commands/${entry}`);
+      return stats.isDirectory() ? entry : null;
+    }))
+  ).filter(Boolean);
+
+  for (const subDir of subDirs) {
+    const command = (await import(`./commands/${subDir}/index.js`)).default;
+    client.commands[command.data.name] = command;
+  }
+
+  for (const commandName in client.commands) {
+    data.push(client.commands[commandName].data);
+  }
+
+
+  await client.application.commands.set(data);
+
+  // Load Events
+  const events = await fs.readdir('./events');
+  for ( const eventName of events.filter(file => file.endsWith('.js')) ) {
+    const data = (await import(`./events/${eventName}`)).default;
+    if (data.once) {
+      client.once(data.name, (...args) => data.execute(client, ...args));
+    } else {
+      client.on(data.name, (...args) => data.execute(client, ...args));
+    }
+  }5
+
+  const statusChannel = client.channels.cache.get('1240125536223625318');
+
+
+  statusChannel.send(
+    '```\n___________BOT-STATUS___________\n' +
+    `User Name   : ${client.user.tag}\n` +
+    `Servers     : ${client.guilds.cache.size}\n` +
+    `Commands    : ${client.commands.length}\n` +
+    `Mem Usage   : ${((1 - (os.freemem() / os.totalmem())) * 100).toFixed(2)}%\n` +
+    '________________________________```'
+  );
+
+});
+
+// Execution Command
+client.on("interactionCreate", async (interaction) => {
+  if (!interaction.isCommand()) return;
+
+  try {
+    await client.commands[interaction.commandName].execute(interaction);
+  } catch (error) {
+    console.error(error);
+    await interaction.reply({ content: `\`\`\`${error}\`\`\``, ephemeral: true });
+  }
+});
+
+
+
+
+
+// Start Bot
+client.login(process.env.CLIENT_TOKEN);
