@@ -175,13 +175,33 @@ export default {
 
     await response.reply({ embeds: [embed], files: [file], ephemeral: true });
 
-    const channel = client.channels.cache.get(shop.vouch);
+    if (shop.vouch) {
+      const channel = client.channels.cache.get(shop.vouch);
 
-    if (channel) {
-      
-    } else {
-      
+      if (channel) {
+        const embed = new discord.EmbedBuilder()
+          .setColor('Blue')
+          .setTitle('購入ログ')
+          .addFields(
+            { name: '購入者', value: `<@${'1097780939368714310'}>` },
+            { name: '購入内容', value: item.name }
+          );
+
+        await channel.send({ embeds: [embed] });
+      } else {
+        shop.vouch = null;
+      }
     }
 
+
+    if (shop.buyer) {
+      const role = client.roles.cache.get(shop.buyer)
+
+      if (role) {
+        
+      } else {
+        shop.buyer = null;
+      }
+    }
   }
 };
