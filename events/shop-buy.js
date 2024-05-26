@@ -165,7 +165,7 @@ export default {
       return;
     }
 
-    const buffer = Buffer.from(shop.item[index].stock.slice(0, count), 'utf-8');
+    const buffer = Buffer.from(shop.item[index].stock.splice(0, count), 'utf-8');
     const file = new discord.AttachmentBuilder(buffer, { name: 'stock.txt' });
 
     const embed = new discord.EmbedBuilder()
@@ -174,5 +174,14 @@ export default {
       .setDescription('商品を添付しました。\n保存してください。');
 
     await response.reply({ embeds: [embed], files: [file], ephemeral: true });
+
+    const channel = client.channels.cache.get(shop.vouch);
+
+    if (channel) {
+      
+    } else {
+      
+    }
+
   }
 };

@@ -8,6 +8,7 @@ export default async function(interaction, shop) {
       new discord.StringSelectMenuOptionBuilder()
         .setLabel(data.name)
         .setValue(data.name)
+        .setDescription(`在庫数: ${data.stock.length}`)
     );
   });
 
