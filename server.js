@@ -354,7 +354,7 @@ async function rotateStatus() {
     await client.user.setActivity(statusList[index], { type: discord.ActivityType.Custom });
 
     // 3秒待機
-    await new Promise(resolve => setTimeout(resolve, 3000));
+    await new Promise(resolve => setTimeout(resolve, 4000));
 
     // 次のステータスに移動
     index = (index + 1) % statusList.length;
