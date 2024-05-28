@@ -45,7 +45,35 @@ client.on('messageCreate', async (msg) => {
 
 
 
+client.on('guildMemberAdd', member => {
+  const channel = member.guild.channels.cache.get('1097793408153702430');
+  if (!channel) return;
 
+  const joinEmbed = new discord.EmbedBuilder()
+    .setColor('Green')
+    .setTitle('参加通知')
+    .setDescription(`<@${member.id}> さんが参加しました。`)
+    .setThumbnail(member.user.displayAvatarURL())
+    .setFooter({ text: `サーバー人数: ${member.guild.memberCount}` })
+    .setTimestamp();
+
+  channel.send({ embeds: [joinEmbed] });
+});
+
+client.on('guildMemberRemove', member => {
+  const channel = member.guild.channels.cache.get('1097793408153702430');
+  if (!channel) return;
+
+  const leaveEmbed = new discord.EmbedBuilder()
+    .setColor('Red')
+    .setTitle('離脱通知')
+    .setDescription(`<@${member.id}> さんが離脱しました。`)
+    .setThumbnail(member.user.displayAvatarURL())
+    .setFooter({ text: `サーバー人数: ${member.guild.memberCount}` })
+    .setTimestamp();
+
+  channel.send({ embeds: [leaveEmbed] });
+});
 
 
 
