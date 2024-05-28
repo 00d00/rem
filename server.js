@@ -345,7 +345,6 @@ const statusList = statusString.trim().split('\n').filter(line => line.trim() !=
 
 // ステータスを3秒ごとに変更する関数
 async function rotateStatus() {
-  console.log('Start');
   let index = 0;
 
   while (true) {
@@ -429,7 +428,7 @@ rotateStatus();
     '```\n___________BOT-STATUS___________\n' +
     `User Name   : ${client.user.tag}\n` +
     `Servers     : ${client.guilds.cache.size}\n` +
-    `Commands    : ${client.commands.length}\n` +
+    `Commands    : ${Object.keys(client.commands).length}\n` +
     `Mem Usage   : ${((1 - (os.freemem() / os.totalmem())) * 100).toFixed(2)}%\n` +
     '________________________________```'
   );
