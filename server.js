@@ -73,7 +73,6 @@ function displayDebugInfo() {
     // });
 }
 
-// デバッグ情報を表示するコマンドを実行
 displayDebugInfo();
 
 
