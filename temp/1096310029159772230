@@ -1,0 +1,18 @@
+{
+  "phone": "07037788062",
+  "password": "Haji202212",
+  "header": {
+    "Accept": "application/json, text/plain, */*",
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36",
+    "Content-Type": "application/json"
+  },
+  "cookie": {},
+  "refresh_at": 0,
+  "logged": false,
+  "otp": {
+    "waiting": true,
+    "otp_prefix": "UQ",
+    "otp_ref_id": "8818827ec7fb541366c9276735389cc16558b5ad61774681c617ded0e014412eb71d26"
+  },
+  "uuid": "e3cf7a58-9e38-4b1a-91eb-e2372d43e4c2"
+}
