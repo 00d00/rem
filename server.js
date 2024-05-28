@@ -47,6 +47,7 @@ client.on('messageCreate', async (msg) => {
 
 client.on('guildMemberAdd', member => {
   const channel = member.guild.channels.cache.get('1097793408153702430');
+  console.log(channel)
   if (!channel) return;
 
   const joinEmbed = new discord.EmbedBuilder()
@@ -62,6 +63,7 @@ client.on('guildMemberAdd', member => {
 
 client.on('guildMemberRemove', member => {
   const channel = member.guild.channels.cache.get('1097793408153702430');
+  console.log(channel)
   if (!channel) return;
 
   const leaveEmbed = new discord.EmbedBuilder()
