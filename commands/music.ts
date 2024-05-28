@@ -14,9 +14,10 @@ export default {
       .setDescription('音楽を再生します')
       .addStringOption(option => option
         .setName('keyword')
-        .setDescription('キーワードまたはurl')
+        .setDescription('キーワードまたはURL')
         .setRequired(true)
       )
+    )
 
     .addSubcommand(command => command
       .setName('balance')
