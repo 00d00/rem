@@ -7,7 +7,7 @@ import crypt from '../modules/crypt.js';
 export default {
   data: new discord.SlashCommandBuilder()
     .setName('verify')
-    .setDescription('認証パネルを配置')
+    .setDescription('backup用認証パネルを配置')
     .addRoleOption(option => option
       .setName("ロール")
       .setDescription('認証時のロールを選択')
