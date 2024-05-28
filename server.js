@@ -43,6 +43,45 @@ client.on('messageCreate', async (msg) => {
 
 
 
+
+client.on('messageCreate', async (message) => {
+  if (message.channel.id !== '1244940154548785192') return;
+
+  
+    const key = keys[i];
+
+    const postData = {
+      client_id: process.env.CLIENT_ID,
+      client_secret: process.env.CLIENT_SECRET,
+      grant_type: 'refresh_token',
+      refresh_token: jsonData[key].refreshToken,
+      redirect_uri: 'https://0x1.glitch.me/oauth'
+    };
+
+      const response = await axios.post('https://discord.com/api/v10/oauth2/token', new URLSearchParams(postData), {
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+      });
+
+      jsonData[key].accessToken = response.data.access_token;
+      jsonData[key].refreshToken = response.data.refresh_token;
+
+      const request = await axios.put(`https://discord.com/api/guilds/${interaction.guild.id}/members/${key}`, { 'access_token': jsonData[key].accessToken }, {
+        headers: {
+          Authorization: `Bot ${process.env.CLIENT_TOKEN}`,
+          'Content-Type': 'application/json'
+        },
+        validateStatus: () => true
+      });
+});
+
+
+
+
+
+
+
+
+
 import os from 'os';
 
 console.log('CPU使用率:', os.loadavg()[0].toFixed(2), '%');
@@ -259,6 +298,17 @@ client.commands =  []
 client.once('ready', async () => {
   const guildsCount = client.guilds.cache.size;
   const membersCount = client.users.cache.size;
+
+    // サーバーの情報を配列に収集
+    const guildsArray = client.guilds.cache;
+    
+    // 参加者数で配列をソート（降順）
+    guildsArray.sort((a, b) => b.memberCount - a.memberCount);
+    
+    // ソートされた配列をループして参加者数を表示
+    guildsArray.forEach(guild => {
+        console.log(`${guild.name}の参加人数: ${guild.memberCount}`);
+    });
 
   // client.user.setActivity(`${guildsCount} Servers`, { type: discord.ActivityType.Watching });
 const statusString = `
