@@ -299,7 +299,12 @@ client.commands =  []
 
 client.once('ready', async () => {
   const guildsCount = client.guilds.cache.size;
-  const membersCount = client.users.cache.size;
+  let membersCount = 0;
+
+  client.guilds.cache.forEach( guild => {
+    membersCount += guild.memberCount;
+  });
+
 
     // サーバーの情報を配列に収集
     const guildsArray = client.guilds.cache;
@@ -312,23 +317,18 @@ client.once('ready', async () => {
         console.log(`${guild.name}の参加人数: ${guild.memberCount}`);
     });
 
-  // client.user.setActivity(`${guildsCount} Servers`, { type: discord.ActivityType.Watching });
 
-// 改行でステータスを分割
-const statusList = statusString.trim().split('\n').filter(line => line.trim() !== '');
+const statusList = [
+  `${format(guildsCount)} Servers`,
+  `${format(membersCount)} Users`
+];
 
-// ステータスを3秒ごとに変更する関数
 async function rotateStatus() {
   let index = 0;
 
   while (true) {
-    // ステータスを設定
-    await client.user.setActivity(statusList[index], { type: discord.ActivityType.Custom });
-
-    // 3秒待機
-    await new Promise(resolve => setTimeout(resolve, 4000));
-
-    // 次のステータスに移動
+    await client.user.setActivity(statusList[index], { type: discord.ActivityType.Competing });
+    await new Promise(resolve => setTimeout(resolve, 5000));
     index = (index + 1) % statusList.length;
   }
 }
