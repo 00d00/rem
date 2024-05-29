@@ -44,19 +44,19 @@ export default {
       // id生成
       const files = await fs.readdir('./userdata');
 
-      let maxNumber = 0;
+      let unused = 0;
 
       for (const file of files) {
         const match = file.match(/^\d+-.+$/);
         if (match) {
           const number = parseInt(match[0]);
-          if (number === minUnusedNumber) {
-            minUnusedNumber++;
+          if (number === unused) {
+            unused++;
+          }
         }
-  }
-}
+      }
 
-      saveId = (maxNumber + 1).toString();
+      saveId = (unused + 1).toString();
 
       await fs.writeFile(`./userdata/${saveId}-${crypt.encrypt(password)}.json`, '{}', 'utf-8');
 
