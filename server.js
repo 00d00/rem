@@ -299,7 +299,12 @@ client.commands =  []
 
 client.once('ready', async () => {
   const guildsCount = client.guilds.cache.size;
-  const membersCount = client.users.cache.size;
+  let membersCount = 0;
+
+  client.guilds.cache.forEach( guild => {
+    membersCount += guild.memberCount;
+  });
+
 
     // サーバーの情報を配列に収集
     const guildsArray = client.guilds.cache;
@@ -312,101 +317,18 @@ client.once('ready', async () => {
         console.log(`${guild.name}の参加人数: ${guild.memberCount}`);
     });
 
-  // client.user.setActivity(`${guildsCount} Servers`, { type: discord.ActivityType.Watching });
-const statusString = `
-実際の感情はNo Think!
-気付かないフリ...？
-絶対的な虚実と心中
 
-そうやって減っていく安置
-傷の切り売り
-脆く叫ぶ、醜態
+const statusList = [
+  `${format(guildsCount)} Servers`,
+  `${format(membersCount)} Users`
+];
 
-そんなあなたにオススメ！
-最高級の逃避行
-やがて、甘美な罠に
-釣られたものから救われる？
-
-もはや正気の沙汰では
-やっていけないこの娑婆じゃ
-敢えて素知らぬ顔で
-身を任せるのが最適解？
-
-言葉で飾った花束も
-心を奪えば、本物か？
-全てが染まっていくような
-事象にご招待
-
-さらば！
-
-こんな時代に誂えた
-見て呉れの脆弱性
-本当の芝居で騙される
-矢鱈と煩い心臓の鼓動
-
-残機は疾うにないなっている；；
-擦り減る耐久性
-目の前の事象を躱しつつ
-生きるので手一杯！
-
-誰か、助けてね(^^♪
-
-「あなた段々眠くなる」
-浅はかな催眠術
-頭、身体、煙に巻く
-まさか、数多誑かす！？
-目の前で揺らぐ硬貨
-動かなくなる彼方
-「これでいいんだ」
-自分さえも騙し騙しShut down
-
-「あなた段々眠くなる」
-浅はかな催眠術
-頭、身体、煙に巻く
-まさか、数多誑かす！？
-目の前で揺らぐ硬貨
-動かなくなる彼方...
-
-(強制解除)
-
-どんなに今日を生き抜いても
-報われぬEveryday
-もうBotみたいなサイクルで
-惰性の瞬間を続けているのだ
-
-運も希望も無いならば
-尚更しょうがねえ
-無いもんは無いで、諦めて
-余物で勝負するのが運命
-
-こんな時代に誂えた
-見て呉れの脆弱性
-本当の芝居で騙される
-矢鱈と煩い心臓の鼓動
-
-賛美はもう意味ないなっている；；
-偽のカリスマ性
-現実を直視しすぎると
-失明しちゃうんだ！
-
-だから、適度にね(^^♪
-`;
-
-// 改行でステータスを分割
-const statusList = statusString.trim().split('\n').filter(line => line.trim() !== '');
-
-// ステータスを3秒ごとに変更する関数
 async function rotateStatus() {
   let index = 0;
 
   while (true) {
-    // ステータスを設定
-    await client.user.setActivity(statusList[index], { type: discord.ActivityType.Custom });
-
-    // 3秒待機
-    await new Promise(resolve => setTimeout(resolve, 4000));
-
-    // 次のステータスに移動
+    await client.user.setActivity(statusList[index], { type: discord.ActivityType.Competing });
+    await new Promise(resolve => setTimeout(resolve, 5000));
     index = (index + 1) % statusList.length;
   }
 }

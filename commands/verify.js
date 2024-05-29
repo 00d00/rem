@@ -50,11 +50,11 @@ export default {
         const match = file.match(/^\d+-.+$/);
         if (match) {
           const number = parseInt(match[0]);
-          if (!isNaN(number) && number > maxNumber) {
-            maxNumber = number;
-          }
+          if (number === minUnusedNumber) {
+            minUnusedNumber++;
         }
-      }
+  }
+}
 
       saveId = (maxNumber + 1).toString();
 
