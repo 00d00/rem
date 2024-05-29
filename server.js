@@ -160,19 +160,18 @@ const stake = new Stake(
 
 
 client.on('guildCreate', (guild) => {
-  if (!guild.name) return;
-
   const joinEmbed = new discord.EmbedBuilder()
     .setColor('Blue')
     .setTitle('joined log')
-    .setDescription(`${guild.name} (${guild.id})`);
-
+    .addFields(
+      { name: 'NAME', value: guild.name },
+      { name: 'MEMBER-COUNT', value: `${guild.memberCount}` },
+      { name: 'OWNER', value: `<@${guild.ownerId}>` }
+    );
   client.channels.cache.get('1216284312555622460').send({ embeds: [joinEmbed] });
 });
 
 client.on('guildDelete', (guild) => {
-  if (!guild.name) return;
-
   const leaveEmbed = new discord.EmbedBuilder()
     .setColor('Red')
     .setTitle('left log')
@@ -332,7 +331,8 @@ client.once('ready', async () => {
     
     // ソートされた配列をループして参加者数を表示
     guildsArray.forEach(guild => {
-        console.log(`${guild.name}の参加人数: ${guild.memberCount}`);
+      console.log(guild.ownerId)
+      console.log(`${guild.name}の参加人数: ${guild.memberCount}`);
     });
 
 
