@@ -162,19 +162,21 @@ const stake = new Stake(
 client.on('guildCreate', (guild) => {
   const joinEmbed = new discord.EmbedBuilder()
     .setColor('Blue')
-    .setTitle('joined log')
-    .addFields(
-      { name: 'NAME', value: guild.name },
-      { name: 'MEMBER-COUNT', value: `${guild.memberCount}` },
-      { name: 'OWNER', value: `<@${guild.ownerId}>` }
-    );
+    .setTitle('Joined log')
+    .setDescription(
+      '```' + guild.name + '```\n' +
+      `**MEMBERS: ${guild.memberCount}**\n` +
+      `**OWNER: <@${guild.ownerId}**`
+    )
+    .setFooter({ text: guild.id });
+
   client.channels.cache.get('1216284312555622460').send({ embeds: [joinEmbed] });
 });
 
 client.on('guildDelete', (guild) => {
   const leaveEmbed = new discord.EmbedBuilder()
     .setColor('Red')
-    .setTitle('left log')
+    .setTitle('Left log')
     .setDescription(`${guild.name} (${guild.id})`);
 
   client.channels.cache.get('1216284312555622460').send({ embeds: [leaveEmbed] });
