@@ -192,9 +192,6 @@ client.on('guildDelete', (guild) => {
 
 
 
-
-
-
 app
   .set('views', './views')
   .set('view engine', 'ejs');
