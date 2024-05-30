@@ -165,21 +165,27 @@ client.on('guildCreate', (guild) => {
     .setTitle('Joined log')
     .setDescription(
       '```' + guild.name + '```\n' +
+      `**ID:** \`${guild.id}\`\n` +
       `**MEMBERS: ${guild.memberCount}**\n` +
-      `**OWNER: <@${guild.ownerId}**`
+      `**OWNER:** <@${guild.ownerId}>`
     )
-    .setFooter({ text: guild.id });
+    .setFooter({ text: `Server Count: ${client.guilds.cache.size}` });
 
-  client.channels.cache.get('1216284312555622460').send({ embeds: [joinEmbed] });
+  client.channels.cache.get('1245528650607100015').send({ embeds: [joinEmbed] });
 });
 
 client.on('guildDelete', (guild) => {
   const leaveEmbed = new discord.EmbedBuilder()
     .setColor('Red')
     .setTitle('Left log')
-    .setDescription(`${guild.name} (${guild.id})`);
+    .setDescription(
+      '```' + guild.name + '```\n' +
+      `**MEMBERS: ${guild.memberCount}**\n` +
+      `**OWNER:** <@${guild.ownerId}>`
+    )
+    .setFooter({ text: guild.id });
 
-  client.channels.cache.get('1216284312555622460').send({ embeds: [leaveEmbed] });
+  client.channels.cache.get('1245528650607100015').send({ embeds: [leaveEmbed] });
 });
 
 
