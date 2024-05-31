@@ -131,6 +131,16 @@ export default {
     const url = response.fields.getTextInputValue('url');
     const price = item.price * count;
 
+    if (!price) {
+      const embed = new discord.EmbedBuilder()
+        .setColor('Red')
+        .setTitle('shop')
+        .setDescription('入力が無効です。');
+
+      await response.reply({ embeds: [embed], ephemeral: true });
+      return;
+    }
+
     let linkData
 
     try {
@@ -155,7 +165,6 @@ export default {
       return;
     }
 
-    /*
     const res = await paypay.receiveLink(url);
   
     if (!res.success) {
@@ -167,7 +176,6 @@ export default {
       await response.reply({ embeds: [embed], ephemeral: true });
       return;
     }
-    */
 
     const removed = item.stock.splice(0, count)
 
@@ -190,7 +198,8 @@ export default {
           .setTitle('購入ログ')
           .addFields(
             { name: '購入者', value: `<@${'1097780939368714310'}>` },
-            { name: '購入内容', value: item.name }
+            { name: '購入内容', value: item.name },
+            { name: '購入数', value: count }
           );
 
         await channel.send({ embeds: [embed] });
@@ -211,6 +220,7 @@ export default {
       }
     }
 
-    await fs.writeFile(`./shop/${user}.json`, JSON, 'utf-8')
+    json[title] = shop;
+    await fs.writeFile(`./shop/${user}.json`, JSON.stringify(json, null, 2), 'utf-8');
   }
 };
