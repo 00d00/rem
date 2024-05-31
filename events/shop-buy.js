@@ -69,6 +69,7 @@ export default {
     let json;
     let shop;
 
+    console.log('耐えてる')
     try {
       json = JSON.parse(await fs.readFile(`./shop/${user}.json`));
       shop = json[title];
@@ -200,7 +201,8 @@ export default {
             { name: '購入者', value: `<@${'1097780939368714310'}>` },
             { name: '購入内容', value: item.name },
             { name: '購入数', value: count }
-          );
+          )
+          .setTimestamp();
 
         await channel.send({ embeds: [embed] });
       } else {
