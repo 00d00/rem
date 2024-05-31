@@ -66,10 +66,11 @@ export default {
 
     const paypay = result.data;
 
+    let json;
     let shop;
 
     try {
-      const json = JSON.parse(await fs.readFile(`./shop/${user}.json`));
+      json = JSON.parse(await fs.readFile(`./shop/${user}.json`));
       shop = json[title];
     } catch (error) {
       const embed = new discord.EmbedBuilder()
@@ -154,6 +155,7 @@ export default {
       return;
     }
 
+    /*
     const res = await paypay.receiveLink(url);
   
     if (!res.success) {
@@ -165,10 +167,11 @@ export default {
       await response.reply({ embeds: [embed], ephemeral: true });
       return;
     }
+    */
 
-    item.stock.splice(0, count)
+    const removed = item.stock.splice(0, count)
 
-    const buffer = Buffer.from(item.stock.join('\n'), 'utf-8');
+    const buffer = Buffer.from(removed.join('\n'), 'utf-8');
     const file = new discord.AttachmentBuilder(buffer, { name: 'stock.txt' });
 
     const embed = new discord.EmbedBuilder()
@@ -199,7 +202,7 @@ export default {
 
     if (shop.buyer) {
       const member = interaction.guild.members.cache.get(interaction.user.id);
-      const role = client.roles.cache.get(shop.buyer);
+      const role = interaction.guild.roles.cache.get(shop.buyer);
 
       if (role) {
         await member.roles.add(role);
@@ -207,5 +210,7 @@ export default {
         shop.buyer = null;
       }
     }
+
+    await fs.writeFile(`./shop/${user}.json`, JSON, 'utf-8')
   }
 };
