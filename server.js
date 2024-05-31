@@ -43,24 +43,6 @@ client.on('messageCreate', async (msg) => {
 
 
 
-// math.jsをインポート
-import * as math from 'mathjs';
-
-// 変数の定義
-const x = math.parse('x');
-
-// 関数の定義
-const f = math.parse('x^2');
-console.log(f)
-// 微分の計算
-const df = math.derivative(f, x);
-console.log('f(x) の微分:', df.toString());
-
-// 積分の計算
-//const integral = math.integrate(f, x);
-//console.log('f(x) の積分:', integral.toString());
-
-
 
 
 client.on('guildMemberAdd', member => {
