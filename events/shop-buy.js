@@ -86,7 +86,6 @@ export default {
     try {
       i = await newItemSelect(interaction, shop);
     } catch (error) {
-      console.error(error)
       const embed = new discord.EmbedBuilder()
         .setColor('Red')
         .setTitle('失敗')
