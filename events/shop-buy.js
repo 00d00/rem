@@ -69,7 +69,6 @@ export default {
     let json;
     let shop;
 
-    console.log('耐えてる')
     try {
       json = JSON.parse(await fs.readFile(`./shop/${user}.json`));
       shop = json[title];
@@ -167,6 +166,7 @@ export default {
     }
 
     const res = await paypay.receiveLink(url);
+    console.log(res)
   
     if (!res.success) {
       const embed = new discord.EmbedBuilder()
@@ -198,7 +198,7 @@ export default {
           .setColor('Blue')
           .setTitle('購入ログ')
           .addFields(
-            { name: '購入者', value: `<@${'1097780939368714310'}>` },
+            { name: '購入者', value: `<@${interaction.user.id}>` },
             { name: '購入内容', value: item.name },
             { name: '購入数', value: count }
           )

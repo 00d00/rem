@@ -14,6 +14,8 @@ export default {
     const button = data[0];
     const name = data[1];
 
+    if (!shopEvents[button]) return;
+
     const json = JSON.parse(await fs.readFile(`./shop/${interaction.user.id}.json`, 'utf-8'));
     const shop = json[name];
 
