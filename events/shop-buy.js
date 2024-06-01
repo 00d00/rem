@@ -200,7 +200,7 @@ export default {
           .setDescription(`<@${interaction.user.id}>`)
           .addFields(
             { name: '購入内容', value: item.name },
-            { name: '購入数', value: count },
+            { name: '購入数', value: count, inline: true },
             { name: '値段', inline: true }
           )
           .setTimestamp();
