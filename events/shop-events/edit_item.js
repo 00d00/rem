@@ -33,6 +33,11 @@ export async function edit_item(interaction, shop) {
         label: '値段',
         id: 'price',
         style: discord.TextInputStyle.Short
+      },
+      {
+        label: '無限在庫(y/n)',
+        id: 'infinity-stock',
+        style: discord.TextInputStyle.Short
       }
     ]
   });
@@ -49,6 +54,14 @@ export async function edit_item(interaction, shop) {
 
   const inputName = response.fields.getTextInputValue('name');
   const inputPrice = response.fields.getTextInputValue('price');
+  const inputInfinityStock = response.fields.getTextInputValue('infinity-stock').toLowerCase();
+
+  if (inputInfinityStock === 'y') inputInfinityStock = true;
+  else if (inputInfinityStock === 'n') inputInfinityStock = false;
+  else {
+    await response.reply({ content: '無限在庫の入力が無効です。', ephemeral: true });
+    return;
+  }
 
   const index = shop.item.findIndex(element => element.name === itemName);
 

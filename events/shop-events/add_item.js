@@ -35,9 +35,16 @@ export async function add_item(interaction, shop) {
     return;
   }
 
-  const inputName = response.fields.getTextInputValue("name");
-  const inputPrice = response.fields.getTextInputValue("price");
-  const inputInfinityStock = response.fields.getTextInputValue("infinity-stock");
+  const inputName = response.fields.getTextInputValue('name');
+  const inputPrice = response.fields.getTextInputValue('price');
+  const inputInfinityStock = response.fields.getTextInputValue('infinity-stock').toLowerCase();
+
+  if (inputInfinityStock === 'y') inputInfinityStock = true;
+  else if (inputInfinityStock === 'n') inputInfinityStock = false;
+  else {
+    await response.reply({ content: '無限在庫の入力が無効です。', ephemeral: true });
+    return;
+  }
 
   if (isNaN(parseInt(inputPrice)) || 999999 < parseInt(inputPrice)) {
     await response.reply({ content: '無効な値段です。', ephemeral: true });
@@ -49,7 +56,7 @@ export async function add_item(interaction, shop) {
     return;
   }
 
-  shop.item.push({ name: inputName, price: parseInt(inputPrice), stock: [] });
+  shop.item.push({ name: inputName, price: parseInt(inputPrice), infinity_stock: inputInfinityStock, stock: [] });
 
   const embed = new discord.EmbedBuilder()
     .setColor('Green')
