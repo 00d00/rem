@@ -197,6 +197,7 @@ export default {
         const embed = new discord.EmbedBuilder()
           .setColor('Blue')
           .setTitle('購入ログ')
+          .setDescription(`<@${interaction.user.id}>`)
           .addFields(
             { name: '購入者', value: `<@${interaction.user.id}>` },
             { name: '購入内容', value: item.name },
