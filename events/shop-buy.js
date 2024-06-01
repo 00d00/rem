@@ -199,9 +199,9 @@ export default {
           .setTitle('購入ログ')
           .setDescription(`<@${interaction.user.id}>`)
           .addFields(
-            { name: '購入者', value: `<@${interaction.user.id}>` },
             { name: '購入内容', value: item.name },
-            { name: '購入数', value: count }
+            { name: '購入数', value: count },
+            { name: '値段', inline: true }
           )
           .setTimestamp();
 
