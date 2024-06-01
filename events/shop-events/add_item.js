@@ -16,6 +16,11 @@ export async function add_item(interaction, shop) {
         label: '値段',
         id: 'price',
         style: discord.TextInputStyle.Short
+      },
+      {
+        label: '無限在庫(y/n)',
+        id: 'infinity-stock',
+        style: discord.TextInputStyle.Short
       }
     ]
   });
@@ -32,6 +37,7 @@ export async function add_item(interaction, shop) {
 
   const inputName = response.fields.getTextInputValue("name");
   const inputPrice = response.fields.getTextInputValue("price");
+  const inputInfinityStock = response.fields.getTextInputValue("infinity-stock");
 
   if (isNaN(parseInt(inputPrice)) || 999999 < parseInt(inputPrice)) {
     await response.reply({ content: '無効な値段です。', ephemeral: true });
