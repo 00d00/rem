@@ -197,12 +197,14 @@ export default {
         const embed = new discord.EmbedBuilder()
           .setColor('Blue')
           .setTitle('購入ログ')
-          .setDescription(`<@${interaction.user.id}>`)
-          .addFields(
-            { name: '購入内容', value: item.name },
-            { name: '購入数', value: count, inline: true },
-            { name: '値段', inline: true }
+          .setDescription(
+`<@${interaction.user.id}>
+
+**購入内容** : ごみ
+**値段** : 3996
+**購入数** : 2`
           )
+          .setThumbnail(interaction.user.avatarURL())
           .setTimestamp();
 
         await channel.send({ embeds: [embed] });
