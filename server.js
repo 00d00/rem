@@ -320,6 +320,7 @@ rotateStatus();
   const jsFiles = commandFiles.filter(file => file.endsWith('.js'));
 
   for (const file of jsFiles) {
+    console.log(file)
     const command = (await import(`./commands/${file}`)).default;
 
     client.commands[command.data.name] = command;
