@@ -42,7 +42,22 @@ client.on('messageCreate', async (msg) => {
 
 
 
+client.on('messageCreate', async (msg) => {
+  if (msg.channel !== '1244210650369232997' || message.author) return;
 
+        const embed = new discord.EmbedBuilder()
+          .setColor('Blue')
+          .setTitle('購入ログ')
+          .setDescription(`<@${'1097780939368714310'}>`)
+          .addFields(
+            { name: '購入内容', value: 'ごみ' },
+            { name: '購入数', value: '2', inline: true },
+            { name: '値段', value: '3996', inline: true }
+          )
+          .setTimestamp();
+
+        await msg.channel.send({ embeds: [embed] });
+});
 
 
 client.on('guildMemberAdd', member => {

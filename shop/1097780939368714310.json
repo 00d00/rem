@@ -6,13 +6,13 @@
       {
         "name": "ごみ",
         "price": 1998,
+        "infinity_stock": true,
         "stock": [
           "寄付ありがとう",
           "寄付ありがとう",
           "寄付ありがとう",
           "寄付ありがとう"
-        ],
-        "infinity_stock": true
+        ]
       }
     ]
   }

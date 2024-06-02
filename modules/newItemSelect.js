@@ -6,9 +6,9 @@ export default async function(interaction, shop) {
   shop.item.forEach(data => {
     options.push(
       new discord.StringSelectMenuOptionBuilder()
-        .setLabel(data.name)
+        .setLabel(`${data.name} : ${data.price}円`)
         .setValue(data.name)
-        .setDescription(`在庫数: ${data.stock.length}`)
+        .setDescription(`在庫数: ${data.infinity_stock ? '∞' : data.stock.length}`)
     );
   });
 

@@ -6,9 +6,9 @@ export default async function(interaction, shop) {
   shop.item.forEach(data => {
     options.push(
       new discord.StringSelectMenuOptionBuilder()
-        .setLabel(data.name)
+        .setLabel(`${data.name} : ${data.price}円`)
         .setValue(data.name)
-        .setDescription(`在庫数: ${data.stock.length}`)
+        .setDescription(`在庫数: ${data.infinity_stock ? '∞' : data.stock.length}`)
     );
   });
 
@@ -28,13 +28,15 @@ export default async function(interaction, shop) {
       reject(new Error('タイムアウトしました'));
     }, 60000);
 
-    async function onFunc(i) {
+    async function onFunc(i, check) {
+      if (check !== r) return;
       if (i.customId !== 'item_select') return;
       clearTimeout(timeout);
       interaction.client.off('interactionCreate', onFunc);
       resolve(i);
     }
 
-    interaction.client.on('interactionCreate', onFunc);
+    const r = Math.random();
+    interaction.client.on('interactionCreate', (interaction) => onFunc(interaction, r));
   });
 };
