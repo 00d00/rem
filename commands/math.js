@@ -1,7 +1,9 @@
 import discord from 'discord.js';
 import * as math from 'mathjs';
-import plotly from 'plotly';
+import pl from 'plotly';
 import fs from 'fs/promises';
+
+const plotly = pl();
 
 export default {
   data: new discord.SlashCommandBuilder()
@@ -39,7 +41,7 @@ export default {
       const layout = { title: 'グラフ', xaxis: { title: 'x軸' }, yaxis: { title: 'y軸' } };
       const figure = { data: data, layout: layout };
 
-      plotly.toImage(figure, { format: 'png', width: 800, height: 600 }, async (err, imageStream) => {
+      plotly.getImage(figure, { format: 'png', width: 800, height: 600 }, async (err, imageStream) => {
         const fileName = 'graph.png';
         const fileStream = await fs.writeFile(fileName, imageStream);
         await interaction.reply({ files: [fileName] });
