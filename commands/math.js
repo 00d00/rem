@@ -1,6 +1,7 @@
 import discord from 'discord.js';
 import * as math from 'mathjs';
-import Plotly from 'plotly.js-dist';
+import plotly from 'plotly';
+import fs from 'fs/promises';
 
 export default {
   data: new discord.SlashCommandBuilder()
@@ -21,7 +22,7 @@ export default {
       .setName('graph')
       .setDescription('グラフを生成')
       .addStringOption(option => option
-        .setName('function')
+        .setName('expr')
         .setDescription('関数')
         .setRequired(true)
       )
@@ -32,8 +33,17 @@ export default {
     const command = interaction.options.getSubcommand();
 
     if (command === 'graph') {
-      const func = interaction.options.getString('function');
+      const expr = interaction.options.getString('expr');
 
+      const data = [{ x: [1, 2, 3], y: [1, 2, 3], type: 'scatter' }];
+      const layout = { title: 'グラフ', xaxis: { title: 'x軸' }, yaxis: { title: 'y軸' } };
+      const figure = { data: data, layout: layout };
+
+      plotly.toImage(figure, { format: 'png', width: 800, height: 600 }, async (err, imageStream) => {
+        const fileName = 'graph.png';
+        const fileStream = await fs.writeFile(fileName, imageStream);
+        await interaction.reply({ files: [fileName] });
+      });
     }
 
   }

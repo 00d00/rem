@@ -21,7 +21,7 @@
     "mathjs": "^12.4.2",
     "node-fetch": "^1.0.0",
     "paypax": "^1.0.0",
-    "plotly.js-dist": "^2.33.0",
+    "plotly": "^1.0.6",
     "uuid": "^9.0.1",
     "ws": "^8.17.0",
     "ytdl-core": "^4.11.5",
