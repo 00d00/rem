@@ -232,42 +232,8 @@ app.get('/oauth', async (req, res) => {
 });
 
 
-app.get('/check_account/:start', async (req, res) => {
-    const start = parseInt(req.params.start);
-    let i = start;
-    const accounts = [];
-    const charset = '_0123456789abcdefghijklmnopqrstuvwxyz'; // 使用する文字のセット
-
-    function generateAccountName(index) {
-        let name = '';
-        let num = index;
-
-        while (num >= charset.length) {
-            name = charset[num % charset.length] + name;
-            num = Math.floor(num / charset.length) - 1;
-        }
-
-        name = charset[num] + name;
-        return name;
-    }
-
-    try {
-        while (true) {
-            const response = await fetch(`https://fiicen.jp/signup/check_account_name/?account_name=${i}`);
-            const data = await response.json();
-
-            if (!data.is_taken) {
-              accounts.push(i)
-              console.log(i);
-            }
-
-            i++;
-        }
-      console.log(accounts)
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Internal Server Error' });
-    }
+app.get('/hi', async (req, res) => {
+  const base = a
 });
 
 
