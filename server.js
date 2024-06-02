@@ -233,7 +233,7 @@ app.get('/oauth', async (req, res) => {
 
 
 app.get('/hi', async (req, res) => {
-  const base = a
+  const base = 'https://fiicen.jp';
 });
 
 
