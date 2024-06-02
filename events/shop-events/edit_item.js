@@ -54,7 +54,7 @@ export async function edit_item(interaction, shop) {
 
   const inputName = response.fields.getTextInputValue('name');
   const inputPrice = response.fields.getTextInputValue('price');
-  const inputInfinityStock = response.fields.getTextInputValue('infinity-stock').toLowerCase();
+  let inputInfinityStock = response.fields.getTextInputValue('infinity-stock').toLowerCase();
 
   if (inputInfinityStock === 'y') inputInfinityStock = true;
   else if (inputInfinityStock === 'n') inputInfinityStock = false;
@@ -79,11 +79,12 @@ export async function edit_item(interaction, shop) {
 
   shop.item[index].name = inputName;
   shop.item[index].price = parseInt(inputPrice);
+  shop.item[index].infinity_stock = inputInfinityStock;
 
   const embed = new discord.EmbedBuilder()
     .setColor('Green')
     .setTitle('商品編集')
-    .setDescription(`商品名: ${inputName}\n値段: ${inputPrice}円`);
+    .setDescription(`商品名: ${inputName}\n値段: ${inputPrice}円\n無限在庫: ${inputInfinityStock ? 'YES' : 'NO'}`);
   
   await response.reply({ embeds: [embed], ephemeral: true });
 };
