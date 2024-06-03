@@ -4,18 +4,19 @@ import * as help from './help-data/index.js';
 export default {
   name: discord.Events.InteractionCreate,
   async execute(client, interaction) {
+    if (!interaction.customId) return;
     if (!interaction.customId.startsWith('help_select')) return;
     if (!interaction.customId.endsWith(interaction.user.id)) return;
 
-    const member = interaction.guild.members.cache.get(interaction.user.id);
+    const command = interaction.values[0];
 
-    await member.roles.add(interaction.customId.slice(7));
+    const description = help[command] || 'このコマンドのhelpは登録されていません。';
 
     const embed = new discord.EmbedBuilder()
-      .setTitle('認証完了')
-      .setDescription(`<@${interaction.user.id}> さんの認証が完了しました。`)
-      .setColor("Green")
+      .setColor('Blue')
+      .setTitle(`help-${command}`)
+      .setDescription(description)
 
-    await interaction.reply({ embeds: [embed], ephemeral: true });
+    await interaction.message.edit({ embeds: [embed] });
   }
 };
