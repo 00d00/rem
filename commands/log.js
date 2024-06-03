@@ -7,8 +7,8 @@ export default {
     .setDescription('log設定')
 
     .addStringOption(command => command
-      .setName('項目')
-      .setDescription('編集する項目')
+      .setName('item')
+      .setDescription('設定する項目')
       .setRequired(true)
 			.addChoices(
 				{ name: '入退出', value: 'join' },
@@ -16,15 +16,9 @@ export default {
 				{ name: 'メッセージ', value: 'message' },
 			)
     )
-
-    .addStringOption(command => command
-      .setName('チャンネル')
-      .setDescription('送信するチャンネル')
-      .setRequired(false)
-    )
-
   ,
   async execute(interaction) {
-    
+    const item = interaction.options.getString('item');
+    console.log(item);
   }
 };
