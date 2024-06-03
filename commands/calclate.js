@@ -1,10 +1,10 @@
 import discord from 'discord.js';
-import { simplify, evaluate } from 'mathjs';
+import { evaluate } from 'mathjs';
 
 export default {
   data: new discord.SlashCommandBuilder()
     .setName('calclate')
-    .setDescription('計算')
+    .setDescription('万能計算機')
     .addStringOption(option => option
       .setName('formula')
       .setDescription('数式')
@@ -20,4 +20,4 @@ export default {
 
     await interaction.reply({ embeds: [embed] });
   }
-}
+};

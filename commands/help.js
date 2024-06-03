@@ -15,9 +15,14 @@ export default {
       .setCustomId('help-select')
       .setPlaceholder('項目を選択')
 
-    for (const key in interaction.client.commands) {
+    const commands = interaction.client.commands;
+
+    for (const key in commands) {
       select.addOptions(
-        
+        new discord.StringSelectMenuOptionBuilder()
+          .setLabel(key)
+          .setDescription(commands[key].data.description)
+          .setValue(key)
       )
     }
 
