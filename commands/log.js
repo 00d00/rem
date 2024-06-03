@@ -36,7 +36,7 @@ export default {
     if (guild.log[item]) delete guild.log[item];
     else guild.log[item] = interaction.channel.id;
 
-    await fs.writeFile(`./guilds-data/${interaction.guild.id}.json`, JSON.stringify(guild), 'utf-8');
+    await fs.writeFile(`./guilds-data/${interaction.guild.id}.json`, JSON.stringify(guild, null, 2), 'utf-8');
 
     const values = {
       join: '入退出',
