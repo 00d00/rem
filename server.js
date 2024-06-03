@@ -6,28 +6,6 @@ import express from 'express';
 const app = express();
 
 
-import luaparse from 'luaparse';
-import lua from 'lua.js';
-
-const luaScript = `
-local str = "Hello, World!"
-print(str)
-
-if str == "Hi" then
-  print(true)
-else
-  print(false)
-end
-
-`;
-
-const ast = luaparse.parse(luaScript);
-console.log(JSON.stringify(ast, null, 2));
-
-
-
-//const luaCode = lua.generate(ast);
-console.log(lua.codegen);
 
 const intents = [
   discord.GatewayIntentBits.AutoModerationConfiguration,
