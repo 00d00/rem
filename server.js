@@ -5,7 +5,7 @@ import fs from 'fs/promises';
 import express from 'express';
 const app = express();
 
-
+import a from './commands/test/index.js';
 
 const intents = [
   discord.GatewayIntentBits.AutoModerationConfiguration,

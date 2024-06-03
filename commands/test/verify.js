@@ -6,7 +6,7 @@ import crypto from 'crypto';
 import crypt from '../../modules/crypt.js';
 
 export default {
-  data: new discord.SlashCommandBuilder()
+  data: new discord.SlashCommandSubcommandBuilder()
     .setName('verify')
     .setDescription('認証パネルを配置')
     .addRoleOption(option => option
@@ -24,7 +24,6 @@ export default {
       .setDescription('IDを指定')
       .setRequired(false)
     )
-    .setDefaultMemberPermissions(discord.PermissionFlagsBits.Administrator)
   ,
   async execute(interaction) {
     // 引数取得
