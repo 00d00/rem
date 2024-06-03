@@ -1,5 +1,5 @@
 import discord from 'discord.js';
-import { evaluate } from 'mathjs';
+import { simplify, evaluate } from 'mathjs';
 
 export default {
   data: new discord.SlashCommandBuilder()
