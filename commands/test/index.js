@@ -30,18 +30,6 @@ data.options.push(verify);
 
 
 
-
-console.log(
-  new discord.SlashCommandBuilder()
-    .setName('hello')
-    .setDescription('Hi Command')
-
-  .addSubcommand( subcommand => subcommand
-    .setName('subc')
-  )
-)
-
-
 export default {
   data: data,
   async execute(interaction) {
