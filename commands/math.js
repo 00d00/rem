@@ -34,10 +34,12 @@ export default {
 
     if (command === 'solve') {
       const formula = interaction.options.getString('formula');
+      const expr = math.parse(formula);
+      console.log(expr)
 
       const embed = new discord.EmbedBuilder()
         .setTitle('計算結果')
-        .setDescription(`${formula} = ${math.solve(formula)}`);
+        .setDescription(`${formula} = ${math.lsolve(formula)}`);
 
       await interaction.reply({ embeds: [embed] });
     }
