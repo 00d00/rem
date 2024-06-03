@@ -12,7 +12,7 @@ export default {
       .setTitle('Help');
 
     const select = new discord.StringSelectMenuBuilder()
-      .setCustomId('help-select')
+      .setCustomId(`help_select-${interaction.user.id}`)
       .setPlaceholder('項目を選択')
 
     const commands = interaction.client.commands;
