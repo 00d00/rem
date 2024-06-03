@@ -3,7 +3,7 @@ import { evaluate } from 'mathjs';
 
 export default {
   data: new discord.SlashCommandBuilder()
-    .setName('calclate')
+    .setName('calculate')
     .setDescription('万能計算機')
     .addStringOption(option => option
       .setName('formula')
