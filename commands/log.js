@@ -31,9 +31,24 @@ export default {
 
     if (!guild.log) guild.log = {};
 
+    const setOrUnset = guild.log[item] ? '解除' : '設定';
+
     if (guild.log[item]) delete guild.log[item];
     else guild.log[item] = interaction.channel.id;
 
     await fs.writeFile(`./guilds-data/${interaction.guild.id}.json`, JSON.stringify(guild), 'utf-8');
+
+    const values = {
+      join: '入退出',
+      mod: 'モデレーション',
+      message: 'メッセージ'
+    };
+
+    const embed = new discord.EmbedBuilder()
+      .setColor('Blue')
+      .setTitle('log')
+      .setDescription(`${values[item]}ログを${setOrUnset}しました。`);
+
+    await interaction.reply({ embeds: [embed] });
   }
 };
