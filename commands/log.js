@@ -11,9 +11,9 @@ export default {
       .setDescription('編集する項目')
       .setRequired(true)
 			.addChoices(
-				{ name: '入退出', value: 'log_join' },
-				{ name: 'モデレーション', value: 'log_mod' },
-				{ name: 'メッセージ', value: 'log_message' },
+				{ name: '入退出', value: 'join' },
+				{ name: 'モデレーション', value: 'mod' },
+				{ name: 'メッセージ', value: 'message' },
 			)
     )
 
