@@ -1,9 +1,7 @@
 import discord from 'discord.js';
 import * as math from 'mathjs';
-import pl from 'plotly';
 import fs from 'fs/promises';
 
-const plotly = pl();
 
 export default {
   data: new discord.SlashCommandBuilder()
