@@ -5,7 +5,6 @@ import fs from 'fs/promises';
 import express from 'express';
 const app = express();
 
-import a from './commands/test/index.js';
 
 const intents = [
   discord.GatewayIntentBits.AutoModerationConfiguration,
@@ -338,15 +337,15 @@ rotateStatus();
 
   const subDirs = (
     await Promise.all(commandFiles.map(async (entry) => {
-      if (entry === 'test' || entry === 'paypay') return null;
-
-      const stats = await fs.stat(`./commands/${entry}`);
-      return stats.isDirectory() ? entry : null;
+      const stat = await fs.stat(`./commands/${entry}`);
+      return stat.isDirectory() ? entry : null;
     }))
   ).filter(Boolean);
 
   for (const subDir of subDirs) {
     const command = (await import(`./commands/${subDir}/index.js`)).default;
+    await command;
+    console.log(command)
     client.commands[command.data.name] = command;
   }
 
