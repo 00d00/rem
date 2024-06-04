@@ -19,9 +19,9 @@ export default {
       .setStyle(discord.ButtonStyle.Link);
 
     const button2 = new discord.ButtonBuilder()
-      .setLabel('✅同意して認証する')
-      .setCustomId('no-agree')
-      .setStyle(discord.ButtonStyle.Link);
+      .setLabel('同意せず認証する')
+      .setCustomId('verify-disagree')
+      .setStyle(discord.ButtonStyle.Secondary);
 
     const row = new discord.ActionRowBuilder()
       .addComponents(button);
