@@ -34,7 +34,7 @@ export default {
   async execute(interaction) {
 		await interaction.deferReply();
 		setTimeout(async () => {
-      		await interaction.followUp('Pong!');
+      		await interaction.followUp('<:CA:1222420131309682728>');
     }, 5000);
   }
 };
