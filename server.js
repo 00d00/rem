@@ -355,7 +355,7 @@ rotateStatus();
 
       const sub = (await import(`./commands/${subDir}/${element}`)).default;
       command.data.addSubcommand(subcommand => sub.data);
-      executions[command.data.name] = command.execute;
+      executions[command.data.name] = sub.execute;
     }
 
     command.execute = async (interaction) => {
