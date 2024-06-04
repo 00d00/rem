@@ -17,4 +17,4 @@ const initializeCommands = async () => {
   return { data: data };
 };
 
-export default initializeCommands();
+export default initializeCommands;
