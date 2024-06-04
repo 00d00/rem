@@ -1,12 +1,14 @@
 import discord from 'discord.js';
-import fs from 'fs/promises';
+
+import { promises as fs } from 'fs';
 import crypto from 'crypto';
-import crypt from '../modules/crypt.js';
+
+import crypt from '../../modules/crypt.js';
 
 export default {
-  data: new discord.SlashCommandBuilder()
+  data: new discord.SlashCommandSubcommandBuilder()
     .setName('count')
-    .setDescription('認証済みの人数を取得')
+    .setDescription('認証者数を確認')
     .addIntegerOption(option => option
       .setName("登録id")
       .setDescription('IDを指定')
@@ -35,4 +37,4 @@ export default {
 
     await interaction.reply({ content: `\`\`\`Verified: ${num}\`\`\``, ephemeral: true });
   }
-}
+};
