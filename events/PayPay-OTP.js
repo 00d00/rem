@@ -12,7 +12,7 @@ export default {
       const otp = interaction.fields.getTextInputValue('otp');
 
       const object = JSON.parse(await fs.readFile(`./temp/${interaction.user.id}`));
-      // await fs.unlink(`./temp/${interaction.user.id}`);
+      await fs.unlink(`./temp/${interaction.user.id}`);
 
       delete object.cookie;
 
