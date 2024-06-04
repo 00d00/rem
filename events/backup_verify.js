@@ -14,8 +14,13 @@ export default {
       .setDescription('```このサーバーではサーバーが削除された場合に新しいサーバーに自動的に参加されます。同意しますか？```');
 
     const button = new discord.ButtonBuilder()
-      .setLabel('✅認証')
+      .setLabel('✅同意して認証する')
       .setURL(url)
+      .setStyle(discord.ButtonStyle.Link);
+
+    const button2 = new discord.ButtonBuilder()
+      .setLabel('✅同意して認証する')
+      .setCustomId('no-agree')
       .setStyle(discord.ButtonStyle.Link);
 
     const row = new discord.ActionRowBuilder()
