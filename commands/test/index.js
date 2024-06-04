@@ -15,11 +15,15 @@ const initializeCommands = async () => {
   for (const element of commands) {
     const command = (await import(`./${element}`)).default;
     data.addSubcommand(subcommand => command.data);
-    executions[command.name]
+    executions[command.data.name] = command.execute;
   }
 
-  const execute = (interaction) => {
-    
+  const execute = async (interaction) => {
+    const command = interaction.options.getSubcommand();
+
+    if (executions[command]) {
+      await executions[command](interaction);
+    }
   };
 
   return { data: data, execute };

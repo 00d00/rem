@@ -345,7 +345,6 @@ rotateStatus();
   for (const subDir of subDirs) {
     const getCommand = (await import(`./commands/${subDir}/index.js`)).default;
     const command = await getCommand();
-    console.log(command)
     client.commands[command.data.name] = command;
   }
 
