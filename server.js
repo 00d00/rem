@@ -354,19 +354,20 @@ rotateStatus();
       if (element === 'index.js') continue;
 
       const sub = (await import(`./commands/${subDir}/${element}`)).default;
-      command.data.addSubcommand(subcommand => sub.data);
-      executions[command.data.name] = sub.execute;
+      command.addSubcommand(subcommand => sub.data);
+      executions[command.name] = sub.execute;
     }
 
-    command.execute = async (interaction) => {
+    client.commands[command.name] = {
+      data: command,
+      async execute(interaction) {
       const command = interaction.options.getSubcommand();
 
       if (executions[command]) {
         await executions[command](interaction);
       }
+    }
     };
-
-    client.commands[command.data.name] = command;
   }
 
   for (const commandName in client.commands) {
