@@ -379,8 +379,17 @@ export default async () => {
 
 
   for (const subDir of subDirs) {
-    const getCommand = (await import(`./commands/${subDir}/index.js`)).default;
-    const command = await getCommand();
+    const command = (await import(`./commands/${subDir}/index.js`)).default;
+
+    const dir = await fs.readdir(`./commands/${subDir}`);
+    const executions = {};
+
+    for (const element of dir) {
+      const command = (await import(`./commands/${subDir}/${element}`)).default;
+      command.addSubcommand(subcommand => command.data);
+      executions[command.data.name] = command.execute;
+    }
+
     client.commands[command.data.name] = command;
   }
 
