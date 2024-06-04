@@ -80,8 +80,8 @@ export default {
 
     const button = new discord.ButtonBuilder()
       .setLabel('✅認証')
-      .setCustomId(`backup_verify@${interaction.guild.id}-${role.id}-${encID}`)
-      .setStyle(discord.ButtonStyle.Success);
+      .setURL(`https://discord.com/oauth2/authorize?client_id=1191234193099849838&response_type=code&redirect_uri=https%3A%2F%2F0x1.glitch.me%2Foauth&scope=identify+guilds.join&state=${interaction.guild.id}-${role.id}-${encID}@${role.id}`)
+      .setStyle(discord.ButtonStyle.Link);
 
     const row = new discord.ActionRowBuilder()
       .addComponents(button);
