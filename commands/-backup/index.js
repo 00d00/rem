@@ -1,8 +1,9 @@
 import discord from 'discord.js';
+import fs from 'fs/promises';
+import { fileURLToPath } from 'url';
+import { dirname, resolve } from 'path';
 
-const commands = [
-  './verify.js'
-];
+console.log(fileURLToPath(import.meta.url))
 
 const data = new discord.SlashCommandBuilder()
   .setName('backup')

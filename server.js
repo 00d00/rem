@@ -343,6 +343,41 @@ rotateStatus();
     }))
   ).filter(Boolean);
 
+/*
+import discord from 'discord.js';
+import fs from 'fs/promises';
+import { fileURLToPath } from 'url';
+import { dirname, resolve } from 'path';
+
+console.log(fileURLToPath(import.meta.url))
+
+const data = new discord.SlashCommandBuilder()
+  .setName('backup')
+  .setDescription('backup')
+  .setDefaultMemberPermissions(discord.PermissionFlagsBits.Administrator);
+
+export default async () => {
+  const executions = {};
+
+  for (const element of commands) {
+    const command = (await import(`./${element}`)).default;
+    data.addSubcommand(subcommand => command.data);
+    executions[command.data.name] = command.execute;
+  }
+
+  const execute = async (interaction) => {
+    const command = interaction.options.getSubcommand();
+
+    if (executions[command]) {
+      await executions[command](interaction);
+    }
+  };
+
+  return { data: data, execute };
+};
+*/
+
+
   for (const subDir of subDirs) {
     const getCommand = (await import(`./commands/${subDir}/index.js`)).default;
     const command = await getCommand();
