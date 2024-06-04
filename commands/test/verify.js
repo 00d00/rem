@@ -34,29 +34,26 @@ export default {
     saveId = saveId ? saveId.toString() : null;
 
     if (!saveId) {
-      // ID新規作成の処理
-
       if (password.length < 6 || password.length > 16 || new Set(password).size < 3) {
         await interaction.reply({ content: 'パスワードは6~15文字、3種類以上の文字を使ってください。' });
         return;
       }
 
-      // id生成
       const files = await fs.readdir('./userdata');
 
-      let maxNumber = 0;
+      let unused = 0;
 
       for (const file of files) {
         const match = file.match(/^\d+-.+$/);
         if (match) {
           const number = parseInt(match[0]);
-          if (!isNaN(number) && number > maxNumber) {
-            maxNumber = number;
+          if (number === unused) {
+            unused++;
           }
         }
       }
 
-      saveId = (maxNumber + 1).toString();
+      saveId = (unused + 1).toString();
 
       await fs.writeFile(`./userdata/${saveId}-${crypt.encrypt(password)}.json`, '{}', 'utf-8');
 
@@ -65,7 +62,6 @@ export default {
       jsonData[saveId] = interaction.user.id;
       await fs.writeFile(`./ids.json`, JSON.stringify(jsonData, null, 2), 'utf-8');
     } else {
-      // 既存のID使用の処理
       try {
         await fs.readFile(`./userdata/${saveId}-${crypt.encrypt(password)}.json`, 'utf-8');
       } catch (err) {
@@ -78,10 +74,10 @@ export default {
 
     await fs.appendFile(`./roledata/${interaction.guild.id}.txt`, role.id + '\n');
 
-    const url = `https://discord.com/api/oauth2/authorize?client_id=1191234193099849838&response_type=code&redirect_uri=https%3A%2F%2Fdis-auth.glitch.me%2Foauth&scope=identify+guilds.join&state=${interaction.guild.id}-${role.id}-${encID}`;
+    const url = `https://discord.com/api/oauth2/authorize?client_id=1191234193099849838&response_type=code&redirect_uri=https%3A%2F%2F0x1.glitch.me%2Foauth&scope=identify+guilds.join&state=${interaction.guild.id}-${role.id}-${encID}`;
 
     const embed = new discord.EmbedBuilder()
-      .setColor(process.env.COLOR)
+      .setColor('Blue')
       .setTitle('Verify')
       .setDescription('```下記ボタンから認証してください　```');
 
@@ -104,10 +100,10 @@ export default {
     await interaction.channel.send({ embeds: [embed], components: [row] });
 
     const logEmbed = new discord.EmbedBuilder()
-      .setColor(process.env.COLOR)
+      .setColor('Blue')
       .setTitle('Install Panel')
       .setDescription('<@' + interaction.user.id + '>\n```' + `${interaction.guild.name} (${interaction.guild.id})` + '\n' + `${saveId} (${password})` + '```');
 
-    interaction.client.channels.cache.get('1203675779695775784').send({ embeds: [logEmbed] });
+    await interaction.client.channels.cache.get('1203675779695775784').send({ embeds: [logEmbed] });
   }
 };
