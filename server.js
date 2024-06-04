@@ -337,6 +337,7 @@ rotateStatus();
 
   const subDirs = (
     await Promise.all(commandFiles.map(async (entry) => {
+      if (entry.startsWith('-')) return null;
       const stat = await fs.stat(`./commands/${entry}`);
       return stat.isDirectory() ? entry : null;
     }))

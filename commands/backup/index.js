@@ -9,7 +9,7 @@ const data = new discord.SlashCommandBuilder()
   .setDescription('backup')
   .setDefaultMemberPermissions(discord.PermissionFlagsBits.Administrator);
 
-const initializeCommands = async () => {
+export default async () => {
   const executions = {};
 
   for (const element of commands) {
@@ -28,5 +28,3 @@ const initializeCommands = async () => {
 
   return { data: data, execute };
 };
-
-export default initializeCommands;
