@@ -10,11 +10,19 @@ const data = new discord.SlashCommandBuilder()
   .setDefaultMemberPermissions(discord.PermissionFlagsBits.Administrator);
 
 const initializeCommands = async () => {
+  const executions = {};
+
   for (const element of commands) {
     const command = (await import(`./${element}`)).default;
     data.addSubcommand(subcommand => command.data);
+    executions[command.name]
   }
-  return { data: data };
+
+  const execute = (interaction) => {
+    
+  };
+
+  return { data: data, execute };
 };
 
 export default initializeCommands;
