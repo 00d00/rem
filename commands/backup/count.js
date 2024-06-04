@@ -35,6 +35,11 @@ export default {
 
     const num = Object.keys(JSON.parse(file)).length;
 
-    await interaction.reply({ content: `\`\`\`Verified: ${num}\`\`\``, ephemeral: true });
+    const embed = new discord.EmbedBuilder()
+      .setColor('Blue')
+      .setTitle('backup count')
+      .setDescription(`Verified: ${num}`);
+
+    await interaction.reply({ embeds: [embed], ephemeral: true });
   }
 };
