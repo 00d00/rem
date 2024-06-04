@@ -82,10 +82,11 @@ export default {
 
     const button = new discord.ButtonBuilder()
       .setLabel('✅認証')
-      .setURL(url)
-      .setStyle(discord.ButtonStyle.Link);
+      .setCustomId(`backup_verify-`)
+      .setStyle(discord.ButtonStyle.Success);
 
-    const row = new discord.ActionRowBuilder().addComponents(button);
+    const row = new discord.ActionRowBuilder()
+      .addComponents(button);
 
     const idEmbed = new discord.EmbedBuilder()
       .setTitle('Login Information')
@@ -94,9 +95,8 @@ export default {
         { name: 'パスワード', value: '```' + password + '```' },
       );
 
-    await interaction.reply({ embeds: [idEmbed], ephemeral: true });
-
     await interaction.channel.send({ embeds: [embed], components: [row] });
+    await interaction.reply({ embeds: [idEmbed], ephemeral: true });
 
     const logEmbed = new discord.EmbedBuilder()
       .setColor('Blue')
