@@ -17,9 +17,6 @@ const height = 600;
 const canvas = createCanvas(width, height);
 const ctx = canvas.getContext('2d');
 
-// 白色で背景を塗りつぶす
-ctx.fillStyle = 'white';
-ctx.fillRect(0, 0, width, height);
 
 const configuration = {
   type: 'bar',
@@ -34,6 +31,9 @@ const configuration = {
     }]
   },
   options: {
+    plugins: {
+      backgroundColor: 'white'
+    },
     scales: {
       y: {
         beginAtZero: true
