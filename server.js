@@ -6,6 +6,56 @@ import express from 'express';
 const app = express();
 
 
+
+
+
+import { createCanvas } from 'canvas';
+import { Chart } from 'chart.js/auto';
+// グラフの寸法を設定
+const width = 800;
+const height = 600;
+const canvas = createCanvas(width, height);
+const ctx = canvas.getContext('2d');
+
+const configuration = {
+  type: 'bar',
+  data: {
+    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+    datasets: [{
+      label: 'My First dataset',
+      backgroundColor: 'rgba(255, 99, 132, 0.2)',
+      borderColor: 'rgba(255, 99, 132, 1)',
+      borderWidth: 1,
+      data: [65, 59, 80, 81, 56, 55, 40],
+    }]
+  },
+  options: {
+    scales: {
+      y: {
+        beginAtZero: true
+      }
+    }
+  }
+};
+
+// グラフの描画
+new Chart(ctx, configuration);
+
+// 画像をファイルに保存する非同期関数
+async function saveChart() {
+  try {
+    const buffer = canvas.toBuffer('image/png');
+    await fs.writeFile('chart.png', buffer);
+    console.log('Chart saved to chart.png');
+  } catch (err) {
+    console.error('Error saving chart:', err);
+  }
+}
+
+// グラフを保存
+saveChart();
+
+
 const intents = [
   discord.GatewayIntentBits.AutoModerationConfiguration,
   discord.GatewayIntentBits.AutoModerationExecution,
