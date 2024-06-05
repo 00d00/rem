@@ -8,25 +8,29 @@ const app = express();
 
 
 
-
 import { createCanvas } from 'canvas';
 import { Chart } from 'chart.js/auto';
+
 
 const width = 800;
 const height = 600;
 const canvas = createCanvas(width, height);
 const ctx = canvas.getContext('2d');
 
+// 白色で背景を塗りつぶす
+ctx.fillStyle = 'white';
+ctx.fillRect(0, 0, width, height);
+
 const configuration = {
   type: 'bar',
   data: {
-    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'SAiKYOO'],
     datasets: [{
       label: 'My First dataset',
       backgroundColor: 'rgba(255, 99, 132, 0.2)',
       borderColor: 'rgba(255, 99, 132, 1)',
       borderWidth: 1,
-      data: [65, 59, 80, 81, 56, 55, 40],
+      data: [65, 59, 80, 81, 56, 55, 40, 999],
     }]
   },
   options: {
@@ -41,7 +45,6 @@ const configuration = {
 // グラフの描画
 new Chart(ctx, configuration);
 
-
 const watermarkText = 'Aces#9600';
 ctx.font = '20px Arial';
 ctx.fillStyle = 'rgba(0, 0, 0, 0.5)'; // 半透明の黒色
@@ -53,7 +56,7 @@ ctx.fillText(watermarkText, width - textWidth - 10, 10);
 async function saveChart() {
   try {
     const buffer = canvas.toBuffer('image/png');
-    await fs.writeFile('chart.png', buffer);
+    await fs.writeFile('chart.png', buffer); // fs.promisesを使う
     console.log('Chart saved to chart.png');
   } catch (err) {
     console.error('Error saving chart:', err);
@@ -62,6 +65,7 @@ async function saveChart() {
 
 // グラフを保存
 saveChart();
+
 
 
 const intents = [
