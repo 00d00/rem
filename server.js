@@ -12,12 +12,12 @@ import { createCanvas } from 'canvas';
 import { Chart } from 'chart.js/auto';
 
 
-const width = 1600;
-const height = 1200;
+const width = 800;
+const height = 600;
 const canvas = createCanvas(width, height);
 const ctx = canvas.getContext('2d');
 
-ctx.fillStyle = 'yellow';
+ctx.fillStyle = 'white'; 
 ctx.fillRect(0, 0, canvas.width, canvas.height);
 
 const configuration = {
@@ -27,43 +27,48 @@ const configuration = {
     datasets: [{
       data: [65, 59, 80, 81, 56, 55, 40, 120],
       label: 'My First dataset',
-      backgroundColor: 'rgba(255, 99, 132, 0.2)',
-      borderColor: 'rgba(255, 99, 132, 1)',
-      borderWidth: 1,
+      backgroundColor: 'rgba(54, 162, 235, 0.2)', // 色合いを変更
+      borderColor: 'rgba(54, 162, 235, 1)', // 色合いを変更
+      borderWidth: 2, // 線の太さを調整
     }]
   },
   options: {
-    backgroundColor: 'rgba(255, 255, 255, 1)',
     scales: {
       y: {
         beginAtZero: true
+      }
+    },
+    plugins: {
+      legend: {
+        labels: {
+          font: {
+            size: 14 // ラベルのフォントサイズを調整
+          }
+        }
       }
     }
   }
 };
 
-// グラフの描画
 new Chart(ctx, configuration);
 
 const watermarkText = 'Aces#9600';
-ctx.font = '20px Arial';
-ctx.fillStyle = 'rgba(0, 0, 0, 0.5)'; // 半透明の黒色
+ctx.font = 'bold 20px Arial'; // フォントを太字に変更
+ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
 const textWidth = ctx.measureText(watermarkText).width;
-const textHeight = 20; // フォントサイズと一致させる
-ctx.fillText(watermarkText, width - textWidth - 10, 10);
+const textHeight = 20;
+ctx.fillText(watermarkText, width - textWidth - 10, 10); // テキストの位置を変更
 
-// 画像をファイルに保存する非同期関数
 async function saveChart() {
   try {
     const buffer = canvas.toBuffer('image/png');
-    await fs.writeFile('chart.png', buffer); // fs.promisesを使う
+    await fs.writeFile('chart.png', buffer);
     console.log('Chart saved to chart.png');
   } catch (err) {
     console.error('Error saving chart:', err);
   }
 }
 
-// グラフを保存
 saveChart();
 
 
