@@ -11,7 +11,7 @@ const app = express();
 
 import { createCanvas } from 'canvas';
 import { Chart } from 'chart.js/auto';
-// グラフの寸法を設定
+
 const width = 800;
 const height = 600;
 const canvas = createCanvas(width, height);
@@ -40,6 +40,14 @@ const configuration = {
 
 // グラフの描画
 new Chart(ctx, configuration);
+
+
+const watermarkText = 'Aces#9600';
+ctx.font = '20px Arial';
+ctx.fillStyle = 'rgba(0, 0, 0, 0.5)'; // 半透明の黒色
+const textWidth = ctx.measureText(watermarkText).width;
+const textHeight = 20; // フォントサイズと一致させる
+ctx.fillText(watermarkText, width - textWidth - 10, 10);
 
 // 画像をファイルに保存する非同期関数
 async function saveChart() {
