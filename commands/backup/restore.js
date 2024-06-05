@@ -1,15 +1,12 @@
-import axios from 'axios';
 import discord from 'discord.js';
+
 import { promises as fs } from 'fs';
 import crypto from 'crypto';
 
-import crypt from '../modules/crypt.js';
-
-
-const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+import crypt from '../../modules/crypt.js';
 
 export default {
-  data: new discord.SlashCommandBuilder()
+  data: new discord.SlashCommandSubcommandBuilder()
     .setName('restore')
     .setDescription('認証者を復元')
     .addStringOption((option) => option
@@ -22,7 +19,6 @@ export default {
       .setDescription('IDを指定')
       .setRequired(true)
     )
-    .setDefaultMemberPermissions(discord.PermissionFlagsBits.Administrator)
   ,
   async execute(interaction) {
     const saveId = interaction.options.getInteger('登録id').toString();

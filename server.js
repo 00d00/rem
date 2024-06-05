@@ -348,14 +348,14 @@ rotateStatus();
 
 
   for (const subDir of subDirs) {
-    const command = (await import(`./commands/${subDir}/index.js`)).default;
+    const command = new discord.SlashCommandBuilder()
+      .setName(subDir)
+      .setDescription(`${subDir} commands`);
 
     const dir = await fs.readdir(`./commands/${subDir}`);
     const executions = {};
 
     for (const element of dir) {
-      if (element === 'index.js') continue;
-
       const sub = (await import(`./commands/${subDir}/${element}`)).default;
       command.addSubcommand(subcommand => sub.data);
       executions[sub.data.name] = sub.execute;
