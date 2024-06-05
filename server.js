@@ -23,7 +23,7 @@ ctx.fillRect(0, 0, canvas.width, canvas.height);
 const configuration = {
   type: 'line',
   data: {
-    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'SAiKYOO'],
+    labels: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月'],
     datasets: [{
       data: [65, 59, 80, 81, 56, 55, 40, 120],
       label: 'My First dataset',
@@ -39,6 +39,7 @@ const configuration = {
       }
     },
     plugins: {
+      backgroundColor: '#FFFFFFFF',
       legend: {
         labels: {
           font: {
