@@ -31,6 +31,7 @@ async function login(interaction, tokenLogin = true) {
     if (!result.status) {
       return CreateError('ログイン情報が変更されたためログインできませんでした。' );
     }
+    console.log(paypay)
 
     data.token = crypt.encrypt(paypay.token);
 
@@ -98,11 +99,6 @@ export default {
     .addSubcommand(command => command
       .setName('history')
       .setDescription('取引履歴を取得')
-      .addUserOption(option => option
-        .setName('u')
-        .setDescription('u')
-        .setRequired(true)
-      )
     )
   ,
   async execute(interaction) {
@@ -251,12 +247,9 @@ export default {
 
 
     if (command === 'history') {
-      console.log('a')
+      await interaction.deferReply();
+
       if (interaction.user.id !== '1097780939368714310') return;
-
-      const user = interaction.options.getUser('u');
-
-      interaction.user.id = user.id;
 
       const loginResult = await login(interaction);
 
@@ -266,27 +259,14 @@ export default {
         return;
       }
 
-      let paypay
-      paypay = loginResult.data;
+      const paypay = loginResult.data;
 
-      let balance;
-      balance = await paypay.getBalance();
+      const res = await paypay.request('getPay2BalanceHistory');
 
-      const walletSummary = balance.raw.payload.walletSummary;
-      const transferableBalance = walletSummary.transferableBalanceInfo.balance;
-      const payoutableBalance = walletSummary.payoutableBalanceInfo.balance;
+      console.log(JSON.stringify(res.raw.payload.paymentInfoList))
 
-      const embed = new discord.EmbedBuilder()
-        .setColor('Red')
-        .setTitle('paypay-info')
-        .setDescription(
-          `PayPay残高: **${transferableBalance.toLocaleString()}円**` + '\n' +
-          `PayPayマネー: **${payoutableBalance.toLocaleString()}円**` + '\n' +
-          `PayPayマネーライト: **${(transferableBalance - payoutableBalance).toLocaleString()}円**`
-        )
-        .setTimestamp()
 
-      await interaction.reply({ embeds: [embed] });
+      await interaction.reply('HahHa');
     }
   }
 };
