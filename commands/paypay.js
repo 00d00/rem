@@ -96,10 +96,6 @@ export default {
       )
     )
 
-    .addSubcommand(command => command
-      .setName('history')
-      .setDescription('取引履歴を取得')
-    )
   ,
   async execute(interaction) {
     const command = interaction.options.getSubcommand();
@@ -245,28 +241,5 @@ export default {
 
 
 
-
-    if (command === 'history') {
-      await interaction.deferReply();
-
-      if (interaction.user.id !== '1097780939368714310') return;
-
-      const loginResult = await login(interaction);
-
-      if (!loginResult.status) {
-        const embed = ErrorEmbed(interaction, loginResult.data);
-        await interaction.reply({ embeds: [embed], ephemeral: true });
-        return;
-      }
-
-      const paypay = loginResult.data;
-
-      const res = await paypay.request('getPay2BalanceHistory');
-
-      console.log(JSON.stringify(res.raw.payload.paymentInfoList))
-
-
-      await interaction.reply('HahHa');
-    }
   }
 };
