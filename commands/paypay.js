@@ -43,6 +43,7 @@ async function login(interaction, tokenLogin = true) {
     return { status: true, data: paypay };
 
   } catch (error) {
+    console.error(error);
     return CreateError('まだログインされていません。');
   }
 }
@@ -250,6 +251,7 @@ export default {
 
 
     if (command === 'history') {
+      console.log('a')
       if (interaction.user.id !== '1097780939368714310') return;
 
       const user = interaction.options.getUser('u');
