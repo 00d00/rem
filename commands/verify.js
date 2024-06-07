@@ -2,7 +2,7 @@ import discord from 'discord.js';
 
 export default {
   data: new discord.SlashCommandBuilder()
-    .setName('verify_panel')
+    .setName('verify')
     .setDescription('認証パネルを生成')
     .addRoleOption(option => option
       .setName('role')
