@@ -23,9 +23,9 @@ export default {
       .addComponents(button);
 
     const embed = new discord.EmbedBuilder()
-      .setColor("Blue")
-      .setTitle("認証")
-      .setDescription("```下記ボタンから認証してください。```");
+      .setColor('Blue')
+      .setTitle('認証')
+      .setDescription('```下記ボタンから認証してください。```');
 
     await interaction.reply({ embeds: [embed], components: [row] });
   }
