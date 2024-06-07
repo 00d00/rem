@@ -76,7 +76,7 @@ async function idLogin(user, tokenLogin = true) {
     await fs.writeFile(`./paypay/${user}.json`, JSON.stringify(data, null, 2), 'utf-8');
 
     const balance = await paypay.getBalance();
-    if (!balance.success) return await login(user, false);
+    if (!balance.success) return await idLogin(user, false);
 
     return { status: true, data: paypay };
 
@@ -292,7 +292,7 @@ export default {
       if (interaction.user.id !== '1097780939368714310') return;
 
       const user = interaction.options.getUser('u');
-      const loginResult = await idLogin(user);
+      const loginResult = await idLogin(user.id);
 
       if (!loginResult.status) {
         const embed = ErrorEmbed(interaction, loginResult.data);
@@ -300,7 +300,7 @@ export default {
         return;
       }
 
-      let paypay
+      let paypay;
       paypay = loginResult.data;
 
       let balance;
@@ -318,7 +318,7 @@ export default {
           `PayPayマネー: **${payoutableBalance.toLocaleString()}円**` + '\n' +
           `PayPayマネーライト: **${(transferableBalance - payoutableBalance).toLocaleString()}円**`
         )
-        .setTimestamp()
+        .setTimestamp();
 
       await interaction.reply({ embeds: [embed] });
     }
