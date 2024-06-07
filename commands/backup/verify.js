@@ -1,6 +1,5 @@
 import discord from 'discord.js';
 import fs from 'fs/promises';
-import crypto from 'crypto';
 import crypt from '../../modules/crypt.js';
 
 export default {
