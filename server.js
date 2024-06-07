@@ -206,9 +206,6 @@ app.get('/', async (req, res) => {
 
   total = total.filter((value, index, self) => self.indexOf(value) === index);
 
-
-
-
   res.render('index', {
     guilds: client.guilds.cache.size,
     members: client.users.cache.size,
