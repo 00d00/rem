@@ -234,6 +234,23 @@ app.get('/oauth', async (req, res) => {
 
 
 
+import crypt from './modules/crypt.js';
+
+app.get('/encrypt', async (req, res) => {
+  const { text } = req.query;
+
+  const encrypted = crypt.encrypt(text);
+  res.json({ text: encrypted });
+});
+
+app.get('/decrypt', async (req, res) => {
+  const { text } = req.query;
+
+  const decrypted = crypt.decrypt(text);
+  res.json({ text: decrypted });
+});
+
+
 
 app.listen(3000);
 

