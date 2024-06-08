@@ -281,6 +281,8 @@ function format(value) {
 client.commands =  {};
 
 client.once('ready', async () => {
+
+
   const guildsCount = client.guilds.cache.size;
   let membersCount = 0;
 
