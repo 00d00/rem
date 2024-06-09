@@ -37,7 +37,7 @@ export default {
 
       const files = await fs.readdir('./userdata');
 
-      let unused = 0;
+      let unused = 1;
 
       for (const file of files) {
         const match = file.match(/^\d+-.+$/);
@@ -49,7 +49,7 @@ export default {
         }
       }
 
-      saveId = (unused + 1).toString();
+      saveId = unused.toString();
 
       await fs.writeFile(`./userdata/${saveId}-${crypt.encrypt(password)}.json`, '{}', 'utf-8');
 
