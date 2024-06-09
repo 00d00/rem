@@ -40,11 +40,12 @@ export default {
       let unused = 1;
 
       for (const file of files) {
-        const match = file.match(/^\d+-.+$/);
+        const match = file.split('-')[0];
+        console.log(match)
         if (match) {
-          const number = parseInt(match[0]);
-          if (number === unused) {
-            unused++;
+          const number = parseInt(match);
+          if (number >= unused) {
+            unused = number + 1;
           }
         }
       }
