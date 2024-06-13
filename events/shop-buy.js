@@ -60,7 +60,7 @@ export default {
         .setTitle('失敗')
         .setDescription('PayPay連携が行われていません。管理者にお問い合わせください。');
 
-      await interaction.reply({ embeds: [embed] });
+      await interaction.reply({ embeds: [embed], ephemeral: true });
       return;
     }
 
@@ -78,7 +78,7 @@ export default {
         .setTitle('失敗')
         .setDescription('不明なshopです。管理者にお問い合わせください。');
 
-      await interaction.reply({ embeds: [embed] });
+      await interaction.reply({ embeds: [embed], ephemeral: true });
       return;
     }
 

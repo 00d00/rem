@@ -1,13 +1,17 @@
 {
   "rama_oll": {
-    "vouch": null,
-    "buyer": null,
+    "vouch": "1208780579345014814",
+    "buyer": "1209958103244873808",
     "item": [
       {
         "name": "ラマの全て",
         "price": 4000,
         "infinity_stock": true,
-        "stock": []
+        "stock": [
+          "https://d.kuku.lu/mxyts57y7",
+          "https://d.kuku.lu/mxyts57y7",
+          "https://d.kuku.lu/mxyts57y7"
+        ]
       }
     ]
   }
