@@ -2,6 +2,13 @@
   "rama_oll": {
     "vouch": null,
     "buyer": null,
-    "item": []
+    "item": [
+      {
+        "name": "ラマの全て",
+        "price": 4000,
+        "infinity_stock": true,
+        "stock": []
+      }
+    ]
   }
 }

@@ -37,7 +37,7 @@ export async function add_item(interaction, shop) {
 
   const inputName = response.fields.getTextInputValue('name');
   const inputPrice = response.fields.getTextInputValue('price');
-  const inputInfinityStock = response.fields.getTextInputValue('infinity-stock').toLowerCase();
+  let inputInfinityStock = response.fields.getTextInputValue('infinity-stock').toLowerCase();
 
   if (inputInfinityStock === 'y') inputInfinityStock = true;
   else if (inputInfinityStock === 'n') inputInfinityStock = false;
