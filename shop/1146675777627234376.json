@@ -1,0 +1,14 @@
+{
+  "a": {
+    "vouch": null,
+    "buyer": null,
+    "item": [
+      {
+        "name": "ぷにぷに垢",
+        "price": 2000,
+        "infinity_stock": true,
+        "stock": []
+      }
+    ]
+  }
+}
