@@ -79,18 +79,8 @@ export default {
   ,
   async execute(interaction) {
     const color = interaction.options.getString('color');
-    const title = interaction.options.getString('title');
-    const description = interaction.options.getString('description');
-    const field1_name = interaction.options.getString('field1_name');
-    const field1_value = interaction.options.getString('field1_value');
-    const field2_name = interaction.options.getString('field2_name');
-    const field2_value = interaction.options.getString('field2_value');
-    const field3_name = interaction.options.getString('field3_name');
-    const field3_value = interaction.options.getString('field3_value');
-    const field4_name = interaction.options.getString('field4_name');
-    const field4_value = interaction.options.getString('field4_value');
-    const field5_name = interaction.options.getString('field5_name');
-    const field5_value = interaction.options.getString('field5_value');
+    const title = interaction.options.getString('title').replace('\\n', '\n');
+    const description = interaction.options.getString('description').replace('\\n', '\n');
 
     const embed = new discord.EmbedBuilder()
       .setColor(color)
@@ -102,7 +92,7 @@ export default {
         const fieldValue = interaction.options.getString(`field${i}_value`);
 
         if (fieldName && fieldValue) {
-            embed.addFields({ name: fieldName, value: fieldValue });
+            embed.addFields({ name: fieldName.replace('\\n', '\n'), value: fieldValue.replace('\\n', '\n') });
         } else {
             break;
         }
