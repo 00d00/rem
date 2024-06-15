@@ -265,6 +265,58 @@ function format(value) {
 
 client.commands =  {};
 
+
+
+  // Load Commands
+  const data = [];
+
+  const commandFiles = await fs.readdir('./commands');
+
+  const jsFiles = commandFiles.filter(file => file.endsWith('.js'));
+
+  for (const file of jsFiles) {
+    console.log(file)
+    const command = (await import(`./commands/${file}`)).default;
+
+    client.commands[command.data.name] = command;
+  }
+
+
+  const subDirs = (
+    await Promise.all(commandFiles.map(async (entry) => {
+      if (entry.startsWith('-')) return null;
+      const stat = await fs.stat(`./commands/${entry}`);
+      return stat.isDirectory() ? entry : null;
+    }))
+  ).filter(Boolean);
+
+
+  for (const subDir of subDirs) {
+    const command = new discord.SlashCommandBuilder()
+      .setName(subDir)
+      .setDescription(`${subDir} commands`);
+
+    const dir = await fs.readdir(`./commands/${subDir}`);
+    const executions = {};
+
+    for (const element of dir) {
+      const sub = (await import(`./commands/${subDir}/${element}`)).default;
+      command.addSubcommand(subcommand => sub.data);
+      executions[sub.data.name] = sub.execute;
+    }
+
+    client.commands[command.name] = {
+      data: command,
+      async execute(interaction) {
+        const command = interaction.options.getSubcommand();
+        await executions[command](interaction);
+      }
+    };
+  }
+
+
+
+
 client.once('ready', async () => {
 
 
@@ -309,63 +361,6 @@ rotateStatus();
 
 
 
-
-
-
-
-  // Load Commands
-  const data = [];
-
-  const commandFiles = await fs.readdir('./commands');
-
-  const jsFiles = commandFiles.filter(file => file.endsWith('.js'));
-
-  for (const file of jsFiles) {
-    console.log(file)
-    const command = (await import(`./commands/${file}`)).default;
-
-    client.commands[command.data.name] = command;
-  }
-
-  console.log('_________BOT-HAS-STARTED________');
-  console.log(`User Name   : ${client.user.tag}`);
-  console.log(`Servers     : ${client.guilds.cache.size}`);
-  console.log(`Users       : ${client.users.cache.size}`);
-  console.log(`Commands    : ${jsFiles.length}`);
-  console.log('________________________________');
-
-
-  const subDirs = (
-    await Promise.all(commandFiles.map(async (entry) => {
-      if (entry.startsWith('-')) return null;
-      const stat = await fs.stat(`./commands/${entry}`);
-      return stat.isDirectory() ? entry : null;
-    }))
-  ).filter(Boolean);
-
-
-  for (const subDir of subDirs) {
-    const command = new discord.SlashCommandBuilder()
-      .setName(subDir)
-      .setDescription(`${subDir} commands`);
-
-    const dir = await fs.readdir(`./commands/${subDir}`);
-    const executions = {};
-
-    for (const element of dir) {
-      const sub = (await import(`./commands/${subDir}/${element}`)).default;
-      command.addSubcommand(subcommand => sub.data);
-      executions[sub.data.name] = sub.execute;
-    }
-
-    client.commands[command.name] = {
-      data: command,
-      async execute(interaction) {
-        const command = interaction.options.getSubcommand();
-        await executions[command](interaction);
-      }
-    };
-  }
 
   for (const commandName in client.commands) {
     data.push(client.commands[commandName].data);
