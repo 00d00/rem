@@ -275,12 +275,11 @@ client.commands =  {};
   const jsFiles = commandFiles.filter(file => file.endsWith('.js'));
 
   for (const file of jsFiles) {
-    console.log(file)
     const command = (await import(`./commands/${file}`)).default;
 
     client.commands[command.data.name] = command;
+    console.log(file)
   }
-
 
   const subDirs = (
     await Promise.all(commandFiles.map(async (entry) => {
