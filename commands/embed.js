@@ -88,14 +88,14 @@ export default {
       .setDescription(description);
 
     for (let i = 1; i <= 5; i++) {
-        const fieldName = interaction.options.getString(`field${i}_name`);
-        const fieldValue = interaction.options.getString(`field${i}_value`);
+      const fieldName = interaction.options.getString(`field${i}_name`);
+      const fieldValue = interaction.options.getString(`field${i}_value`);
 
-        if (fieldName && fieldValue) {
-            embed.addFields({ name: fieldName.replace('\\n', '\n'), value: fieldValue.replace('\\n', '\n') });
-        } else {
-            break;
-        }
+      if (fieldName && fieldValue) {
+        embed.addFields({ name: fieldName.replace('\\n', '\n'), value: fieldValue.replace('\\n', '\n') });
+      } else {
+        break;
+      }
     }
 
     await interaction.reply({ embeds: [embed] });
