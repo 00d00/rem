@@ -400,8 +400,17 @@ client.on("interactionCreate", async (interaction) => {
   try {
     await client.commands[interaction.commandName].execute(interaction);
   } catch (error) {
-    console.error(error);
-    await interaction.reply({ content: `\`\`\`${error}\`\`\``, ephemeral: true });
+
+    const embed = new discord.EmbedBuilder()
+      .setColor('Red')
+      .setTitle('ERROR')
+      .setDescription(`${error.name} : ${error.message}`);
+
+    if (interaction.replied) {
+      await interaction.followUp({ embeds: [embed], ephemeral: true });
+    } else {
+      await interaction.reply({ embeds: [embed], ephemeral: true });
+    }
   }
 });
 
