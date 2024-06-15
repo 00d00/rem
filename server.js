@@ -48,39 +48,6 @@ client.on('messageCreate', async (msg) => {
 
 
 
-client.on('guildMemberAdd', member => {
-  console.log('ADD')
-  const channel = member.guild.channels.cache.get('1097793408153702430');
-  console.log(channel)
-  if (!channel) return;
-
-  const joinEmbed = new discord.EmbedBuilder()
-    .setColor('Green')
-    .setTitle('参加通知')
-    .setDescription(`<@${member.id}> さんが参加しました。`)
-    .setThumbnail(member.user.displayAvatarURL())
-    .setFooter({ text: `サーバー人数: ${member.guild.memberCount}` })
-    .setTimestamp();
-
-  channel.send({ embeds: [joinEmbed] });
-});
-
-client.on('guildMemberRemove', member => {
-  console.log('REMOVE')
-  const channel = member.guild.channels.cache.get('1097793408153702430');
-  console.log(channel)
-  if (!channel) return;
-
-  const leaveEmbed = new discord.EmbedBuilder()
-    .setColor('Red')
-    .setTitle('離脱通知')
-    .setDescription(`<@${member.id}> さんが離脱しました。`)
-    .setThumbnail(member.user.displayAvatarURL())
-    .setFooter({ text: `サーバー人数: ${member.guild.memberCount}` })
-    .setTimestamp();
-
-  channel.send({ embeds: [leaveEmbed] });
-});
 
 
 
@@ -174,6 +141,39 @@ client.on('guildDelete', (guild) => {
 });
 
 
+client.on('guildMemberAdd', member => {
+  console.log('ADD')
+  const channel = member.guild.channels.cache.get('1240244950235615232');
+  console.log(channel)
+  if (!channel) return;
+
+  const joinEmbed = new discord.EmbedBuilder()
+    .setColor('Green')
+    .setTitle('参加通知')
+    .setDescription(`<@${member.id}> さんが参加しました。`)
+    .setThumbnail(member.user.displayAvatarURL())
+    .setFooter({ text: `サーバー人数: ${member.guild.memberCount}` })
+    .setTimestamp();
+
+  channel.send({ embeds: [joinEmbed] });
+});
+
+client.on('guildMemberRemove', member => {
+  console.log('REMOVE')
+  const channel = member.guild.channels.cache.get('1240244950235615232');
+  console.log(channel)
+  if (!channel) return;
+
+  const leaveEmbed = new discord.EmbedBuilder()
+    .setColor('Red')
+    .setTitle('離脱通知')
+    .setDescription(`<@${member.id}> さんが離脱しました。`)
+    .setThumbnail(member.user.displayAvatarURL())
+    .setFooter({ text: `サーバー人数: ${member.guild.memberCount}` })
+    .setTimestamp();
+
+  channel.send({ embeds: [leaveEmbed] });
+});
 
 
 
@@ -233,22 +233,6 @@ app.get('/oauth', async (req, res) => {
 
 
 
-
-import crypt from './modules/crypt.js';
-
-app.get('/encrypt', async (req, res) => {
-  const { text } = req.query;
-
-  const encrypted = crypt.encrypt(text);
-  res.json({ text: encrypted });
-});
-
-app.get('/decrypt', async (req, res) => {
-  const { text } = req.query;
-
-  const decrypted = crypt.decrypt(text);
-  res.json({ text: decrypted });
-});
 
 
 
