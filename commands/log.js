@@ -32,6 +32,7 @@ export default {
     if (!guild.log) guild.log = {};
 
     const setOrUnset = guild.log[item] ? '解除' : '設定';
+    const greenOrRed = guild.log[item] ? 'Red' : 'Green';
 
     if (guild.log[item]) delete guild.log[item];
     else guild.log[item] = interaction.channel.id;
