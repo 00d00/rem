@@ -18,7 +18,7 @@ const intents = [
   discord.GatewayIntentBits.GuildEmojisAndStickers,
   discord.GatewayIntentBits.GuildIntegrations,
   discord.GatewayIntentBits.GuildInvites,
-  // discord.GatewayIntentBits.GuildMembers,
+  discord.GatewayIntentBits.GuildMembers,
   discord.GatewayIntentBits.GuildMessageReactions,
   discord.GatewayIntentBits.GuildMessageTyping,
   discord.GatewayIntentBits.GuildMessages,
@@ -143,10 +143,7 @@ client.on('guildDelete', (guild) => {
 
 
 client.on('guildMemberAdd', member => {
-  console.log('ADD')
   const channel = member.guild.channels.cache.get('1240244950235615232');
-  console.log(channel)
-  if (!channel) return;
 
   const joinEmbed = new discord.EmbedBuilder()
     .setColor('Green')
@@ -160,10 +157,7 @@ client.on('guildMemberAdd', member => {
 });
 
 client.on('guildMemberRemove', member => {
-  console.log('REMOVE')
   const channel = member.guild.channels.cache.get('1240244950235615232');
-  console.log(channel)
-  if (!channel) return;
 
   const leaveEmbed = new discord.EmbedBuilder()
     .setColor('Red')
