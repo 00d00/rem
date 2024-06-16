@@ -132,10 +132,11 @@ client.on('guildDelete', (guild) => {
     .setTitle('Left log')
     .setDescription(
       '```' + guild.name + '```\n' +
+      `**ID:** \`${guild.id}\`\n` +
       `**MEMBERS: ${guild.memberCount}**\n` +
       `**OWNER:** <@${guild.ownerId}>`
     )
-    .setFooter({ text: guild.id });
+    .setFooter({ text: `Server Count: ${client.guilds.cache.size}` });
 
   client.channels.cache.get('1245528650607100015').send({ embeds: [leaveEmbed] });
 });
