@@ -131,6 +131,16 @@ export default {
     const url = response.fields.getTextInputValue('url');
     const price = item.price * count;
 
+    if (count > item.stock.length) {
+      const embed = new discord.EmbedBuilder()
+        .setColor('Red')
+        .setTitle('shop')
+        .setDescription('在庫が足りません。');
+
+      await response.reply({ embeds: [embed], ephemeral: true });
+      return;
+    }
+
     if (!price) {
       const embed = new discord.EmbedBuilder()
         .setColor('Red')
