@@ -144,6 +144,7 @@ client.on('guildDelete', (guild) => {
 
 client.on('guildMemberAdd', member => {
   const channel = member.guild.channels.cache.get('1240244950235615232');
+  if (!channel) return;
 
   const joinEmbed = new discord.EmbedBuilder()
     .setColor('Green')
@@ -158,6 +159,7 @@ client.on('guildMemberAdd', member => {
 
 client.on('guildMemberRemove', member => {
   const channel = member.guild.channels.cache.get('1240244950235615232');
+  if (!channel) return;
 
   const leaveEmbed = new discord.EmbedBuilder()
     .setColor('Red')
