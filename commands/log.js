@@ -16,6 +16,8 @@ export default {
 				{ name: 'メッセージ', value: 'message' },
 			)
     )
+
+  .setDefaultMemberPermissions(discord.PermissionFlagsBits.Administrator)
   ,
   async execute(interaction) {
     const item = interaction.options.getString('item');
