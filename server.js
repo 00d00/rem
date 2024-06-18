@@ -290,7 +290,8 @@ client.commands =  {};
   for (const subDir of subDirs) {
     const command = new discord.SlashCommandBuilder()
       .setName(subDir)
-      .setDescription(`${subDir} commands`);
+      .setDescription(`${subDir} commands`)
+      .setDefaultMemberPermissions(discord.PermissionFlagsBits.Administrator);
 
     const dir = await fs.readdir(`./commands/${subDir}`);
     const executions = {};
