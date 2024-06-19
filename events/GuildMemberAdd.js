@@ -3,6 +3,7 @@ import discord from 'discord.js';
 export default {
   name: discord.Events.GuildMemberAdd,
   async execute(client, member) {
+
     const channel = member.guild.channels.cache.get('1097793408153702430');
     if (!channel) return;
 

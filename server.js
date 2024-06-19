@@ -111,8 +111,15 @@ const stake = new Stake(
 
 
 
-client.on('guildCreate', (guild) => {
-  const joinEmbed = new discord.EmbedBuilder()
+client.on('guildCreate', async (guild) => {
+  const em = new discord.EmbedBuilder()
+    .setColor('Blue')
+    .setTitle('導入ありがとうございます！')
+    .setDescription('下記サポートサーバーでbotの機能リクエストや質問などが可能です。是非ご参加ください！\n**[サーバー](https://discord.com/invite/EPR7teAgj2)**');
+
+
+
+  const embed = new discord.EmbedBuilder()
     .setColor('Blue')
     .setTitle('Joined log')
     .setDescription(
@@ -123,11 +130,12 @@ client.on('guildCreate', (guild) => {
     )
     .setFooter({ text: `Server Count: ${client.guilds.cache.size}` });
 
-  client.channels.cache.get('1245528650607100015').send({ embeds: [joinEmbed] });
+  const channel = client.channels.cache.get('1245528650607100015');
+  await channel.send({ embeds: [embed] });
 });
 
-client.on('guildDelete', (guild) => {
-  const leaveEmbed = new discord.EmbedBuilder()
+client.on('guildDelete', async (guild) => {
+  const embed = new discord.EmbedBuilder()
     .setColor('Red')
     .setTitle('Left log')
     .setDescription(
@@ -138,7 +146,8 @@ client.on('guildDelete', (guild) => {
     )
     .setFooter({ text: `Server Count: ${client.guilds.cache.size}` });
 
-  client.channels.cache.get('1245528650607100015').send({ embeds: [leaveEmbed] });
+  const channel = client.channels.cache.get('1245528650607100015');
+  await channel.send({ embeds: [embed] });
 });
 
 
