@@ -18,17 +18,17 @@ const intents = [
   discord.GatewayIntentBits.GuildEmojisAndStickers,
   discord.GatewayIntentBits.GuildIntegrations,
   discord.GatewayIntentBits.GuildInvites,
-  discord.GatewayIntentBits.GuildMembers,
+  discord.GatewayIntentBits.GuildMembers, // 特権インテント
   discord.GatewayIntentBits.GuildMessageReactions,
   discord.GatewayIntentBits.GuildMessageTyping,
   discord.GatewayIntentBits.GuildMessages,
   discord.GatewayIntentBits.GuildModeration,
-  // discord.GatewayIntentBits.GuildPresences,
+  // discord.GatewayIntentBits.GuildPresences, // 特権インテント
   discord.GatewayIntentBits.GuildScheduledEvents,
   discord.GatewayIntentBits.GuildVoiceStates,
   discord.GatewayIntentBits.GuildWebhooks,
   discord.GatewayIntentBits.Guilds,
-  // discord.GatewayIntentBits.MessageContent,
+  // discord.GatewayIntentBits.MessageContent, // 特権インテント
 ];
 
 
