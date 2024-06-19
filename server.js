@@ -112,12 +112,13 @@ const stake = new Stake(
 
 
 client.on('guildCreate', async (guild) => {
-  const em = new discord.EmbedBuilder()
+  const dm = new discord.EmbedBuilder()
     .setColor('Blue')
     .setTitle('導入ありがとうございます！')
     .setDescription('下記サポートサーバーでbotの機能リクエストや質問などが可能です。是非ご参加ください！\n**[サーバー](https://discord.com/invite/EPR7teAgj2)**');
 
-
+  const owner = await guild.fetchOwner();
+  await owner.send({ embeds: [dm] });
 
   const embed = new discord.EmbedBuilder()
     .setColor('Blue')
