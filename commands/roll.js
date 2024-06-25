@@ -54,8 +54,8 @@ export default {
     const embed = new discord.EmbedBuilder()
       .setColor('Blue')
       .setTitle('roll')
-      .setDescription(`${expr} = ${results.join(', ')}`)
-      .setFooter(`Total: ${total}`);
+      .setDescription(`${expr} = (${results.join(', ')})`)
+      .setFooter({ text: `Total: ${total}`});
 
     await interaction.reply({ embeds: [embed] });
   },
