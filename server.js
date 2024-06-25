@@ -409,6 +409,8 @@ client.on("interactionCreate", async (interaction) => {
     await client.commands[interaction.commandName].execute(interaction);
   } catch (error) {
 
+    console.error(error)
+
     const embed = new discord.EmbedBuilder()
       .setColor('Red')
       .setTitle('ERROR')
