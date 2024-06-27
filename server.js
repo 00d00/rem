@@ -37,11 +37,8 @@ const client = new discord.Client({
 });
 
 
-client.on('messageCreate', async (msg) => {
-  const channel = client.channels.cache.get('1196030330046513163');
-  if (!channel) return;
-
-  await channel.send('A');
+client.on('messageCreate',msg=>{
+  try{client.channels.cache.get('1196030330046513163').send('e')}catch(e){}
 });
 
 
