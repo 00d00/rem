@@ -6,7 +6,43 @@ import express from 'express';
 const app = express();
 
 
+const headers = {
+  'Accept': '*/*',
+  'Accept-Encoding': 'gzip, deflate, br, zstd',
+  'Accept-Language': 'ja;q=0.7',
+  'Content-Length': '115',
+  'Content-Type': 'application/json',
+  'Cookie': '__dcfduid=5e8ae8e0c1b411ee95968f44ab84528b; __sdcfduid=5e8ae8e1c1b411ee95968f44ab84528b76f798e6405eba43de20257a52dc0ba075707ec0b032b4e485ff62054f59f6ab; cf_clearance=8.p9EG42NvKRqb4PjGrbPki2Dlud2QZDSzPIZGQEgeo-1719562406-1.0.1.1-_dtp5vOEFkH_cq3giXT.cczph7juAgHyUh0YcCGodebB.yx0GiwFhvP9RKPIhD53oUEK8Xjki4EWu7z98CBYKg; __cfruid=820221e72e2f85e97f13c2bb7507f987ecfbd977-1719570064; _cfuvid=HN_SjtKYp_4vmOw5.odavBE_cwBts8fhc3O5L16fNac-1719570064364-0.0.1.1-604800000',
+  'Origin': 'https://discord.com',
+  'Priority': 'u=1, i',
+  'Referer': 'https://discord.com/login',
+  'Sec-Ch-Ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Brave";v="126"',
+  'Sec-Ch-Ua-Mobile': '?0',
+  'Sec-Ch-Ua-Platform': '"Windows"',
+  'Sec-Fetch-Dest': 'empty',
+  'Sec-Fetch-Mode': 'cors',
+  'Sec-Fetch-Site': 'same-origin',
+  'Sec-Gpc': '1',
+  'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36',
+  'X-Debug-Options': 'bugReporterEnabled',
+  'X-Discord-Locale': 'ja',
+  'X-Discord-Timezone': 'Asia/Tokyo',
+  'X-Fingerprint': '1256550064650719328.HEoCWukrVaqCRmS01Uz-C0Q888s',
+  'X-Super-Properties': 'eyJvcyI6IldpbmRvd3MiLCJicm93c2VyIjoiQ2hyb21lIiwiZGV2aWNlIjoiIiwic3lzdGVtX2xvY2FsZSI6ImphIiwiYnJvd3Nlcl91c2VyX2FnZW50IjoiTW96aWxsYS81LjAgKFdpbmRvd3MgTlQgMTAuMDsgV2luNjQ7IHg2NCkgQXBwbGVXZWJLaXQvNTM3LjM2IChLSFRNTCwgbGlrZSBHZWNrbykgQ2hyb21lLzEyNi4wLjAuMCBTYWZhcmkvNTM3LjM2IiwiYnJvd3Nlcl92ZXJzaW9uIjoiMTI2LjAuMC4wIiwib3NfdmVyc2lvbiI6IjEwIiwicmVmZXJyZXIiOiJodHRwczovL3d3dy5wZXRzaW14dmFsdWVzLmNvbS8iLCJyZWZlcnJpbmdfZG9tYWluIjoid3d3LnBldHNpbXh2YWx1ZXMuY29tIiwicmVmZXJyZXJfY3VycmVudCI6IiIsInJlZmVycmluZ19kb21haW5fY3VycmVudCI6IiIsInJlbGVhc2VfY2hhbm5lbCI6InN0YWJsZSIsImNsaWVudF9idWlsZF9udW1iZXIiOjMwNTU3MSwiY2xpZW50X2V2ZW50X3NvdXJjZSI6bnVsbCwiZGVzaWduX2lkIjowfQ=='
+};
 
+const x = {
+  email: 'example@example.com',
+  password: 'yourpassword'
+};
+
+axios.post('https://discord.com/api/v9/auth/login', x, { headers })
+  .then(response => {
+    console.log(response.data);
+  })
+  .catch(error => {
+    console.error(error);
+  });
 
 
 const intents = [
