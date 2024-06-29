@@ -42,14 +42,14 @@ export default {
       )
       .setRequired(true)
     )
-    .addIntegerOption(option => option
+    .addNumberOption(option => option
       .setName('progress')
       .setDescription('進行度 (0-100)')
       .setRequired(true)
     ),
   async execute(interaction) {
     const rank = interaction.options.getString('rank');
-    const progress = interaction.options.getInteger('progress');
+    const progress = interaction.options.getNumber('progress');
 
 
     let result;
