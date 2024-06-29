@@ -40,7 +40,6 @@ export default {
         const rank = interaction.options.getString('rank');
         const progress = interaction.options.getInteger('progress');
 
-      
 
         let result;
 
