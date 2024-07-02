@@ -15,7 +15,23 @@ export default {
       data = {
         keywords: [],
         mentionable: 0,
-        punishments: {}
+        punishments: [ // WARN / TIMEOUT / KICK / BAN
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        points: {
+          invite: 0,
+          everyone: 0,
+          duplicate: 0,
+        }
       };
     }
 
