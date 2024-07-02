@@ -13,7 +13,6 @@ export default {
       data = await fs.readFile(`./automod/${interaction.guild.id}.json`);
     } catch (error) {
       data = {
-        log: null,
         keywords: [],
         mentionable: 0,
         punishments: {}
@@ -24,7 +23,7 @@ export default {
       .setColor('Blue')
       .setTitle('Automod Settings')
       .addFields(
-        { name: 'モデレーターログ', value: modChannel }
+        { name: 'サーバーログ', value: data.log ? `` : '無し' }
       );
 
     await interaction.reply({ embeds: [embed] });
