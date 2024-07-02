@@ -16,7 +16,7 @@ export default {
         log: null,
         keywords: [],
         mentionable: 0,
-        
+        punishments: {}
       };
     }
 
