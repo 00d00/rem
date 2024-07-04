@@ -10,7 +10,7 @@ export default {
   async execute(interaction) {
     let data;
     try {
-      data = await fs.readFile(`./automod/${interaction.guild.id}.json`);
+      data = JSON.parse(await fs.readFile(`./automod/${interaction.guild.id}.json`, 'utf-8'));
     } catch (error) {
       data = {
         keywords: [],
@@ -33,6 +33,8 @@ export default {
           duplicate: 0,
         }
       };
+
+      await fs.writeFile(`./automod/${interaction.guild.id}.json`, JSON.stringify(data), 'utf-8');
     }
 
     const embed = new discord.EmbedBuilder()
