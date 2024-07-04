@@ -6,15 +6,6 @@ import express from 'express';
 const app = express();
 
 
-import luaparse from 'luaparse';
-console.log(luaparse)
-// LuaコードをASTに変換する
-const code = 'local x = 10; print(x + 5)';
-const ast = luaparse.parse(code);
-
-// ASTからLuaコードを生成する
-const generatedCode = luaparse.stringify(ast);
-console.log(generatedCode);  // 'local x = 10;\nprint((x + 5));'
 
 
 
