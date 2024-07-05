@@ -363,7 +363,6 @@ rotateStatus();
 
 
 
-
   for (const commandName in client.commands) {
     data.push(client.commands[commandName].data);
   }
