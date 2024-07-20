@@ -234,9 +234,9 @@ export default {
           .setDescription(
 `<@${interaction.user.id}>
 
-**購入内容** : ごみ
-**値段** : 3996
-**購入数** : 2`
+**購入内容** : ${item.name}
+**値段** : ${price}
+**購入数** : ${count}`
           )
           .setThumbnail(interaction.user.avatarURL())
           .setTimestamp();
