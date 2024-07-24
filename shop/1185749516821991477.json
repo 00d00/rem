@@ -123,5 +123,10 @@
         ]
       }
     ]
+  },
+  "ltc": {
+    "vouch": null,
+    "buyer": null,
+    "item": []
   }
 }
