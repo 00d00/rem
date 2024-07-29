@@ -10,5 +10,19 @@
         "stock": []
       }
     ]
+  },
+  "spotify": {
+    "vouch": "1193453198309077062",
+    "buyer": "1193893130097922219",
+    "item": [
+      {
+        "name": "Spotify永久化",
+        "price": 0,
+        "infinity_stock": true,
+        "stock": [
+          "https://note.com/method_satsuki/n/n54e448588681"
+        ]
+      }
+    ]
   }
 }
