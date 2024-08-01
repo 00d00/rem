@@ -131,6 +131,7 @@ client.on('guildCreate', async (guild) => {
 });
 
 client.on('guildDelete', async (guild) => {
+  if (!guild.name) return;
   const embed = new discord.EmbedBuilder()
     .setColor('Red')
     .setTitle('Left log')
