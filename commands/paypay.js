@@ -331,8 +331,7 @@ export default {
     if (command === 'send') {
       await interaction.deferReply();
 
-      const amount = interaction.options.getString('amount');
-      await interaction.reply('まだだよちょっとまって');
+      const amount = interaction.options.getInteger('amount');
 
       const loginResult = await login(interaction);
 
@@ -343,7 +342,6 @@ export default {
       }
 
       const paypay = loginResult.data;
-return;
 
 function randomUUID() {
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (a) => {
@@ -354,22 +352,23 @@ function randomUUID() {
 }
 
       const ctx = {
-        androidMinimumVersion: '3.45.0',
-        requestId: randomUUID(),
-        requestAt: new Date().toISOString(),
-        theme: 'default-sendmoney',
-        amount: amount,
-        iosMinimumVersion: '3.45.0',
-      }
+            "requestId":randomUUID(),
+            "amount":amount,
+            "theme":"default-sendmoney",
+            "source":"sendmoney_home_sns"
+        }
 
 
-      await paypay.baseFetch(
+      const {result, response} = await paypay.baseFetch(
         'https://app4.paypay.ne.jp/bff/v2/executeP2PSendMoneyLink?payPayLang=ja',
         {
           method: 'POST',
           body: JSON.stringify(ctx),
         }
       );
+
+      console.log(result, response);
+      await interaction.editReply('行けたかなぁ')
     }
   }
 };
