@@ -328,47 +328,47 @@ export default {
 
 
 
-    if (command === 'send') {
-      await interaction.deferReply();
+//     if (command === 'send') {
+//       await interaction.deferReply();
 
-      const amount = interaction.options.getInteger('amount');
+//       const amount = interaction.options.getInteger('amount');
 
-      const loginResult = await login(interaction);
+//       const loginResult = await login(interaction);
 
-      if (!loginResult.status) {
-        const embed = ErrorEmbed(interaction, loginResult.data);
-        await interaction.followUp({ embeds: [embed], ephemeral: true });
-        return;
-      }
+//       if (!loginResult.status) {
+//         const embed = ErrorEmbed(interaction, loginResult.data);
+//         await interaction.followUp({ embeds: [embed], ephemeral: true });
+//         return;
+//       }
 
-      const paypay = loginResult.data;
+//       const paypay = loginResult.data;
 
-function randomUUID() {
-  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (a) => {
-    const r = (new Date().getTime() + Math.random() * 16) % 16 | 0,
-      v = a == 'x' ? r : (r & 0x3) | 0x8
-    return v.toString(16)
-  })
-}
+// function randomUUID() {
+//   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (a) => {
+//     const r = (new Date().getTime() + Math.random() * 16) % 16 | 0,
+//       v = a == 'x' ? r : (r & 0x3) | 0x8
+//     return v.toString(16)
+//   })
+// }
 
-      const ctx = {
-            "requestId":randomUUID(),
-            "amount":amount,
-            "theme":"default-sendmoney",
-            "source":"sendmoney_home_sns"
-        }
+//       const ctx = {
+//             "requestId":randomUUID(),
+//             "amount":amount,
+//             "theme":"default-sendmoney",
+//             "source":"sendmoney_home_sns"
+//         }
 
 
-      const {result, response} = await paypay.baseFetch(
-        'https://app4.paypay.ne.jp/bff/v2/executeP2PSendMoneyLink?payPayLang=ja',
-        {
-          method: 'POST',
-          body: JSON.stringify(ctx),
-        }
-      );
+//       const {result, response} = await paypay.baseFetch(
+//         'https://app4.paypay.ne.jp/bff/v2/executeP2PSendMoneyLink?payPayLang=ja',
+//         {
+//           method: 'POST',
+//           body: JSON.stringify(ctx),
+//         }
+//       );
 
-      console.log(result, response);
-      await interaction.editReply('行けたかなぁ')
-    }
+//       console.log(result, response);
+//       await interaction.editReply('行けたかなぁ')
+//     }
   }
 };
