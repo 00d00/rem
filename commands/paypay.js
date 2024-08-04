@@ -323,5 +323,53 @@ export default {
       await interaction.reply({ embeds: [embed] });
     }
 
+
+
+
+
+
+    if (command === 'send') {
+      await interaction.deferReply();
+
+      const amount = interaction.options.getString('amount');
+      await interaction.reply('まだだよちょっとまって');
+
+      const loginResult = await login(interaction);
+
+      if (!loginResult.status) {
+        const embed = ErrorEmbed(interaction, loginResult.data);
+        await interaction.followUp({ embeds: [embed], ephemeral: true });
+        return;
+      }
+
+      const paypay = loginResult.data;
+return;
+
+function randomUUID() {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (a) => {
+    const r = (new Date().getTime() + Math.random() * 16) % 16 | 0,
+      v = a == 'x' ? r : (r & 0x3) | 0x8
+    return v.toString(16)
+  })
+}
+
+      const ctx = {
+        androidMinimumVersion: '3.45.0',
+        requestId: randomUUID(),
+        requestAt: new Date().toISOString(),
+        theme: 'default-sendmoney',
+        amount: amount,
+        iosMinimumVersion: '3.45.0',
+      }
+
+
+      await paypay.baseFetch(
+        'https://app4.paypay.ne.jp/bff/v2/executeP2PSendMoneyLink?payPayLang=ja',
+        {
+          method: 'POST',
+          body: JSON.stringify(ctx),
+        }
+      );
+    }
   }
 };
