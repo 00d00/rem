@@ -3,5 +3,17 @@
     "vouch": null,
     "buyer": null,
     "item": []
+  },
+  "a": {
+    "vouch": null,
+    "buyer": null,
+    "item": [
+      {
+        "name": "a",
+        "price": 0,
+        "infinity_stock": true,
+        "stock": []
+      }
+    ]
   }
 }
