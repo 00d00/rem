@@ -26,16 +26,20 @@
     "buyer": null,
     "item": [
       {
-        "name": "仕入先 1",
-        "price": 200,
+        "name": "仕入先1",
+        "price": 150,
         "infinity_stock": true,
-        "stock": []
+        "stock": [
+          "https://discord.com/invite/TMQT37X4ZW"
+        ]
       },
       {
         "name": "仕入先2",
         "price": 300,
         "infinity_stock": true,
-        "stock": []
+        "stock": [
+          "https://discord.com/invite/njPqxnV3Rf"
+        ]
       },
       {
         "name": "仕入先3",
