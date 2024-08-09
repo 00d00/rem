@@ -10,6 +10,38 @@
         "stock": [
           "test"
         ]
+      },
+      {
+        "name": "test1",
+        "price": 1,
+        "infinity_stock": true,
+        "stock": [
+          "test1"
+        ]
+      }
+    ]
+  },
+  "siiresaki": {
+    "vouch": "1242860776620818583",
+    "buyer": null,
+    "item": [
+      {
+        "name": "仕入先 1",
+        "price": 200,
+        "infinity_stock": true,
+        "stock": []
+      },
+      {
+        "name": "仕入先2",
+        "price": 300,
+        "infinity_stock": true,
+        "stock": []
+      },
+      {
+        "name": "仕入先3",
+        "price": 150,
+        "infinity_stock": true,
+        "stock": []
       }
     ]
   }
