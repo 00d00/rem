@@ -1,0 +1,16 @@
+{
+  "test": {
+    "vouch": null,
+    "buyer": null,
+    "item": [
+      {
+        "name": "test",
+        "price": 0,
+        "infinity_stock": true,
+        "stock": [
+          "test"
+        ]
+      }
+    ]
+  }
+}
