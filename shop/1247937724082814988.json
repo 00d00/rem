@@ -10,5 +10,10 @@
         "stock": []
       }
     ]
+  },
+  "h": {
+    "vouch": null,
+    "buyer": null,
+    "item": []
   }
 }
