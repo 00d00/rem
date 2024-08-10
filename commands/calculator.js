@@ -12,16 +12,19 @@ export default {
     )
   ,
   async execute(interaction) {
-    const expr = interaction.options.getInteger('expr');
+    const expr = interaction.options.getString('expr');
+    let result;
 
     try {
-      const result = evaluate(expr);
+      result = evaluate(expr);
+    } catch (error) {
+      result = 'Invalid Input';
     }
-    
+
     const embed = new discord.EmbedBuilder()
-      .setColor(result ? 'Blue' : 'Red')
+      .setColor(result === 'Invalid Input' ? 'Red' : 'Blue')
       .setTitle('calculator')
-      .setDescription(`${expr} = ${result}`);
+      .setDescription(result === 'Invalid Input' ? result : `${expr} = ${result}`);
 
     await interaction.reply({ embeds: [embed] });
   }
