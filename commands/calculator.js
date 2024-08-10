@@ -4,27 +4,6 @@ import { create, all } from 'mathjs';
 
 const math = create(all);
 
-// 数値微分関数を定義
-math.import({
-  diff: (f, x, h = 1e-5) => {
-    const func = math.parse(f).compile();
-    return (func.evaluate({ x: x + h }) - func.evaluate({ x: x })) / h;
-  }
-});
-
-// 数値積分関数を定義
-math.import({
-  integral: (f, a, b, n = 1000) => {
-    const h = (b - a) / n;
-    const func = math.parse(f).compile();
-    let sum = 0;
-    for (let i = 0; i < n; i++) {
-      sum += func.evaluate({ x: a + i * h }) * h;
-    }
-    return sum;
-  }
-});
-
 
 export default {
   data: new SlashCommandBuilder()
