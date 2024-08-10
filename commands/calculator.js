@@ -1,8 +1,8 @@
-import discord from 'discord.js';
+import { SlashCommandBuilder, EmbedBuilder } from 'discord.js';
 import { evaluate } from 'mathjs';
 
 export default {
-  data: new discord.SlashCommandBuilder()
+  data: new SlashCommandBuilder()
     .setName('calculator')
     .setDescription('最強の計算機')
     .addStringOption(option => option
@@ -21,7 +21,7 @@ export default {
       result = 'Invalid Input';
     }
 
-    const embed = new discord.EmbedBuilder()
+    const embed = new EmbedBuilder()
       .setColor(result === 'Invalid Input' ? 'Red' : 'Blue')
       .setTitle('calculator')
       .setDescription(result === 'Invalid Input' ? result : `${expr} = ${result}`);
