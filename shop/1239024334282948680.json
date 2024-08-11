@@ -15,5 +15,17 @@
         "stock": []
       }
     ]
+  },
+  "raill": {
+    "vouch": "1269268396931809465",
+    "buyer": "1269268342414246049",
+    "item": [
+      {
+        "name": "児ポ79本",
+        "price": 500,
+        "infinity_stock": true,
+        "stock": []
+      }
+    ]
   }
 }
