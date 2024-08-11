@@ -27,5 +27,41 @@
         "stock": []
       }
     ]
+  },
+  "shop": {
+    "vouch": "1269268396931809465",
+    "buyer": "1269268342414246049",
+    "item": [
+      {
+        "name": "Netflix永久",
+        "price": 400,
+        "infinity_stock": true,
+        "stock": []
+      },
+      {
+        "name": "Spotify永久",
+        "price": 700,
+        "infinity_stock": true,
+        "stock": []
+      },
+      {
+        "name": "disney＋永久",
+        "price": 650,
+        "infinity_stock": true,
+        "stock": []
+      },
+      {
+        "name": "Amazonプライム永久",
+        "price": 1000,
+        "infinity_stock": true,
+        "stock": []
+      },
+      {
+        "name": "U-NEXT",
+        "price": 1000,
+        "infinity_stock": true,
+        "stock": []
+      }
+    ]
   }
 }
