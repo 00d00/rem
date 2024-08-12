@@ -1,0 +1,18 @@
+{
+  "phone": "07023667905",
+  "password": "User1234",
+  "header": {
+    "Accept": "application/json, text/plain, */*",
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36",
+    "Content-Type": "application/json"
+  },
+  "cookie": {},
+  "refresh_at": 0,
+  "logged": false,
+  "otp": {
+    "waiting": true,
+    "otp_prefix": "RL",
+    "otp_ref_id": "954138d37778c36d12c7ce59af63f572dc5384f7c1af219da457430bbe0fc2ca8c6b72"
+  },
+  "uuid": "e9b962ec-4951-49e9-ba80-383aa9ffc4e1"
+}
