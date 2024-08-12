@@ -1,0 +1,16 @@
+{
+  "18": {
+    "vouch": "1206878364808515615",
+    "buyer": null,
+    "item": [
+      {
+        "name": "ぬざるま",
+        "price": 1,
+        "infinity_stock": true,
+        "stock": [
+          "1"
+        ]
+      }
+    ]
+  }
+}
