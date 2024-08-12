@@ -1,0 +1,16 @@
+{
+  "mannko": {
+    "vouch": null,
+    "buyer": null,
+    "item": [
+      {
+        "name": "d",
+        "price": 1,
+        "infinity_stock": true,
+        "stock": [
+          "https://www.youtube.com/"
+        ]
+      }
+    ]
+  }
+}
