@@ -1,0 +1,18 @@
+{
+  "phone": "08087338877",
+  "password": "Takerunn624",
+  "header": {
+    "Accept": "application/json, text/plain, */*",
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36",
+    "Content-Type": "application/json"
+  },
+  "cookie": {},
+  "refresh_at": 0,
+  "logged": false,
+  "otp": {
+    "waiting": true,
+    "otp_prefix": "QS",
+    "otp_ref_id": "448028a19f29c345858ab3534d478da476ee5de6dcfb740448ae812121bab28b5d868a"
+  },
+  "uuid": "cbdd4187-5fb7-48c3-8156-eaf73a62b596"
+}
