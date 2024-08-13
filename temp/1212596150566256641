@@ -1,0 +1,18 @@
+{
+  "phone": "07075701557",
+  "password": "Hikaman133",
+  "header": {
+    "Accept": "application/json, text/plain, */*",
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36",
+    "Content-Type": "application/json"
+  },
+  "cookie": {},
+  "refresh_at": 0,
+  "logged": false,
+  "otp": {
+    "waiting": true,
+    "otp_prefix": "PO",
+    "otp_ref_id": "3091768aac5ad24cca81102967e6027d9b800925b3a6334267623f0e8bb3e493699dbd"
+  },
+  "uuid": "6620d73a-101f-4f98-b0f9-c73599490420"
+}
