@@ -12,6 +12,7 @@ export default {
       .setTitle('Aces BOT INFO')
       .addFields(
         { name: 'Server Count', value: `\`\`\`${client.guilds.cache.size}\`\`\``, inline: true },
+        { name: 'Member Count', value: `\`\`\`${client.users.cache.size}\`\`\``, inline: true },
         { name: 'Uptime', value: `\`\`\`${Math.floor(client.uptime / 1000)} seconds\`\`\``, inline: true },
         { name: 'Ping', value: `Pinging...`, inline: true },
       );
@@ -25,6 +26,7 @@ export default {
       .setTitle('Aces BOT INFO')
       .addFields(
         { name: 'Server Count', value: `\`\`\`${client.guilds.cache.size}\`\`\``, inline: true },
+        { name: 'Member Count', value: `\`\`\`${client.users.cache.size}\`\`\``, inline: true },
         { name: 'Uptime', value: `\`\`\`${Math.floor(client.uptime / 1000)} seconds\`\`\``, inline: true },
         { name: 'Ping', value: `\`\`\`${ping} ms\`\`\``, inline: true },
       );
