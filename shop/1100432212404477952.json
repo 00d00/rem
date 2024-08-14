@@ -25,19 +25,31 @@
         "name": "jc 4つ",
         "price": 300,
         "infinity_stock": true,
-        "stock": []
+        "stock": [
+          "1",
+          "1",
+          "1"
+        ]
       },
       {
         "name": "jc-20個",
         "price": 400,
         "infinity_stock": true,
-        "stock": []
+        "stock": [
+          "1",
+          "1",
+          "1"
+        ]
       },
       {
-        "name": "jsjc-80個",
-        "price": 700,
+        "name": "js-jc-80個",
+        "price": 400,
         "infinity_stock": true,
-        "stock": []
+        "stock": [
+          "1",
+          "1",
+          "1"
+        ]
       },
       {
         "name": "js-40個",

@@ -24,7 +24,9 @@
         "name": "児ポ79本",
         "price": 500,
         "infinity_stock": true,
-        "stock": []
+        "stock": [
+          "999"
+        ]
       }
     ]
   },
