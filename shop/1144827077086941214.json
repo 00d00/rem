@@ -1,0 +1,16 @@
+{
+  "jipo_1": {
+    "vouch": "1264360029054566420",
+    "buyer": "1264355826328670269",
+    "item": [
+      {
+        "name": "jiポ 1 炉有り",
+        "price": 200,
+        "infinity_stock": true,
+        "stock": [
+          "https://drive.google.com/file/d/1PjMl7M93O4dDdg_YACkzD8lNn1rfS9fX/view?usp=drivesdk"
+        ]
+      }
+    ]
+  }
+}
