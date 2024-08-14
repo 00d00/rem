@@ -13,6 +13,12 @@
           "寄付ありがとう",
           "寄付ありがとう"
         ]
+      },
+      {
+        "name": "かみ",
+        "price": 5500,
+        "infinity_stock": false,
+        "stock": []
       }
     ]
   }
