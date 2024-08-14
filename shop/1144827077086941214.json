@@ -42,8 +42,8 @@
     ]
   },
   "jc_ona": {
-    "vouch": null,
-    "buyer": null,
+    "vouch": "1264360029054566420",
+    "buyer": "1264355826328670269",
     "item": [
       {
         "name": "jc オナ動画-24本",
@@ -52,5 +52,24 @@
         "stock": []
       }
     ]
+  },
+  "jc_ero_1": {
+    "vouch": "1264360029054566420",
+    "buyer": "1264355826328670269",
+    "item": [
+      {
+        "name": "jc エロ動画 1-10本",
+        "price": 200,
+        "infinity_stock": true,
+        "stock": [
+          "https://drive.google.com/file/d/1QCkeBaMbqTIW_J9Nh92LM_C9-rjWdK5K/view?usp=drivesdk"
+        ]
+      }
+    ]
+  },
+  "jc_ero_2": {
+    "vouch": null,
+    "buyer": null,
+    "item": []
   }
 }

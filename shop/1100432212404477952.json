@@ -7,13 +7,37 @@
         "name": "ネトフリ永久垢",
         "price": 1000,
         "infinity_stock": false,
-        "stock": []
+        "stock": [
+          "1",
+          "1"
+        ]
       },
       {
         "name": "Spotify永久垢",
         "price": 1000,
         "infinity_stock": false,
-        "stock": []
+        "stock": [
+          "1",
+          "1"
+        ]
+      },
+      {
+        "name": "netflix通常",
+        "price": 80,
+        "infinity_stock": false,
+        "stock": [
+          "1",
+          "1"
+        ]
+      },
+      {
+        "name": "spotify通常",
+        "price": 80,
+        "infinity_stock": false,
+        "stock": [
+          "1",
+          "1"
+        ]
       }
     ]
   },
@@ -212,7 +236,12 @@
         "name": "jc-4つ　長",
         "price": 500,
         "infinity_stock": false,
-        "stock": []
+        "stock": [
+          "1",
+          "1",
+          "1",
+          "1"
+        ]
       }
     ]
   }
