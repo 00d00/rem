@@ -40,5 +40,17 @@
         ]
       }
     ]
+  },
+  "jc_ona": {
+    "vouch": null,
+    "buyer": null,
+    "item": [
+      {
+        "name": "jc オナ動画-24本",
+        "price": 200,
+        "infinity_stock": true,
+        "stock": []
+      }
+    ]
   }
 }
