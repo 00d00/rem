@@ -73,14 +73,16 @@
     "item": []
   },
   "jc_erokawa": {
-    "vouch": null,
-    "buyer": null,
+    "vouch": "1264360029054566420",
+    "buyer": "1264355826328670269",
     "item": [
       {
         "name": "jc エロカワ エロ動画-11本 エロ写真-12枚",
         "price": 200,
         "infinity_stock": true,
-        "stock": []
+        "stock": [
+          "https://drive.google.com/file/d/1QHW3aok6ClXiiLYPTC6mlK-DSkY4Imrm/view?usp=drivesdk"
+        ]
       }
     ]
   }
